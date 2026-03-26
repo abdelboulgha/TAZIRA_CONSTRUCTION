@@ -213,7 +213,7 @@ export default function ServicesSection() {
         /* Section */
         .svc2-section {
           background: #fff;
-          padding: 9rem 0 10rem;
+          padding: 4rem 0 9rem;
           position: relative;
           overflow: hidden;
         }

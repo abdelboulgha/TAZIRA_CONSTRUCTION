@@ -271,7 +271,7 @@ export default function AboutPreview() {
         /* Root */
         .about-root {
           background: #fff;
-          padding: 7rem 0 8rem;
+          padding: 7rem 0 3rem;
           overflow: hidden;
           position: relative;
         }

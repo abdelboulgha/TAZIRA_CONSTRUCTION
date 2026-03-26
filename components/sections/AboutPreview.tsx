@@ -1,167 +1,480 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
-export default function AboutPreview() {
-  const { t: _t, isRTL } = useLanguage();
-  const t = _t as any;
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const imgScale = useTransform(scrollYProgress, [0, 1], [1.08, 1.0]);
-  const imgY     = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
+/* ─── Image data ─────────────────────────────────────────────── */
+const IMAGES = [
+  { src: '/assets/image1.png', alt: 'Chantier au coucher du soleil' },
+  { src: '/assets/image2.png', alt: 'Équipe sur chantier' },
+  { src: '/assets/image3.png', alt: 'Matériel de construction' },
+  { src: '/assets/image4.png', alt: 'Travaux en hauteur' },
+  { src: '/assets/image5.png', alt: 'Opérateur sur chantier' },
+  { src: '/assets/image6.png', alt: 'Travaux de terrassement' },
+];
 
-  const stats = [
-    { value: '200+', label: t.aboutPreview.stats.projects },
-    { value: '10+',  label: t.aboutPreview.stats.years },
-    { value: '150+', label: t.aboutPreview.stats.clients },
-    { value: '50+',  label: t.aboutPreview.stats.team },
-  ];
+/* ─── Pillars ─────────────────────────────────────────────────── */
+const PILLARS = [
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+    label: 'Qualité certifiée',
+    desc: 'Processus rigoureux et matériaux premium.',
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+    label: 'Délais respectés',
+    desc: 'Planification précise, livraison ponctuelle.',
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
+    label: 'Expertise humaine',
+    desc: 'Une équipe expérimentée et passionnée.',
+  },
+];
+
+export default function AboutPreview() {
+  const { isRTL } = useLanguage();
+
+  const sectionRef   = useRef<HTMLElement>(null);
+  const eyebrowRef   = useRef<HTMLDivElement>(null);
+  const headlineRef  = useRef<HTMLHeadingElement>(null);
+  const paraRef      = useRef<HTMLParagraphElement>(null);
+  const pillarsRef   = useRef<HTMLDivElement>(null);
+  const ctaRef       = useRef<HTMLDivElement>(null);
+  const col1Ref      = useRef<HTMLDivElement>(null);
+  const col2Ref      = useRef<HTMLDivElement>(null);
+  const col3Ref      = useRef<HTMLDivElement>(null);
+  const lineRef      = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ctx: any;
+    (async () => {
+      const gsapMod = await import('gsap');
+      const stMod   = await import('gsap/ScrollTrigger');
+      const gsap    = gsapMod.default || gsapMod.gsap;
+      const ST      = stMod.ScrollTrigger || stMod.default;
+      gsap.registerPlugin(ST);
+
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 78%',
+            once: true,
+          },
+        });
+
+        /* eyebrow line */
+        tl.fromTo(
+          lineRef.current,
+          { scaleX: 0, transformOrigin: 'left center' },
+          { scaleX: 1, duration: 0.7, ease: 'power3.out' },
+          0,
+        );
+        tl.fromTo(
+          eyebrowRef.current,
+          { opacity: 0, x: -18 },
+          { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' },
+          0.2,
+        );
+
+        /* headline word-by-word */
+        tl.fromTo(
+          headlineRef.current,
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.85, ease: 'power4.out' },
+          0.35,
+        );
+
+        /* paragraph */
+        tl.fromTo(
+          paraRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+          0.55,
+        );
+
+        /* pillars stagger */
+        const pillars = pillarsRef.current?.querySelectorAll('.about-pillar');
+        if (pillars) {
+          tl.fromTo(
+            pillars,
+            { opacity: 0, x: -24 },
+            { opacity: 1, x: 0, stagger: 0.13, duration: 0.6, ease: 'power3.out' },
+            0.7,
+          );
+        }
+
+        /* cta */
+        tl.fromTo(
+          ctaRef.current,
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' },
+          1.1,
+        );
+
+        /* image columns – clip-path reveal */
+        const makeColTl = (el: HTMLDivElement | null, delay: number) => {
+          if (!el) return;
+          const imgs = el.querySelectorAll('.about-img-wrap');
+          gsap.fromTo(
+            imgs,
+            { clipPath: 'inset(100% 0% 0% 0%)', opacity: 0 },
+            {
+              clipPath: 'inset(0% 0% 0% 0%)',
+              opacity: 1,
+              stagger: 0.18,
+              duration: 1,
+              ease: 'power4.inOut',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 80%',
+                once: true,
+              },
+              delay,
+            },
+          );
+          /* subtle parallax on scroll */
+          imgs.forEach((img, i) => {
+            gsap.to(img, {
+              yPercent: i % 2 === 0 ? -6 : 6,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.5,
+              },
+            });
+          });
+        };
+
+        makeColTl(col1Ref.current, 0);
+        makeColTl(col2Ref.current, 0.22);
+        makeColTl(col3Ref.current, 0.44);
+      }, sectionRef);
+    })();
+
+    return () => ctx?.revert();
+  }, []);
 
   return (
     <section
-      ref={ref}
-      style={{
-        display: 'grid',
-        gridTemplateColumns: isRTL ? '45% 55%' : '55% 45%',
-        minHeight: '600px',
-        direction: isRTL ? 'rtl' : 'ltr',
-        overflow: 'hidden',
-      }}
-      className="about-split"
+      ref={sectionRef}
+      className="about-root"
+      style={{ direction: isRTL ? 'rtl' : 'ltr' }}
     >
-      {/* ═══ LEFT — Light panel, text content ═══ */}
-      <div style={{
-        background: '#f8f8f8',
-        display: 'flex', alignItems: 'center',
-        padding: '6rem max(2rem, calc((100vw - 1280px) / 2 + 1.5rem))',
-        position: 'relative', overflow: 'hidden',
-        order: isRTL ? 2 : 1,
-      }}>
-        {/* Subtle red dot accent */}
-        <div style={{
-          position: 'absolute', bottom: '10%',
-          left: isRTL ? 'auto' : '-80px', right: isRTL ? '-80px' : 'auto',
-          width: '200px', height: '200px', borderRadius: '50%',
-          background: 'rgba(212,43,43,0.06)', pointerEvents: 'none',
-        }} />
+      {/* ═══════════════════════════════════════════
+          INNER WRAPPER
+      ═══════════════════════════════════════════ */}
+      <div className="about-inner">
 
-        {/* Vertical red accent */}
-        <div style={{
-          position: 'absolute', top: '15%', bottom: '15%',
-          right: isRTL ? 'auto' : 0, left: isRTL ? 0 : 'auto',
-          width: '3px',
-          background: 'linear-gradient(to bottom, transparent, var(--color-primary) 30%, var(--color-primary) 70%, transparent)',
-        }} />
+        {/* ── LEFT: editorial text ── */}
+        <div className="about-text-col">
 
-        <motion.div
-          initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          style={{ position: 'relative', zIndex: 1, maxWidth: '520px' }}
-        >
-          {/* Label */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '2rem' }}>
-            <div style={{ height: '1.5px', width: '36px', background: 'var(--color-primary)' }} />
-            <span style={{ color: 'var(--color-primary)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
-              {t.aboutPreview.badge}
+          {/* Eyebrow */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
+            <div
+              ref={lineRef}
+              style={{ width: 40, height: 2, background: 'var(--color-primary)', flexShrink: 0 }}
+            />
+            <span ref={eyebrowRef} className="about-eyebrow">
+              À PROPOS DE NOUS
             </span>
           </div>
 
           {/* Headline */}
-          <h2 style={{
-            fontFamily: 'var(--font-heading)', fontWeight: 900,
-            fontSize: 'clamp(2.4rem, 3.5vw, 3.6rem)',
-            lineHeight: 1.05, letterSpacing: '-0.025em',
-            color: 'var(--color-secondary)', marginBottom: '1.75rem',
-          }}>
-            {t.aboutPreview.title}
-            <br />
-            <span style={{ color: 'var(--color-primary)' }}>{t.aboutPreview.titleHighlight}</span>
-            <span style={{ color: 'var(--color-primary)' }}>.</span>
+          <h2 ref={headlineRef} className="about-headline">
+            Construire avec<br />
+            <span style={{ color: 'var(--color-primary)' }}>précision</span>{' '}
+            &amp; vision.
           </h2>
 
-          <p style={{ fontSize: '0.97rem', lineHeight: 1.8, color: 'var(--color-text-muted)', marginBottom: '0.85rem' }}>
-            {t.aboutPreview.description}
-          </p>
-          <p style={{ fontSize: '0.93rem', lineHeight: 1.75, color: 'var(--color-text-muted)', marginBottom: '3rem' }}>
-            {t.aboutPreview.description2}
+          {/* Body */}
+          <p ref={paraRef} className="about-para">
+            Depuis notre création, TAZIRA CONSTRUCTION SARL s&apos;impose comme
+            un acteur incontournable du secteur du bâtiment en Algérie. Nous
+            conjuguons expertise technique, rigueur et engagement humain pour
+            réaliser des projets qui durent et qui marquent les territoires.
           </p>
 
-          {/* Stats — inline row */}
-          <div style={{ display: 'flex', gap: '0', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', marginBottom: '2.75rem' }}>
-            {stats.map((s, i) => (
-              <motion.div key={s.label}
-                initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: 0.35 + i * 0.09 }}
-                style={{ flex: 1, padding: '1.25rem 0.75rem', borderRight: i < stats.length - 1 ? '1px solid var(--color-border)' : 'none', textAlign: 'center' }}
-              >
-                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(1.3rem, 2.5vw, 1.65rem)', color: i === 0 ? 'var(--color-primary)' : 'var(--color-secondary)', lineHeight: 1 }}>{s.value}</div>
-                <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.09em', marginTop: '0.4rem', lineHeight: 1.3 }}>{s.label}</div>
-              </motion.div>
+          {/* Pillars */}
+          <div ref={pillarsRef} className="about-pillars">
+            {PILLARS.map((p) => (
+              <div key={p.label} className="about-pillar">
+                <div className="about-pillar-icon">{p.icon}</div>
+                <div>
+                  <div className="about-pillar-label">{p.label}</div>
+                  <div className="about-pillar-desc">{p.desc}</div>
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* CTAs */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
-            <Link href="/about" className="btn btn-primary" style={{ padding: '0.9rem 2rem', fontSize: '0.85rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              {t.aboutPreview.learnMore}
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d={isRTL ? 'M19 12H5M12 19l-7-7 7-7' : 'M5 12h14M12 5l7 7-7 7'}/></svg>
+          {/* CTA */}
+          <div ref={ctaRef} className="about-cta">
+            <Link href="/about" className="btn btn-primary">
+              Découvrir notre histoire
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
             </Link>
-            <a href="https://wa.me/212650596613" target="_blank" rel="noopener noreferrer"
-              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#16a34a', fontSize: '0.85rem', fontWeight: 700, textDecoration: 'none' }}
-              onMouseOver={e => (e.currentTarget.style.opacity = '0.7')}
-              onMouseOut={e => (e.currentTarget.style.opacity = '1')}
+            <a
+              href="tel:+213650596613"
+              className="about-tel-link"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              WhatsApp
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              Nous appeler
             </a>
           </div>
-        </motion.div>
+        </div>
+
+        {/* ── RIGHT: mosaic gallery ── */}
+        <div className="about-gallery">
+
+          {/* Column 1 — tall single image */}
+          <div ref={col1Ref} className="about-col about-col-1">
+            <div className="about-img-wrap about-img-tall">
+              <img src={IMAGES[0].src} alt={IMAGES[0].alt} className="about-img" />
+            </div>
+          </div>
+
+          {/* Column 2 — two images stacked (offset down) */}
+          <div ref={col2Ref} className="about-col about-col-2">
+            <div className="about-img-wrap about-img-medium">
+              <img src={IMAGES[1].src} alt={IMAGES[1].alt} className="about-img" />
+            </div>
+            <div className="about-img-wrap about-img-medium">
+              <img src={IMAGES[2].src} alt={IMAGES[2].alt} className="about-img" />
+            </div>
+          </div>
+
+          {/* Column 3 — three compact images */}
+          <div ref={col3Ref} className="about-col about-col-3">
+            <div className="about-img-wrap about-img-compact">
+              <img src={IMAGES[3].src} alt={IMAGES[3].alt} className="about-img" />
+            </div>
+            <div className="about-img-wrap about-img-compact">
+              <img src={IMAGES[4].src} alt={IMAGES[4].alt} className="about-img" />
+            </div>
+            <div className="about-img-wrap about-img-compact">
+              <img src={IMAGES[5].src} alt={IMAGES[5].alt} className="about-img" />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* ═══ RIGHT — Full-bleed image ═══ */}
-      <div style={{ position: 'relative', overflow: 'hidden', order: isRTL ? 1 : 2, minHeight: '500px' }}>
-        <motion.div style={{ position: 'absolute', inset: '-8%', scale: imgScale, y: imgY }}>
-          <img src="https://images.unsplash.com/photo-1541888081198-b80c102a9eb7?w=900&q=85" alt="TAZIRA Construction"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        </motion.div>
-        <div style={{ position: 'absolute', inset: 0, background: isRTL ? 'linear-gradient(to left, rgba(248,248,248,0.12) 0%, transparent 40%)' : 'linear-gradient(to right, rgba(248,248,248,0.12) 0%, transparent 40%)' }} />
-
-        {/* Floating quality card */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.7 }}
-          style={{ position: 'absolute', bottom: '2.5rem', left: isRTL ? 'auto' : '2rem', right: isRTL ? '2rem' : 'auto', background: 'rgba(255,255,255,0.96)', backdropFilter: 'blur(12px)', borderRadius: '16px', padding: '1.25rem 1.5rem', boxShadow: '0 16px 40px rgba(0,0,0,0.14)', display: 'flex', alignItems: 'center', gap: '1rem' }}
-        >
-          <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
-          <div>
-            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.3rem', color: 'var(--color-secondary)', lineHeight: 1 }}>100%</div>
-            <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', marginTop: '0.2rem' }}>Qualité garantie</div>
-          </div>
-        </motion.div>
-
-        {/* Top chip */}
-        <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-          transition={{ delay: 1, type: 'spring', stiffness: 160 }}
-          style={{ position: 'absolute', top: '2rem', right: isRTL ? 'auto' : '2rem', left: isRTL ? '2rem' : 'auto', background: 'var(--color-primary)', color: 'white', padding: '0.6rem 1.1rem', borderRadius: '100px', display: 'flex', alignItems: 'center', gap: '0.5rem', boxShadow: '0 8px 24px rgba(212,43,43,0.35)' }}
-        >
-          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1rem' }}>200+</span>
-          <span style={{ fontSize: '0.68rem', fontWeight: 600, opacity: 0.85, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{t.aboutPreview.stats.projects}</span>
-        </motion.div>
-      </div>
-
-      <style dangerouslySetInnerHTML={{__html:`
-        @media(max-width:900px){
-          .about-split{grid-template-columns:1fr!important;}
-          .about-split>*:first-child{order:2!important;padding:4rem 1.5rem!important;}
-          .about-split>*:last-child{order:1!important;min-height:340px!important;}
+      {/* ─── Scoped styles ─────────────────────────────────────── */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        /* Root */
+        .about-root {
+          background: #fff;
+          padding: 7rem 0 8rem;
+          overflow: hidden;
+          position: relative;
         }
-      `}}/>
+        .about-root::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px);
+          background-size: 28px 28px;
+          pointer-events: none;
+        }
+
+        /* Inner layout */
+        .about-inner {
+          max-width: 1340px;
+          margin: 0 auto;
+          padding: 0 2.5rem;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 5rem;
+          align-items: center;
+        }
+
+        /* ── Left text col ── */
+        .about-text-col {
+          position: relative;
+          z-index: 1;
+        }
+        .about-eyebrow {
+          font-family: var(--font-heading);
+          font-size: 0.65rem;
+          font-weight: 800;
+          letter-spacing: 0.26em;
+          color: var(--color-primary);
+          opacity: 0;
+        }
+        .about-headline {
+          font-family: var(--font-heading);
+          font-size: clamp(2.6rem, 4vw, 4rem);
+          font-weight: 900;
+          line-height: 1.06;
+          letter-spacing: -0.03em;
+          color: var(--color-secondary);
+          margin-bottom: 1.75rem;
+          opacity: 0;
+        }
+        .about-para {
+          font-size: 0.97rem;
+          line-height: 1.88;
+          color: var(--color-text-muted);
+          margin-bottom: 2.75rem;
+          max-width: 480px;
+          opacity: 0;
+        }
+
+        /* Pillars */
+        .about-pillars {
+          display: flex;
+          flex-direction: column;
+          gap: 1.1rem;
+          margin-bottom: 3rem;
+        }
+        .about-pillar {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+          opacity: 0;
+        }
+        .about-pillar-icon {
+          width: 42px;
+          height: 42px;
+          border-radius: 10px;
+          background: var(--color-primary-light);
+          border: 1px solid rgba(212,43,43,0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--color-primary);
+          flex-shrink: 0;
+        }
+        .about-pillar-label {
+          font-family: var(--font-heading);
+          font-weight: 700;
+          font-size: 0.88rem;
+          color: var(--color-secondary);
+          letter-spacing: 0.01em;
+          margin-bottom: 0.18rem;
+        }
+        .about-pillar-desc {
+          font-size: 0.82rem;
+          color: var(--color-text-muted);
+          line-height: 1.55;
+        }
+
+        /* CTA */
+        .about-cta {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          flex-wrap: wrap;
+          opacity: 0;
+        }
+        .about-tel-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          font-size: 0.82rem;
+          font-weight: 700;
+          color: var(--color-secondary);
+          letter-spacing: 0.04em;
+          text-decoration: none;
+          border-bottom: 1.5px solid var(--color-border);
+          padding-bottom: 2px;
+          transition: border-color 0.25s, color 0.25s;
+        }
+        .about-tel-link:hover {
+          color: var(--color-primary);
+          border-color: var(--color-primary);
+        }
+
+        /* ── Gallery ── */
+        .about-gallery {
+          display: grid;
+          grid-template-columns: 1.1fr 1fr 0.9fr;
+          gap: 12px;
+          align-items: stretch;
+          height: 620px;
+        }
+        .about-col {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .about-col-2 {
+          margin-top: 48px;
+        }
+        .about-col-3 {
+          margin-top: -32px;
+        }
+
+        /* Image wrappers */
+        .about-img-wrap {
+          border-radius: 6px;
+          overflow: hidden;
+          position: relative;
+          clip-path: inset(100% 0% 0% 0%);
+          opacity: 0;
+          flex-shrink: 0;
+        }
+        .about-img-tall   { flex: 1; }
+        .about-img-medium { flex: 1; }
+        .about-img-compact { flex: 1; }
+
+        .about-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .about-img-wrap:hover .about-img {
+          transform: scale(1.05);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1100px) {
+          .about-inner {
+            grid-template-columns: 1fr;
+            gap: 4rem;
+          }
+          .about-gallery {
+            height: 420px;
+          }
+          .about-para { max-width: 100%; }
+        }
+        @media (max-width: 680px) {
+          .about-root { padding: 5rem 0 6rem; }
+          .about-inner { padding: 0 1.25rem; gap: 3rem; }
+          .about-gallery {
+            grid-template-columns: 1fr 1fr;
+            height: 360px;
+          }
+          .about-col-3 { display: none; }
+          .about-col-2 { margin-top: 28px; }
+        }
+      `}} />
     </section>
   );
 }

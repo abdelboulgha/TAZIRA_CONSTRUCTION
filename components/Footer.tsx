@@ -10,7 +10,7 @@ export default function Footer() {
   const serviceKeys = ['construction', 'renovation', 'electrical', 'publicWorks', 'maintenance', 'design'];
 
   return (
-    <footer style={{ background: '#f8f8f8', borderTop: '1px solid var(--color-border)', color: 'var(--color-text-muted)', direction: isRTL ? 'rtl' : 'ltr' }}>
+    <footer style={{ background: 'var(--color-secondary)', color: 'rgba(255,255,255,0.65)', direction: isRTL ? 'rtl' : 'ltr' }}>
 
       {/* Main grid */}
       <div className="container" style={{ padding: '4.5rem 1.5rem 3rem' }}>
@@ -21,11 +21,11 @@ export default function Footer() {
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', textDecoration: 'none' }}>
               <Image src="/assets/logo.png" alt="TAZIRA" width={44} height={44} style={{ objectFit: 'contain' }} />
               <div>
-                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1rem', color: 'var(--color-secondary)' }}>TAZIRA</div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1rem', color: 'white' }}>TAZIRA</div>
                 <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 500, fontSize: '0.65rem', color: 'var(--color-primary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>CONSTRUCTION</div>
               </div>
             </Link>
-            <p style={{ fontSize: '0.875rem', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '260px', color: 'var(--color-text-muted)' }}>
+            <p style={{ fontSize: '0.875rem', lineHeight: 1.7, marginBottom: '1.5rem', maxWidth: '260px', color: 'rgba(255,255,255,0.5)' }}>
               {t.footer.description}
             </p>
             {/* Social icons */}
@@ -36,7 +36,7 @@ export default function Footer() {
                 { href: '#', icon: <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> },
               ].map((s, i) => (
                 <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                  style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'white', border: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-muted)', transition: 'all 0.2s', textDecoration: 'none' }}
+                  style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.5)', transition: 'all 0.2s', textDecoration: 'none' }}
                   className="social-icon"
                 >
                   {s.icon}
@@ -47,13 +47,13 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-secondary)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
+            <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', color: 'white', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
               {t.footer.links}
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               {[{ href: '/', label: t.nav.home }, { href: '/about', label: t.nav.about }, { href: '/services', label: t.nav.services }, { href: '/contact', label: t.nav.contact }].map((lnk) => (
                 <li key={lnk.href}>
-                  <Link href={lnk.href} className="footer-link" style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none', transition: 'color 0.2s' }}>
+                  <Link href={lnk.href} className="footer-link" style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none', transition: 'color 0.2s' }}>
                     <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block', flexShrink: 0 }} />
                     {lnk.label}
                   </Link>
@@ -64,13 +64,13 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-secondary)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
+            <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', color: 'white', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
               {t.footer.services}
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               {serviceKeys.map((key) => (
                 <li key={key}>
-                  <Link href="/services" className="footer-link" style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none', transition: 'color 0.2s' }}>
+                  <Link href="/services" className="footer-link" style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', display: 'flex', alignItems: 'center', gap: '0.4rem', textDecoration: 'none', transition: 'color 0.2s' }}>
                     <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block', flexShrink: 0 }} />
                     {t.services.items[key as keyof typeof t.services.items].title}
                   </Link>
@@ -81,7 +81,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-secondary)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
+            <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.85rem', color: 'white', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '1.25rem' }}>
               {t.footer.contact}
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '1.5rem' }}>
@@ -90,7 +90,7 @@ export default function Footer() {
                 { icon: '✉️', value: 'contact@tazira-construction.ma', href: 'mailto:contact@tazira-construction.ma' },
                 { icon: '📍', value: 'Maroc', href: '#' },
               ].map((item) => (
-                <a key={item.value} href={item.href} className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.875rem', color: 'var(--color-text-muted)', textDecoration: 'none', transition: 'color 0.2s' }}>
+                <a key={item.value} href={item.href} className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }}>
                   <span>{item.icon}</span>{item.value}
                 </a>
               ))}
@@ -109,17 +109,17 @@ export default function Footer() {
       {/* Bottom bar */}
       <div style={{ borderTop: '1px solid var(--color-border)', padding: '1.1rem 1.5rem' }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
+          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)' }}>
             © {year} TAZIRA CONSTRUCTION SARL. {t.footer.rights}
           </p>
-          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-light)' }}>
+          <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.35)' }}>
             {t.footer.madeWith} 🇲🇦
           </p>
         </div>
       </div>
 
       <style jsx>{`
-        .footer-link:hover { color: var(--color-primary) !important; }
+        .footer-link:hover { color: white !important; }
         .social-icon:hover { background: var(--color-primary) !important; border-color: var(--color-primary) !important; color: white !important; }
         .wa-btn:hover { background: #1ebe5d !important; transform: translateY(-2px); }
         @media(max-width:1024px){ .footer-grid{ grid-template-columns:1fr 1fr !important; } }

@@ -341,8 +341,8 @@ export default function AboutPage() {
 
       {/* ════ MISSION & VISION ════════════════════════════════ */}
       <section ref={missionRef} className="ab-mission">
-        <div className="ab-mission-glow" />
         <div className="container">
+
           <div className="ab-mv-header">
             <div className="ab-eyebrow ab-eyebrow-center">
               <div className="ab-eline-r" />
@@ -350,19 +350,14 @@ export default function AboutPage() {
               <div className="ab-eline-r" />
             </div>
             <h2 className="ab-heading ab-heading-white ab-heading-center">
-              Ce qui nous <em className="ab-em">guide</em>
+              Notre raison d&apos;être
             </h2>
           </div>
 
           <div className="ab-mv-grid">
             {/* Mission */}
             <div className="ab-mv-card">
-              <div className="ab-mv-top-line" />
-              <div className="ab-mv-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                  <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
-                </svg>
-              </div>
+              <div className="ab-mv-num">01</div>
               <h3 className="ab-mv-title">Notre Mission</h3>
               <p className="ab-mv-body">
                 Offrir à nos clients des solutions de construction complètes, fiables et durables,
@@ -372,38 +367,40 @@ export default function AboutPage() {
               <ul className="ab-mv-list">
                 {["Qualité d'exécution sans compromis", "Respect des engagements", "Satisfaction client garantie"].map((item, i) => (
                   <li key={i} className="ab-mv-item">
-                    <div className="ab-mv-dot" />
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
 
+            {/* Divider */}
+            <div className="ab-mv-divider" />
+
             {/* Vision */}
-            <div className="ab-mv-card ab-mv-card-red">
-              <div className="ab-mv-top-line ab-mv-top-red" />
-              <div className="ab-mv-icon ab-mv-icon-red">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                  <circle cx="12" cy="12" r="3"/>
-                </svg>
-              </div>
-              <h3 className="ab-mv-title ab-mv-title-bright">Notre Vision</h3>
-              <p className="ab-mv-body ab-mv-body-bright">
+            <div className="ab-mv-card">
+              <div className="ab-mv-num">02</div>
+              <h3 className="ab-mv-title">Notre Vision</h3>
+              <p className="ab-mv-body">
                 Devenir le partenaire de référence de la construction au Maroc, reconnu pour
                 son excellence technique, son éthique professionnelle et sa capacité à livrer
                 des projets d&apos;envergure avec une précision remarquable.
               </p>
               <ul className="ab-mv-list">
                 {["Leadership national dans le BTP", "Innovation et développement durable", "Rayonnement à l'international"].map((item, i) => (
-                  <li key={i} className="ab-mv-item ab-mv-item-bright">
-                    <div className="ab-mv-dot ab-mv-dot-red" />
+                  <li key={i} className="ab-mv-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -724,52 +721,45 @@ export default function AboutPage() {
         /* ── MISSION / VISION ───────────────────────────────── */
         .ab-mission {
           background: #060606;
-          padding: 10rem 0;
-          position: relative; overflow: hidden;
-        }
-        .ab-mission-glow {
-          position: absolute; inset: 0; pointer-events: none;
-          background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(212,43,43,0.07) 0%, transparent 70%);
+          padding: 8rem 0;
         }
         .ab-mv-header {
-          text-align: center; margin-bottom: 5rem; position: relative; z-index: 1;
+          text-align: center; margin-bottom: 5rem;
         }
         .ab-mv-grid {
-          display: grid; grid-template-columns: 1fr 1fr;
-          gap: 2rem; position: relative; z-index: 1;
+          display: grid;
+          grid-template-columns: 1fr 1px 1fr;
+          gap: 0 4rem;
+          align-items: start;
+        }
+        .ab-mv-divider {
+          background: rgba(255,255,255,0.08);
+          align-self: stretch;
         }
         .ab-mv-card {
-          background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.07);
-          border-radius: 16px; padding: 3rem;
-          position: relative; overflow: hidden;
-          transition: border-color 0.35s, background 0.35s;
+          padding: 0.5rem 0;
         }
-        .ab-mv-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
-        .ab-mv-card-red { background: rgba(212,43,43,0.06); border-color: rgba(212,43,43,0.18); }
-        .ab-mv-card-red:hover { background: rgba(212,43,43,0.09); border-color: rgba(212,43,43,0.28); }
-        .ab-mv-top-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.05); }
-        .ab-mv-top-red { background: linear-gradient(90deg, var(--color-primary) 0%, rgba(212,43,43,0.2) 100%); }
-        .ab-mv-icon {
-          width: 60px; height: 60px; border-radius: 14px;
-          background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-          display: flex; align-items: center; justify-content: center;
-          color: rgba(255,255,255,0.5); margin-bottom: 1.75rem;
-        }
-        .ab-mv-icon-red { background: rgba(212,43,43,0.15); border-color: rgba(212,43,43,0.25); color: var(--color-primary); }
-        .ab-mv-title {
+        .ab-mv-num {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: 1.4rem; color: rgba(255,255,255,0.55);
-          margin-bottom: 1.1rem; letter-spacing: -0.02em;
+          font-size: 3rem; color: rgba(212,43,43,0.15);
+          line-height: 1; margin-bottom: 1rem;
+          letter-spacing: -0.05em;
         }
-        .ab-mv-title-bright { color: white; }
-        .ab-mv-body { font-size: 0.9rem; line-height: 1.88; color: rgba(255,255,255,0.28); margin-bottom: 2rem; }
-        .ab-mv-body-bright { color: rgba(255,255,255,0.5); }
-        .ab-mv-list { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
-        .ab-mv-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.82rem; color: rgba(255,255,255,0.28); font-weight: 500; }
-        .ab-mv-item-bright { color: rgba(255,255,255,0.55); }
-        .ab-mv-dot { width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); flex-shrink: 0; }
-        .ab-mv-dot-red { background: rgba(212,43,43,0.2); border-color: rgba(212,43,43,0.35); }
+        .ab-mv-title {
+          font-family: var(--font-heading); font-weight: 700;
+          font-size: 1.25rem; color: var(--color-secondary);
+          margin-bottom: 1rem;
+        }
+        .ab-mv-body {
+          font-size: 0.9rem; line-height: 1.85;
+          color: rgba(255,255,255,0.45);
+          margin-bottom: 1.75rem;
+        }
+        .ab-mv-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+        .ab-mv-item {
+          display: flex; align-items: center; gap: 0.65rem;
+          font-size: 0.85rem; color: rgba(255,255,255,0.55); font-weight: 500;
+        }
 
         /* ── VALUES ─────────────────────────────────────────── */
         .ab-values {

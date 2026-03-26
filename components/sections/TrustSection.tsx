@@ -57,7 +57,6 @@ export default function TrustSection() {
         <div ref={textRef} className="trust-text" style={{ opacity: 0 }}>
 
           <div className="trust-eyebrow">
-            <div className="trust-eyebrow-line" />
             <span>À propos de nous</span>
           </div>
 
@@ -197,11 +196,7 @@ export default function TrustSection() {
           display: flex; align-items: center; gap: 0.85rem;
           margin-bottom: 1.75rem;
         }
-        .trust-eyebrow-line {
-          width: 36px; height: 1.5px;
-          background: var(--color-primary); flex-shrink: 0;
-        }
-        .trust-eyebrow span {
+.trust-eyebrow span {
           font-size: 0.65rem; font-weight: 800;
           letter-spacing: 0.24em; text-transform: uppercase;
           color: var(--color-primary);

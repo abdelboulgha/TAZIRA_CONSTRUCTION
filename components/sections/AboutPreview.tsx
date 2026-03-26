@@ -190,11 +190,7 @@ export default function AboutPreview() {
         <div className="about-text-col">
 
           {/* Eyebrow */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
-            <div
-              ref={lineRef}
-              style={{ width: 40, height: 2, background: 'var(--color-primary)', flexShrink: 0 }}
-            />
+          <div style={{ marginBottom: '2rem' }}>
             <span ref={eyebrowRef} className="about-eyebrow">
               À PROPOS DE NOUS
             </span>

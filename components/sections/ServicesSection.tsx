@@ -232,8 +232,7 @@ export default function ServicesSection() {
         .svc2-eyebrow {
           display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.1rem;
         }
-        .svc2-eyeline { width: 32px; height: 1.5px; background: var(--color-primary); }
-        .svc2-eyebrow span {
+.svc2-eyebrow span {
           font-size: 0.65rem; font-weight: 800; letter-spacing: 0.24em;
           text-transform: uppercase; color: var(--color-primary);
         }

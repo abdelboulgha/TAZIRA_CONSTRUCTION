@@ -86,8 +86,7 @@ export default function TestimonialsSection() {
         {/* Header */}
         <div className="tsm-header" style={{ opacity: 0 }}>
           <div className="tsm-eyebrow">
-            <div className="tsm-eyebrow-line" /><span>Témoignages clients</span>
-            <div className="tsm-eyebrow-line" />
+            <span>Témoignages clients</span>
           </div>
           <h2 className="tsm-heading">
             Ce que disent nos{' '}
@@ -182,8 +181,7 @@ export default function TestimonialsSection() {
           display: flex; align-items: center; justify-content: center;
           gap: 1rem; margin-bottom: 1.5rem;
         }
-        .tsm-eyebrow-line { width: 42px; height: 1.5px; background: var(--color-primary); }
-        .tsm-eyebrow span {
+.tsm-eyebrow span {
           color: var(--color-primary); font-size: 0.65rem; font-weight: 800;
           letter-spacing: 0.26em; text-transform: uppercase;
         }

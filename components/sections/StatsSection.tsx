@@ -125,9 +125,7 @@ export default function StatsSection() {
         {/* Headline */}
         <div className="stt-headline" style={{ opacity: 0 }}>
           <div className="stt-headline-eyebrow">
-            <div className="stt-headline-line" />
             <span>Chiffres clés</span>
-            <div className="stt-headline-line" />
           </div>
           <h2 className="stt-headline-title">
             Des résultats qui{' '}
@@ -213,11 +211,7 @@ export default function StatsSection() {
           display: flex; align-items: center; justify-content: center;
           gap: 1rem; margin-bottom: 1.75rem;
         }
-        .stt-headline-line {
-          height: 1px; width: 52px;
-          background: rgba(196,147,63,0.5);
-        }
-        .stt-headline-eyebrow span {
+.stt-headline-eyebrow span {
           color: var(--color-primary); font-size: 0.65rem;
           font-weight: 800; letter-spacing: 0.26em; text-transform: uppercase;
         }

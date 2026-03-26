@@ -94,7 +94,6 @@ export default function ProjectsSection() {
         <div ref={headerRef} className="proj-header" style={{ opacity: 0 }}>
           <div>
             <div className="proj-eyebrow">
-              <div className="proj-eyebrow-line" />
               <span>Nos Réalisations</span>
             </div>
             <h2 className="proj-heading">
@@ -212,8 +211,7 @@ export default function ProjectsSection() {
         .proj-eyebrow {
           display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.25rem;
         }
-        .proj-eyebrow-line { width: 32px; height: 1.5px; background: var(--color-primary); }
-        .proj-eyebrow span {
+.proj-eyebrow span {
           color: var(--color-primary); font-size: 0.65rem; font-weight: 800;
           letter-spacing: 0.24em; text-transform: uppercase;
         }

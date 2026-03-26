@@ -73,7 +73,7 @@ export default function HeroSection() {
               <span ref={line1Ref} className="h-line h-line-solid">CONSTRUIRE</span>
             </span>
             <span className="h-line-wrap">
-              <span ref={line2Ref} className="h-line h-line-ghost">L&apos;EXCELLENCE.</span>
+              <span ref={line2Ref} className="h-line h-line-ghost">L&apos;EXCELLENCE</span>
             </span>
           </h1>
         </div>

@@ -41,7 +41,7 @@ export default function WhyUsSection() {
     if (isPaused) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % FEATURES.length);
-    }, 4500);
+    }, 1000);
     return () => clearInterval(interval);
   }, [isPaused]);
 

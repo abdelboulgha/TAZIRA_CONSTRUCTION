@@ -39,15 +39,17 @@ export default function Navbar() {
       <div className="nb-inner container">
 
         {/* ── Logo ──────────────────────────────── */}
-        <Link href="/" className="nb-logo">
-          <Image
-            src="/assets/logo.png"
-            alt="TAZIRA CONSTRUCTION"
-            width={46}
-            height={46}
-            style={{ objectFit: 'contain' }}
-            priority
-          />
+        <Link href="/" className="nb-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', flexShrink: 0, textDecoration: 'none' }}>
+          <span style={{ display: 'flex', flexShrink: 0, width: 46, height: 46 }}>
+            <Image
+              src="/assets/logo.png"
+              alt="TAZIRA CONSTRUCTION"
+              width={46}
+              height={46}
+              style={{ objectFit: 'contain' }}
+              priority
+            />
+          </span>
           <div className="nb-logo-text">
             <span className="nb-logo-main">TAZIRA</span>
             <span className="nb-logo-sub">CONSTRUCTION</span>

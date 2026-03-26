@@ -130,7 +130,7 @@ export default function ServicesSection() {
             });
             gsap.to(imgEl,    { opacity: 0, scale: 1, duration: 0.4 });
             gsap.to(numEl,    { color: 'rgba(255,255,255,0.045)', duration: 0.3 });
-            gsap.to(iconEl,   { background: 'rgba(196,147,63,0.07)', color: 'var(--color-primary)', boxShadow: 'none', duration: 0.35 });
+            gsap.to(iconEl,   { background: 'rgba(255,255,255,0.06)', color: 'white', boxShadow: 'none', duration: 0.35 });
             gsap.to(lineEl,   { width: '48px', duration: 0.45, ease: 'power3.inOut' });
             gsap.to(descEl,   { opacity: 0, y: 10, duration: 0.22 });
             gsap.to(arrowEl,  { opacity: 0, x: -8, duration: 0.18 });
@@ -287,7 +287,7 @@ export default function ServicesSection() {
         .svc-line {
           position: absolute; top: 0; left: 0;
           height: 2.5px; width: 48px;
-          background: var(--color-primary);
+          background: white;
           z-index: 3;
           border-radius: 10px 10px 0 0;
         }
@@ -314,9 +314,9 @@ export default function ServicesSection() {
         .svc-icon-wrap {
           width: 56px; height: 56px; border-radius: 12px;
           display: flex; align-items: center; justify-content: center;
-          background: rgba(196,147,63,0.07);
-          color: var(--color-primary);
-          border: 1px solid rgba(196,147,63,0.15);
+          background: rgba(255,255,255,0.06);
+          color: white;
+          border: 1px solid rgba(255,255,255,0.12);
           margin-bottom: 1.75rem;
           flex-shrink: 0;
         }

@@ -7,25 +7,25 @@ const FEATURES = [
     num: '01',
     title: 'Qualité Garantie',
     desc: 'Chaque projet est réalisé selon les normes les plus strictes avec des matériaux sélectionnés pour leur durabilité et performance à long terme.',
-    img: 'https://images.unsplash.com/photo-1541888081198-b80c102a9eb7?auto=format&fit=crop&q=80&w=1200',
+    img: '/assets/image1.png',
   },
   {
     num: '02',
     title: 'Respect des Délais',
     desc: 'Une planification rigoureuse et un suivi en temps réel de chaque chantier nous permettent de toujours livrer votre projet dans les temps.',
-    img: 'https://images.unsplash.com/photo-1504307651254-35680f356f12?auto=format&fit=crop&q=80&w=1200',
+    img: '/assets/image2.png',
   },
   {
     num: '03',
     title: 'Expertise Technique',
     desc: "Bénéficiez de plus de 10 ans d'expérience cumulée par nos ingénieurs et techniciens dans les domaines les plus pointus de la construction.",
-    img: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200',
+    img: '/assets/image3.png',
   },
   {
     num: '04',
     title: 'Accompagnement 360°',
     desc: "De la conception préliminaire à la livraison finale, nous vous accompagnons à chaque étape et garantissons un suivi de qualité après remise des clés.",
-    img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200',
+    img: '/assets/image4.png',
   }
 ];
 

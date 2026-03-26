@@ -163,7 +163,6 @@ export default function CtaSection() {
         }
         .cta-btn-primary:hover {
           background: var(--color-primary-dark);
-          transform: translateY(-2px);
           box-shadow: 0 12px 32px rgba(196,147,63,0.4);
         }
 
@@ -181,7 +180,6 @@ export default function CtaSection() {
         .cta-btn-wa:hover {
           background: #25d366; color: white;
           border-color: #25d366;
-          transform: translateY(-2px);
         }
 
         .cta-phone {

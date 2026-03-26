@@ -158,7 +158,7 @@ export default function CtaSection() {
           border-radius: var(--radius-md);
           font-family: var(--font-heading); font-size: 0.82rem;
           font-weight: 700; letter-spacing: 0.04em;
-          text-decoration: none; transition: all 0.25s;
+          text-decoration: none; transition: background 0.35s ease, box-shadow 0.35s ease;
           white-space: nowrap;
         }
         .cta-btn-primary:hover {
@@ -174,7 +174,7 @@ export default function CtaSection() {
           border-radius: var(--radius-md);
           font-family: var(--font-heading); font-size: 0.82rem;
           font-weight: 700; letter-spacing: 0.04em;
-          text-decoration: none; transition: all 0.25s;
+          text-decoration: none; transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
           white-space: nowrap;
         }
         .cta-btn-wa:hover {

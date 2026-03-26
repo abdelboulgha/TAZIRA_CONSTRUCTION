@@ -151,14 +151,14 @@ export default function ServicesPage() {
         }} />
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(180,20,20,0.5) 100%)',
+          background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(166,120,40,0.5) 100%)',
         }} />
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '720px' }}>
           <span style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
             padding: '0.4rem 1.1rem',
-            background: 'rgba(212,43,43,0.15)', border: '1px solid rgba(212,43,43,0.4)',
-            borderRadius: 'var(--radius-full)', color: '#ff9999',
+            background: 'rgba(196,147,63,0.15)', border: '1px solid rgba(196,147,63,0.4)',
+            borderRadius: 'var(--radius-full)', color: '#f0c97a',
             fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
             textTransform: 'uppercase' as const, marginBottom: '1.5rem',
           }}>

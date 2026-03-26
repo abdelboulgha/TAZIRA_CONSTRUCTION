@@ -191,8 +191,8 @@ export default function StatsSection() {
         .stt-overlay-glow {
           position: absolute; inset: 0; z-index: 1; pointer-events: none;
           background-image:
-            radial-gradient(ellipse 65% 55% at 15% 50%, rgba(212,43,43,0.09) 0%, transparent 100%),
-            radial-gradient(ellipse 65% 55% at 85% 50%, rgba(212,43,43,0.06) 0%, transparent 100%);
+            radial-gradient(ellipse 65% 55% at 15% 50%, rgba(196,147,63,0.09) 0%, transparent 100%),
+            radial-gradient(ellipse 65% 55% at 85% 50%, rgba(196,147,63,0.06) 0%, transparent 100%);
         }
         .stt-grid-lines {
           position: absolute; inset: 0; z-index: 1; opacity: 0.028; pointer-events: none;
@@ -215,7 +215,7 @@ export default function StatsSection() {
         }
         .stt-headline-line {
           height: 1px; width: 52px;
-          background: rgba(212,43,43,0.5);
+          background: rgba(196,147,63,0.5);
         }
         .stt-headline-eyebrow span {
           color: var(--color-primary); font-size: 0.65rem;
@@ -268,7 +268,7 @@ export default function StatsSection() {
         .stt-suffix { color: var(--color-primary); }
         .stt-bar {
           width: 28px; height: 1.5px;
-          background: rgba(212,43,43,0.45);
+          background: rgba(196,147,63,0.45);
           margin: 0 auto 0.9rem;
         }
         .stt-label {

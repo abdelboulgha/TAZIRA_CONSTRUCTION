@@ -291,7 +291,7 @@ export default function ProjectsSection() {
           background: var(--color-primary); flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
           transition: all 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
-          box-shadow: 0 5px 20px rgba(212,43,43,0.55);
+          box-shadow: 0 5px 20px rgba(196,147,63,0.55);
         }
         .proj-featured {
           position: absolute; top: 1rem; right: 1rem; z-index: 3;

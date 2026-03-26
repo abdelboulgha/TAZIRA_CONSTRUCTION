@@ -230,7 +230,7 @@ export default function ProcessSection() {
           left: 0;
           width: 100%;
           height: 100%;
-          background: linear-gradient(to bottom, var(--color-primary) 0%, rgba(212,43,43,0) 100%);
+          background: linear-gradient(to bottom, var(--color-primary) 0%, rgba(196,147,63,0) 100%);
           box-shadow: 0 0 15px var(--color-primary);
         }
 
@@ -268,7 +268,7 @@ export default function ProcessSection() {
           border-radius: 50%;
           background-color: var(--color-dark-surface);
           border: 2px solid var(--color-primary);
-          box-shadow: 0 0 0 6px rgba(212,43,43,0.15);
+          box-shadow: 0 0 0 6px rgba(196,147,63,0.15);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -285,7 +285,7 @@ export default function ProcessSection() {
         }
 
         .timeline-item:hover .timeline-node {
-          box-shadow: 0 0 0 10px rgba(212,43,43,0.25);
+          box-shadow: 0 0 0 10px rgba(196,147,63,0.25);
           background-color: var(--color-primary);
         }
 
@@ -320,7 +320,7 @@ export default function ProcessSection() {
 
         .timeline-card:hover {
           background: rgba(255, 255, 255, 0.06);
-          border-color: rgba(212, 43, 43, 0.3);
+          border-color: rgba(196, 147, 63, 0.3);
           transform: translateY(-5px);
           box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
@@ -346,7 +346,7 @@ export default function ProcessSection() {
         }
 
         .timeline-card:hover .card-bg-number {
-          color: rgba(212,43,43,0.06);
+          color: rgba(196,147,63,0.06);
         }
 
         /* Card Content */

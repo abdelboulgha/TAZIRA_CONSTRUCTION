@@ -258,8 +258,8 @@ export default function ContactPage() {
           <span style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
             padding: '0.4rem 1.1rem',
-            background: 'rgba(212,43,43,0.15)', border: '1px solid rgba(212,43,43,0.4)',
-            borderRadius: 'var(--radius-full)', color: '#ff9999',
+            background: 'rgba(196,147,63,0.15)', border: '1px solid rgba(196,147,63,0.4)',
+            borderRadius: 'var(--radius-full)', color: '#f0c97a',
             fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
             textTransform: 'uppercase' as const, marginBottom: '1.5rem',
           }}>

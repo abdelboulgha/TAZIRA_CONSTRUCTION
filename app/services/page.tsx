@@ -1,10 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useRef, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import CtaSection from '@/components/sections/CtaSection';
-import Link from 'next/link';
 
 const serviceImages: Record<string, string> = {
   construction: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
@@ -24,25 +22,44 @@ const serviceIcons: Record<string, JSX.Element> = {
   design: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
 };
 
-function ServiceCard({ serviceKey, data, index, inView, isRTL }: {
+function ServiceCard({ serviceKey, data, index, isRTL }: {
   serviceKey: string;
   data: { title: string; description: string; features: string[] };
   index: number;
-  inView: boolean;
   isRTL: boolean;
 }) {
+  const cardRef = useRef<HTMLDivElement>(null);
   const isEven = index % 2 === 0;
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+    <div
+      ref={cardRef}
       style={{
         display: 'grid',
-        gridTemplateColumns: isEven ? '1fr 1fr' : '1fr 1fr',
+        gridTemplateColumns: '1fr 1fr',
         gap: '3rem',
         alignItems: 'center',
         marginBottom: '5rem',
+        opacity: 0,
+        transform: 'translateY(40px)',
+        transition: `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`,
       }}
       className="service-detail-row"
     >
@@ -86,7 +103,7 @@ function ServiceCard({ serviceKey, data, index, inView, isRTL }: {
 
         <div className="divider" />
 
-        <p style={{ marginTop: '1.25rem', marginBottom: '1.75rem', lineHeight: 1.8 }}>
+        <p style={{ marginTop: '1.25rem', marginBottom: '1.75rem', lineHeight: 1.8, color: 'var(--color-text-muted)' }}>
           {data.description}
         </p>
 
@@ -110,19 +127,16 @@ function ServiceCard({ serviceKey, data, index, inView, isRTL }: {
           ))}
         </ul>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export default function ServicesPage() {
   const { t, isRTL } = useLanguage();
-  const servicesRef = useRef(null);
-  const servicesInView = useInView(servicesRef, { once: true, margin: '-80px' });
-
   const services = t.servicesPage.items;
 
   return (
-    <div style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+    <div style={{ direction: isRTL ? 'rtl' : 'ltr', background: 'var(--color-bg)' }}>
       {/* Hero */}
       <section style={{
         position: 'relative',
@@ -140,34 +154,32 @@ export default function ServicesPage() {
           background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(180,20,20,0.5) 100%)',
         }} />
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '720px' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <span style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-              padding: '0.4rem 1.1rem',
-              background: 'rgba(212,43,43,0.15)', border: '1px solid rgba(212,43,43,0.4)',
-              borderRadius: 'var(--radius-full)', color: '#ff9999',
-              fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
-              textTransform: 'uppercase' as const, marginBottom: '1.5rem',
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block' }} />
-              {t.servicesPage.hero.badge}
-            </span>
-            <h1 style={{
-              color: 'white', fontFamily: 'var(--font-heading)', fontWeight: 900,
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginBottom: '1rem',
-            }}>
-              {t.servicesPage.hero.title}{' '}
-              <span style={{ color: 'var(--color-primary)' }}>{t.servicesPage.hero.titleHighlight}</span>
-            </h1>
-            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.7 }}>
-              {t.servicesPage.hero.subtitle}
-            </p>
-          </motion.div>
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+            padding: '0.4rem 1.1rem',
+            background: 'rgba(212,43,43,0.15)', border: '1px solid rgba(212,43,43,0.4)',
+            borderRadius: 'var(--radius-full)', color: '#ff9999',
+            fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
+            textTransform: 'uppercase' as const, marginBottom: '1.5rem',
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block' }} />
+            {t.servicesPage.hero.badge}
+          </span>
+          <h1 style={{
+            color: 'white', fontFamily: 'var(--font-heading)', fontWeight: 900,
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginBottom: '1rem',
+          }}>
+            {t.servicesPage.hero.title}{' '}
+            <span style={{ color: 'var(--color-primary)' }}>{t.servicesPage.hero.titleHighlight}</span>
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.7 }}>
+            {t.servicesPage.hero.subtitle}
+          </p>
         </div>
       </section>
 
       {/* Services List */}
-      <section className="section" ref={servicesRef}>
+      <section style={{ padding: '5rem 0', background: 'var(--color-bg)' }}>
         <div className="container">
           {Object.entries(services).map(([key, data], i) => (
             <ServiceCard
@@ -175,7 +187,6 @@ export default function ServicesPage() {
               serviceKey={key}
               data={data as { title: string; description: string; features: string[] }}
               index={i}
-              inView={servicesInView}
               isRTL={isRTL}
             />
           ))}

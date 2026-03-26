@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
 function ContactForm({ t }: { t: any }) {
@@ -20,11 +19,11 @@ function ContactForm({ t }: { t: any }) {
 
   return (
     <div style={{
-      background: 'white',
+      background: 'var(--color-bg-light)',
       borderRadius: 'var(--radius-xl)',
       padding: '2.5rem',
       boxShadow: 'var(--shadow-xl)',
-      border: '1px solid var(--color-border-light)',
+      border: '1px solid var(--color-border)',
     }}>
       <h2 style={{
         fontFamily: 'var(--font-heading)', fontWeight: 800,
@@ -34,20 +33,19 @@ function ContactForm({ t }: { t: any }) {
       </h2>
 
       {status === 'done' ? (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          style={{
-            textAlign: 'center', padding: '3rem',
-            background: '#f0fdf4', borderRadius: 'var(--radius-lg)',
-            border: '1px solid #bbf7d0',
-          }}
-        >
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: '#15803d', marginBottom: '0.5rem' }}>
+        <div style={{
+          textAlign: 'center', padding: '3rem',
+          background: 'rgba(21,128,61,0.1)', borderRadius: 'var(--radius-lg)',
+          border: '1px solid rgba(21,128,61,0.3)',
+        }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" style={{ marginBottom: '1rem' }}>
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, color: '#4ade80', marginBottom: '0.5rem' }}>
             {t.contact.form.success}
           </h3>
-        </motion.div>
+        </div>
       ) : (
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}
@@ -167,10 +165,9 @@ function ContactInfo({ t }: { t: any }) {
           <div key={item.label} style={{
             display: 'flex', gap: '1rem', alignItems: 'flex-start',
             padding: '1.25rem',
-            background: 'white',
+            background: 'var(--color-bg-light)',
             borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--color-border-light)',
-            boxShadow: 'var(--shadow-sm)',
+            border: '1px solid var(--color-border)',
           }}>
             <div style={{
               width: '46px', height: '46px', borderRadius: 'var(--radius-md)',
@@ -178,7 +175,7 @@ function ContactInfo({ t }: { t: any }) {
               display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>{item.icon}</div>
             <div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-light)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>
                 {item.label}
               </div>
               {item.href ? (
@@ -214,11 +211,33 @@ function ContactInfo({ t }: { t: any }) {
 
 export default function ContactPage() {
   const { t, isRTL } = useLanguage();
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const formRef = useRef<HTMLDivElement>(null);
+  const infoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const els = [
+      { el: formRef.current, delay: '0s' },
+      { el: infoRef.current, delay: '0.2s' },
+    ];
+    els.forEach(({ el, delay }) => {
+      if (!el) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            el.style.transitionDelay = delay;
+            el.style.opacity = '1';
+            el.style.transform = 'translateX(0)';
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(el);
+    });
+  }, []);
 
   return (
-    <div style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+    <div style={{ direction: isRTL ? 'rtl' : 'ltr', background: 'var(--color-bg)' }}>
       {/* Hero */}
       <section style={{
         position: 'relative',
@@ -236,34 +255,32 @@ export default function ContactPage() {
           background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(26,26,26,0.65) 100%)',
         }} />
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '720px' }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <span style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-              padding: '0.4rem 1.1rem',
-              background: 'rgba(212,43,43,0.15)', border: '1px solid rgba(212,43,43,0.4)',
-              borderRadius: 'var(--radius-full)', color: '#ff9999',
-              fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
-              textTransform: 'uppercase' as const, marginBottom: '1.5rem',
-            }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block' }} />
-              {t.contact.hero.badge}
-            </span>
-            <h1 style={{
-              color: 'white', fontFamily: 'var(--font-heading)', fontWeight: 900,
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginBottom: '1rem',
-            }}>
-              {t.contact.hero.title}{' '}
-              <span style={{ color: 'var(--color-primary)' }}>{t.contact.hero.titleHighlight}</span>
-            </h1>
-            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.7 }}>
-              {t.contact.hero.subtitle}
-            </p>
-          </motion.div>
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+            padding: '0.4rem 1.1rem',
+            background: 'rgba(212,43,43,0.15)', border: '1px solid rgba(212,43,43,0.4)',
+            borderRadius: 'var(--radius-full)', color: '#ff9999',
+            fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
+            textTransform: 'uppercase' as const, marginBottom: '1.5rem',
+          }}>
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block' }} />
+            {t.contact.hero.badge}
+          </span>
+          <h1 style={{
+            color: 'white', fontFamily: 'var(--font-heading)', fontWeight: 900,
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginBottom: '1rem',
+          }}>
+            {t.contact.hero.title}{' '}
+            <span style={{ color: 'var(--color-primary)' }}>{t.contact.hero.titleHighlight}</span>
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.7 }}>
+            {t.contact.hero.subtitle}
+          </p>
         </div>
       </section>
 
       {/* Form + Info */}
-      <section className="section section-light" ref={ref}>
+      <section style={{ padding: '5rem 0', background: 'var(--color-bg)' }}>
         <div className="container">
           <div style={{
             display: 'grid',
@@ -273,26 +290,32 @@ export default function ContactPage() {
           }}
           className="contact-grid"
           >
-            <motion.div
-              initial={{ opacity: 0, x: isRTL ? 40 : -40 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7 }}
+            <div
+              ref={formRef}
+              style={{
+                opacity: 0,
+                transform: isRTL ? 'translateX(40px)' : 'translateX(-40px)',
+                transition: 'opacity 0.7s ease, transform 0.7s ease',
+              }}
             >
               <ContactForm t={t} />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: isRTL ? -40 : 40 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 }}
+            </div>
+            <div
+              ref={infoRef}
+              style={{
+                opacity: 0,
+                transform: isRTL ? 'translateX(-40px)' : 'translateX(40px)',
+                transition: 'opacity 0.7s ease, transform 0.7s ease',
+              }}
             >
               <ContactInfo t={t} />
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Map */}
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section style={{ paddingBottom: '5rem', background: 'var(--color-bg)' }}>
         <div className="container">
           <h3 style={{
             fontFamily: 'var(--font-heading)', fontWeight: 700,

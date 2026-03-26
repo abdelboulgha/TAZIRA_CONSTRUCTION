@@ -7,25 +7,25 @@ const FEATURES = [
     num: '01',
     title: 'Qualité Garantie',
     desc: 'Chaque projet est réalisé selon les normes les plus strictes avec des matériaux sélectionnés pour leur durabilité et performance à long terme.',
-    img: '/assets/image1.png',
+    img: '/assets/whyus-quality.png',
   },
   {
     num: '02',
     title: 'Respect des Délais',
     desc: 'Une planification rigoureuse et un suivi en temps réel de chaque chantier nous permettent de toujours livrer votre projet dans les temps.',
-    img: '/assets/image2.png',
+    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80',
   },
   {
     num: '03',
     title: 'Expertise Technique',
     desc: "Bénéficiez de plus de 10 ans d'expérience cumulée par nos ingénieurs et techniciens dans les domaines les plus pointus de la construction.",
-    img: '/assets/image3.png',
+    img: 'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?w=800&q=80',
   },
   {
     num: '04',
     title: 'Accompagnement 360°',
     desc: "De la conception préliminaire à la livraison finale, nous vous accompagnons à chaque étape et garantissons un suivi de qualité après remise des clés.",
-    img: '/assets/image4.png',
+    img: 'https://images.unsplash.com/photo-1556761175-5973e51f8a84?w=800&q=80',
   }
 ];
 

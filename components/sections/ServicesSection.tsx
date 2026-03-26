@@ -1,17 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
+/* ─── Services data ─────────────────────────────────────────── */
 const SERVICES = [
   {
     num: '01',
     key: 'construction',
     title: 'Construction de bâtiments',
     desc: 'Conception et réalisation de bâtiments résidentiels, commerciaux et industriels selon les normes les plus strictes.',
-    img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=85',
+    img: '/assets/image2.png',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
       </svg>
@@ -22,9 +23,9 @@ const SERVICES = [
     key: 'electrical',
     title: 'Travaux électriques',
     desc: 'Installation, mise en conformité et maintenance de systèmes électriques pour tous types de bâtiments.',
-    img: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=900&q=85',
+    img: '/assets/image5.png',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
       </svg>
     ),
@@ -34,9 +35,9 @@ const SERVICES = [
     key: 'renovation',
     title: 'Rénovation & finition',
     desc: 'Rénovation complète et travaux de finition haut de gamme pour transformer et valoriser vos espaces.',
-    img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=85',
+    img: '/assets/image4.png',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
       </svg>
     ),
@@ -46,9 +47,9 @@ const SERVICES = [
     key: 'maintenance',
     title: 'Maintenance & dépannage',
     desc: 'Service de maintenance préventive et corrective avec intervention rapide garantie sous 24 heures.',
-    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=85',
+    img: '/assets/image6.png',
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
         <circle cx="12" cy="12" r="3"/>
         <path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M19.07 19.07l-1.41-1.41M6.34 6.34L4.93 4.93M21 12h-2M5 12H3M12 19v2M12 3V1"/>
       </svg>
@@ -59,57 +60,87 @@ const SERVICES = [
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef  = useRef<HTMLDivElement>(null);
+  const gridRef    = useRef<HTMLDivElement>(null);
   const cardRefs   = useRef<(HTMLDivElement | null)[]>([]);
-  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
-    import('gsap').then(({ gsap }) => {
-      import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-        gsap.registerPlugin(ScrollTrigger);
+    let ctx: any;
 
+    (async () => {
+      const gsapMod = await import('gsap');
+      const stMod   = await import('gsap/ScrollTrigger');
+      const gsap    = gsapMod.default || (gsapMod as any).gsap;
+      const ST      = stMod.ScrollTrigger || (stMod as any).default;
+      gsap.registerPlugin(ST);
+
+      ctx = gsap.context(() => {
+        /* ── Entry: header ── */
         gsap.fromTo(headerRef.current,
-          { y: 45, opacity: 0 },
+          { y: 50, opacity: 0 },
           { y: 0, opacity: 1, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: headerRef.current, start: 'top 82%', once: true } }
+            scrollTrigger: { trigger: headerRef.current, start: 'top 85%', once: true } }
         );
 
-        cardRefs.current.forEach((el, i) => {
-          if (!el) return;
-          gsap.fromTo(el,
-            { y: 70, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.85, delay: i * 0.13, ease: 'power3.out',
-              scrollTrigger: { trigger: sectionRef.current, start: 'top 68%', once: true } }
-          );
+        /* ── Entry: cards stagger ── */
+        gsap.fromTo(cardRefs.current,
+          { y: 80, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.12, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: gridRef.current, start: 'top 78%', once: true } }
+        );
+
+        /* ── Hover: jump effect per card ── */
+        cardRefs.current.forEach((card) => {
+          if (!card) return;
+
+          const imgEl   = card.querySelector('.svc-img') as HTMLElement;
+          const numEl   = card.querySelector('.svc-num') as HTMLElement;
+          const iconEl  = card.querySelector('.svc-icon-wrap') as HTMLElement;
+          const titleEl = card.querySelector('.svc-title') as HTMLElement;
+          const descEl  = card.querySelector('.svc-desc') as HTMLElement;
+          const lineEl  = card.querySelector('.svc-line') as HTMLElement;
+          const arrowEl = card.querySelector('.svc-arrow') as HTMLElement;
+
+          const enterTl = gsap.timeline({ paused: true });
+          enterTl
+            .to(card,     { y: -18, boxShadow: '0 32px 72px rgba(0,0,0,0.14)', borderColor: 'rgba(212,43,43,0.25)', duration: 0.42, ease: 'power3.out' }, 0)
+            .to(imgEl,    { opacity: 0.18, scale: 1.06, duration: 0.5, ease: 'power2.out' }, 0)
+            .to(numEl,    { color: 'rgba(212,43,43,0.18)', duration: 0.3 }, 0)
+            .to(iconEl,   { background: 'var(--color-primary)', color: '#fff', boxShadow: '0 10px 28px rgba(212,43,43,0.38)', duration: 0.35 }, 0)
+            .to(lineEl,   { width: '100%', duration: 0.55, ease: 'power3.inOut' }, 0)
+            .to(titleEl,  { color: 'var(--color-secondary)', y: -4, duration: 0.32 }, 0)
+            .to(descEl,   { opacity: 1, y: 0, duration: 0.38, ease: 'power3.out' }, 0.08)
+            .to(arrowEl,  { opacity: 1, x: 0, duration: 0.3, ease: 'power3.out' }, 0.15);
+
+          card.addEventListener('mouseenter', () => enterTl.play());
+          card.addEventListener('mouseleave', () => enterTl.reverse());
         });
-      });
-    });
+
+      }, sectionRef);
+    })();
+
+    return () => ctx?.revert();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="svc-section"
-    >
-      {/* Background dot pattern */}
-      <div className="svc-dots" />
-      {/* Red ambient glow */}
-      <div className="svc-glow" />
+    <section ref={sectionRef} className="svc2-section">
 
-      <div className="container svc-container">
+      {/* Subtle dot grid */}
+      <div className="svc2-dots" aria-hidden="true" />
 
-        {/* Header */}
-        <div ref={headerRef} className="svc-header" style={{ opacity: 0 }}>
+      <div className="container">
+
+        {/* ── Header ── */}
+        <div ref={headerRef} className="svc2-header" style={{ opacity: 0 }}>
           <div>
-            <div className="svc-eyebrow">
-              <div className="svc-eyebrow-line" />
+            <div className="svc2-eyebrow">
+              <div className="svc2-eyeline" />
               <span>Nos Expertises</span>
             </div>
-            <h2 className="svc-heading">
-              Services{' '}
-              <em className="svc-em">d&apos;excellence</em>
+            <h2 className="svc2-heading">
+              Services <em className="svc2-em">d&apos;excellence</em>
             </h2>
           </div>
-          <Link href="/services" className="svc-view-all">
+          <Link href="/services" className="svc2-viewall">
             Voir tous les services
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -117,193 +148,192 @@ export default function ServicesSection() {
           </Link>
         </div>
 
-        {/* Cards */}
-        <div className="svc-grid">
-          {SERVICES.map((svc, i) => {
-            const isActive = hovered === svc.key;
-            return (
+        {/* ── Cards grid — 4 côte à côte ── */}
+        <div ref={gridRef} className="svc2-grid">
+          {SERVICES.map((svc, i) => (
+            <div
+              key={svc.key}
+              ref={el => { cardRefs.current[i] = el; }}
+              className="svc2-card"
+              style={{ opacity: 0 }}
+            >
+              {/* Background image */}
               <div
-                key={svc.key}
-                ref={el => { cardRefs.current[i] = el; }}
-                className="svc-card"
-                onMouseEnter={() => setHovered(svc.key)}
-                onMouseLeave={() => setHovered(null)}
-                style={{ opacity: 0 }}
-              >
-                {/* Image bg */}
-                <div
-                  className="svc-card-bg"
-                  style={{
-                    backgroundImage: `url(${svc.img})`,
-                    opacity: isActive ? 0.12 : 0,
-                    transform: isActive ? 'scale(1.05)' : 'scale(1)',
-                  }}
-                />
-                {/* Light overlay */}
-                <div className="svc-card-overlay" style={{
-                  background: isActive
-                    ? 'linear-gradient(to top, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.6) 55%, rgba(255,255,255,0.1) 100%)'
-                    : 'none',
-                }} />
-                {/* Top accent line */}
-                <div className="svc-topline" style={{ width: isActive ? '100%' : '48px' }} />
+                className="svc-img"
+                style={{ backgroundImage: `url(${svc.img})`, opacity: 0 }}
+              />
 
-                {/* Content */}
-                <div className="svc-inner">
-                  {/* Large background number */}
-                  <div className="svc-bg-num" style={{ color: isActive ? 'rgba(212,43,43,0.12)' : 'rgba(0,0,0,0.04)' }}>
-                    {svc.num}
-                  </div>
+              {/* Top accent line */}
+              <div className="svc-line" />
 
-                  {/* Icon box */}
-                  <div className="svc-icon-box" style={{
-                    background: isActive ? 'var(--color-primary)' : 'rgba(212,43,43,0.07)',
-                    color: isActive ? 'white' : 'var(--color-primary)',
-                    border: `1px solid ${isActive ? 'transparent' : 'rgba(212,43,43,0.15)'}`,
-                    boxShadow: isActive ? '0 10px 32px rgba(212,43,43,0.35)' : 'none',
-                  }}>
-                    {svc.icon}
-                  </div>
+              {/* Big background number */}
+              <div className="svc-num">{svc.num}</div>
 
-                  <h3 className="svc-title">{svc.title}</h3>
-                  <p className="svc-desc">{svc.desc}</p>
-
-                  {/* Arrow link */}
-                  <div className="svc-link" style={{
-                    opacity: isActive ? 1 : 0,
-                    transform: isActive ? 'translateY(0)' : 'translateY(8px)',
-                  }}>
-                    <span>En savoir plus</span>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </div>
+              {/* Content */}
+              <div className="svc2-inner">
+                <div className="svc-icon-wrap">{svc.icon}</div>
+                <h3 className="svc-title">{svc.title}</h3>
+                <p className="svc-desc">{svc.desc}</p>
+                <div className="svc-arrow">
+                  <span>En savoir plus</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
 
+      {/* ── Styles ── */}
       <style dangerouslySetInnerHTML={{ __html: `
-        /* ─── Section ─── */
-        .svc-section {
-          background: #ffffff;
-          padding: 10rem 0;
-          position: relative; overflow: hidden;
+        /* Section */
+        .svc2-section {
+          background: #fff;
+          padding: 9rem 0 10rem;
+          position: relative;
+          overflow: hidden;
         }
-        .svc-dots {
-          position: absolute; inset: 0; z-index: 0; pointer-events: none;
-          background-image: radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px);
-          background-size: 30px 30px;
+        .svc2-dots {
+          position: absolute; inset: 0; pointer-events: none;
+          background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+          background-size: 28px 28px;
         }
-        .svc-glow {
-          position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%);
-          width: 80%; height: 60%; z-index: 0; pointer-events: none;
-          background: radial-gradient(ellipse at center, rgba(212,43,43,0.05) 0%, transparent 70%);
-        }
-        .svc-container { position: relative; z-index: 1; }
 
-        /* ─── Header ─── */
-        .svc-header {
-          display: flex; justify-content: space-between; align-items: flex-end;
-          margin-bottom: 5.5rem; flex-wrap: wrap; gap: 2rem;
+        /* Header */
+        .svc2-header {
+          display: flex; justify-content: space-between;
+          align-items: flex-end; margin-bottom: 5rem;
+          flex-wrap: wrap; gap: 1.5rem;
         }
-        .svc-eyebrow {
-          display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.25rem;
+        .svc2-eyebrow {
+          display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.1rem;
         }
-        .svc-eyebrow-line { width: 32px; height: 1.5px; background: var(--color-primary); }
-        .svc-eyebrow span {
-          color: var(--color-primary); font-size: 0.65rem; font-weight: 800;
-          letter-spacing: 0.24em; text-transform: uppercase;
-        }
-        .svc-heading {
-          font-family: var(--font-heading); font-weight: 900;
-          font-size: clamp(2.5rem, 5vw, 4rem);
-          line-height: 1.0; letter-spacing: -0.04em; margin: 0;
-          color: var(--color-secondary);
-        }
-        .svc-em { color: var(--color-primary); font-style: italic; }
-        .svc-view-all {
-          display: flex; align-items: center; gap: 0.55rem;
-          color: var(--color-text-muted); font-size: 0.68rem; font-weight: 700;
-          letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
-          border-bottom: 1px solid rgba(212,43,43,0.45); padding-bottom: 3px;
-          transition: color 0.25s;
-          white-space: nowrap;
-        }
-        .svc-view-all:hover { color: var(--color-primary); }
-
-        /* ─── Cards grid ─── */
-        .svc-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 16px;
-        }
-        .svc-card {
-          position: relative; overflow: hidden;
-          min-height: 400px; cursor: default;
-          border-radius: 8px;
-          border: 1px solid var(--color-border-light);
-          background: var(--color-bg-light);
-          transition: transform 0.38s ease, box-shadow 0.38s ease;
-        }
-        .svc-card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-        }
-        .svc-card-bg {
-          position: absolute; inset: 0;
-          background-size: cover; background-position: center;
-          transition: opacity 0.55s ease, transform 0.7s ease;
-          z-index: 0; border-radius: 8px;
-        }
-        .svc-card-overlay {
-          position: absolute; inset: 0; z-index: 1;
-          transition: background 0.45s ease; border-radius: 8px;
-        }
-        .svc-topline {
-          position: absolute; top: 0; left: 0; height: 2px;
-          background: var(--color-primary); z-index: 3;
-          transition: width 0.55s cubic-bezier(0.25,1,0.5,1);
-          border-radius: 8px 8px 0 0;
-        }
-        .svc-inner {
-          position: relative; z-index: 2;
-          padding: 3rem 2.75rem;
-        }
-        .svc-bg-num {
-          position: absolute; top: 1.5rem; right: 2rem;
-          font-family: var(--font-heading); font-weight: 900;
-          font-size: 4rem; line-height: 1; letter-spacing: -0.06em;
-          user-select: none; transition: color 0.4s; pointer-events: none;
-        }
-        .svc-icon-box {
-          width: 62px; height: 62px; border-radius: 12px;
-          display: flex; align-items: center; justify-content: center;
-          margin-bottom: 2rem; transition: all 0.38s;
-        }
-        .svc-title {
-          font-family: var(--font-heading); font-weight: 800;
-          font-size: 1.2rem; color: var(--color-secondary);
-          margin-bottom: 1rem; line-height: 1.2;
-        }
-        .svc-desc {
-          font-size: 0.86rem; color: var(--color-text-muted);
-          line-height: 1.78; margin: 0; max-width: 380px;
-        }
-        .svc-link {
-          margin-top: 2.25rem; display: flex; align-items: center; gap: 0.55rem;
-          transition: all 0.38s;
-        }
-        .svc-link span {
-          font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+        .svc2-eyeline { width: 32px; height: 1.5px; background: var(--color-primary); }
+        .svc2-eyebrow span {
+          font-size: 0.65rem; font-weight: 800; letter-spacing: 0.24em;
           text-transform: uppercase; color: var(--color-primary);
         }
-        @media (max-width: 768px) {
-          .svc-grid { grid-template-columns: 1fr; }
-          .svc-card { min-height: 320px; }
-          .svc-section { padding: 6rem 0; }
+        .svc2-heading {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+          line-height: 1.02; letter-spacing: -0.04em;
+          color: var(--color-secondary); margin: 0;
+        }
+        .svc2-em { color: var(--color-primary); font-style: italic; }
+        .svc2-viewall {
+          display: flex; align-items: center; gap: 0.55rem;
+          font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; text-decoration: none;
+          color: var(--color-text-muted);
+          border-bottom: 1px solid rgba(212,43,43,0.4);
+          padding-bottom: 3px; transition: color 0.25s; white-space: nowrap;
+        }
+        .svc2-viewall:hover { color: var(--color-primary); }
+
+        /* Grid — 4 colonnes */
+        .svc2-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 14px;
+          align-items: stretch;
+        }
+
+        /* Card */
+        .svc2-card {
+          position: relative;
+          overflow: hidden;
+          border-radius: 10px;
+          border: 1px solid var(--color-border-light);
+          background: var(--color-bg-light);
+          min-height: 360px;
+          cursor: default;
+          will-change: transform, box-shadow;
+        }
+
+        /* bg image */
+        .svc-img {
+          position: absolute; inset: 0;
+          background-size: cover; background-position: center;
+          z-index: 0;
+          transition: transform 0.55s ease;
+          border-radius: 10px;
+        }
+
+        /* top line */
+        .svc-line {
+          position: absolute; top: 0; left: 0;
+          height: 2.5px; width: 48px;
+          background: var(--color-primary);
+          z-index: 3;
+          border-radius: 10px 10px 0 0;
+        }
+
+        /* big number */
+        .svc-num {
+          position: absolute; bottom: 1rem; right: 1.25rem;
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: 5rem; line-height: 1; letter-spacing: -0.06em;
+          color: rgba(0,0,0,0.045);
+          user-select: none; pointer-events: none; z-index: 1;
+          transition: color 0.35s;
+        }
+
+        /* Inner content */
+        .svc2-inner {
+          position: relative; z-index: 2;
+          padding: 2.5rem 2rem 2rem;
+          display: flex; flex-direction: column;
+          height: 100%;
+        }
+
+        /* Icon */
+        .svc-icon-wrap {
+          width: 56px; height: 56px; border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          background: rgba(212,43,43,0.07);
+          color: var(--color-primary);
+          border: 1px solid rgba(212,43,43,0.15);
+          margin-bottom: 1.75rem;
+          flex-shrink: 0;
+        }
+
+        /* Title */
+        .svc-title {
+          font-family: var(--font-heading); font-weight: 800;
+          font-size: 1.05rem; color: var(--color-secondary);
+          line-height: 1.25; margin-bottom: 1rem;
+        }
+
+        /* Desc */
+        .svc-desc {
+          font-size: 0.83rem; color: var(--color-text-muted);
+          line-height: 1.75; margin: 0; flex: 1;
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        /* Arrow */
+        .svc-arrow {
+          margin-top: 1.5rem;
+          display: flex; align-items: center; gap: 0.5rem;
+          opacity: 0;
+          transform: translateX(-8px);
+        }
+        .svc-arrow span {
+          font-size: 0.67rem; font-weight: 700;
+          letter-spacing: 0.13em; text-transform: uppercase;
+          color: var(--color-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+          .svc2-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+          .svc2-grid { grid-template-columns: 1fr; }
+          .svc2-section { padding: 6rem 0; }
         }
       `}} />
     </section>

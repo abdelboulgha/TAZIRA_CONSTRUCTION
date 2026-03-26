@@ -88,31 +88,53 @@ export default function ServicesSection() {
             scrollTrigger: { trigger: gridRef.current, start: 'top 78%', once: true } }
         );
 
-        /* ── Hover: jump effect per card ── */
-        cardRefs.current.forEach((card) => {
+        /* ── Hover: horizontal accordion expand ── */
+        const FLEX_ACTIVE   = 3.0;
+        const FLEX_INACTIVE = 0.55;
+        const FLEX_DEFAULT  = 1;
+
+        cardRefs.current.forEach((card, idx) => {
           if (!card) return;
 
-          const imgEl   = card.querySelector('.svc-img') as HTMLElement;
-          const numEl   = card.querySelector('.svc-num') as HTMLElement;
+          const imgEl   = card.querySelector('.svc-img')       as HTMLElement;
+          const numEl   = card.querySelector('.svc-num')       as HTMLElement;
           const iconEl  = card.querySelector('.svc-icon-wrap') as HTMLElement;
-          const titleEl = card.querySelector('.svc-title') as HTMLElement;
-          const descEl  = card.querySelector('.svc-desc') as HTMLElement;
-          const lineEl  = card.querySelector('.svc-line') as HTMLElement;
-          const arrowEl = card.querySelector('.svc-arrow') as HTMLElement;
+          const lineEl  = card.querySelector('.svc-line')      as HTMLElement;
+          const descEl  = card.querySelector('.svc-desc')      as HTMLElement;
+          const arrowEl = card.querySelector('.svc-arrow')     as HTMLElement;
 
-          const enterTl = gsap.timeline({ paused: true });
-          enterTl
-            .to(card,     { y: -18, boxShadow: '0 32px 72px rgba(0,0,0,0.14)', borderColor: 'rgba(212,43,43,0.25)', duration: 0.42, ease: 'power3.out' }, 0)
-            .to(imgEl,    { opacity: 0.18, scale: 1.06, duration: 0.5, ease: 'power2.out' }, 0)
-            .to(numEl,    { color: 'rgba(212,43,43,0.18)', duration: 0.3 }, 0)
-            .to(iconEl,   { background: 'var(--color-primary)', color: '#fff', boxShadow: '0 10px 28px rgba(212,43,43,0.38)', duration: 0.35 }, 0)
-            .to(lineEl,   { width: '100%', duration: 0.55, ease: 'power3.inOut' }, 0)
-            .to(titleEl,  { color: 'var(--color-secondary)', y: -4, duration: 0.32 }, 0)
-            .to(descEl,   { opacity: 1, y: 0, duration: 0.38, ease: 'power3.out' }, 0.08)
-            .to(arrowEl,  { opacity: 1, x: 0, duration: 0.3, ease: 'power3.out' }, 0.15);
+          card.addEventListener('mouseenter', () => {
+            /* Expand this card */
+            gsap.to(card, { flexGrow: FLEX_ACTIVE, borderColor: 'rgba(212,43,43,0.2)', boxShadow: '0 20px 56px rgba(0,0,0,0.1)', duration: 0.52, ease: 'power3.inOut' });
+            gsap.to(imgEl,    { opacity: 0.14, scale: 1.05, duration: 0.55, ease: 'power2.out' });
+            gsap.to(numEl,    { color: 'rgba(212,43,43,0.14)', duration: 0.3 });
+            gsap.to(iconEl,   { background: 'var(--color-primary)', color: '#fff', boxShadow: '0 10px 28px rgba(212,43,43,0.35)', duration: 0.35 });
+            gsap.to(lineEl,   { width: '100%', duration: 0.52, ease: 'power3.inOut' });
+            gsap.fromTo(descEl,  { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.38, delay: 0.18, ease: 'power3.out' });
+            gsap.fromTo(arrowEl, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3,  delay: 0.25, ease: 'power3.out' });
 
-          card.addEventListener('mouseenter', () => enterTl.play());
-          card.addEventListener('mouseleave', () => enterTl.reverse());
+            /* Compress other cards */
+            cardRefs.current.forEach((other, oidx) => {
+              if (!other || oidx === idx) return;
+              gsap.to(other, { flexGrow: FLEX_INACTIVE, duration: 0.52, ease: 'power3.inOut' });
+              const otherImg = other.querySelector('.svc-img') as HTMLElement;
+              gsap.to(otherImg, { opacity: 0, duration: 0.3 });
+            });
+          });
+
+          card.addEventListener('mouseleave', () => {
+            /* Reset all */
+            cardRefs.current.forEach((c) => {
+              if (!c) return;
+              gsap.to(c, { flexGrow: FLEX_DEFAULT, borderColor: 'var(--color-border-light)', boxShadow: 'none', duration: 0.48, ease: 'power3.inOut' });
+            });
+            gsap.to(imgEl,    { opacity: 0, scale: 1, duration: 0.4 });
+            gsap.to(numEl,    { color: 'rgba(0,0,0,0.045)', duration: 0.3 });
+            gsap.to(iconEl,   { background: 'rgba(212,43,43,0.07)', color: 'var(--color-primary)', boxShadow: 'none', duration: 0.35 });
+            gsap.to(lineEl,   { width: '48px', duration: 0.45, ease: 'power3.inOut' });
+            gsap.to(descEl,   { opacity: 0, y: 10, duration: 0.22 });
+            gsap.to(arrowEl,  { opacity: 0, x: -8, duration: 0.18 });
+          });
         });
 
       }, sectionRef);
@@ -232,24 +254,24 @@ export default function ServicesSection() {
         }
         .svc2-viewall:hover { color: var(--color-primary); }
 
-        /* Grid — 4 colonnes */
+        /* Grid — flexbox accordion */
         .svc2-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 14px;
-          align-items: stretch;
+          display: flex;
+          gap: 12px;
+          height: 400px;
         }
 
         /* Card */
         .svc2-card {
+          flex: 1 1 0;
           position: relative;
           overflow: hidden;
           border-radius: 10px;
           border: 1px solid var(--color-border-light);
           background: var(--color-bg-light);
-          min-height: 360px;
           cursor: default;
-          will-change: transform, box-shadow;
+          will-change: flex-grow, box-shadow;
+          min-width: 0;
         }
 
         /* bg image */
@@ -328,11 +350,11 @@ export default function ServicesSection() {
         }
 
         /* Responsive */
-        @media (max-width: 1100px) {
-          .svc2-grid { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 900px) {
+          .svc2-grid { flex-direction: column; height: auto; }
+          .svc2-card { min-height: 180px; flex-grow: 1 !important; }
         }
         @media (max-width: 640px) {
-          .svc2-grid { grid-template-columns: 1fr; }
           .svc2-section { padding: 6rem 0; }
         }
       `}} />

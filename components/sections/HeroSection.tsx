@@ -1,166 +1,276 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import gsap from 'gsap';
+import dynamic from 'next/dynamic';
+
+const Spline = dynamic(() => import('@splinetool/react-spline'), {
+  ssr: false,
+  loading: () => <div style={{ width: '100%', height: '100%' }} />,
+});
 
 export default function HeroSection() {
-  const { t: _t, isRTL } = useLanguage();
-  const t = _t as any;
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
-  const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const { isRTL } = useLanguage();
+  const badgeRef    = useRef<HTMLDivElement>(null);
+  const titleRef    = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef      = useRef<HTMLDivElement>(null);
+  const lineRef     = useRef<HTMLDivElement>(null);
+  const scrollRef   = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.hero-tag-line', { scaleX: 0, transformOrigin: isRTL ? 'right' : 'left', duration: 1.2, ease: 'power4.out', delay: 0.3 });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, [isRTL]);
+    import('gsap').then(({ gsap }) => {
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      tl.fromTo(lineRef.current,    { scaleY: 0, transformOrigin: 'top center' }, { scaleY: 1, duration: 1.2 }, 0.2)
+        .fromTo(badgeRef.current,   { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: 0.85 }, 0.6)
+        .fromTo(titleRef.current,   { y: 65, opacity: 0 }, { y: 0, opacity: 1, duration: 1.1 }, 0.85)
+        .fromTo(subtitleRef.current,{ y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9  }, 1.25)
+        .fromTo(ctaRef.current,     { y: 22, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8  }, 1.55)
+        .fromTo(scrollRef.current,  { opacity: 0 },        { opacity: 1, duration: 0.6         }, 2.0);
+    });
+  }, []);
 
   return (
-    <section ref={sectionRef} style={{ position: 'relative', height: '100vh', minHeight: '700px', overflow: 'hidden', direction: isRTL ? 'rtl' : 'ltr' }}>
-      {/* Parallax bg */}
-      <motion.div style={{
-        position: 'absolute', inset: '-60px', y: yBg,
-        backgroundImage: 'url(https://images.unsplash.com/photo-1486325212027-8081e485255e?w=2000&q=85)',
-        backgroundSize: 'cover', backgroundPosition: 'center',
-      }} />
+    <section className="hero-root">
 
-      {/* Overlays */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(105deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.65) 55%, rgba(180,20,20,0.18) 100%)' }} />
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(212,43,43,0.08) 0%, transparent 50%)', pointerEvents: 'none' }} />
+      {/* ── Background ──────────────────────────────── */}
+      <div className="hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=90"
+          alt=""
+          aria-hidden="true"
+          className="hero-bg-img"
+        />
+        <div className="hero-overlay" />
+        <div className="hero-red-line" />
+      </div>
 
-      {/* Noise texture */}
-      <div style={{
-        position: 'absolute', inset: 0, opacity: 0.025,
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-        backgroundRepeat: 'repeat', backgroundSize: '150px',
-      }} />
+      {/* ── Spline 3D — right half ───────────────────── */}
+      <div className="hero-spline" aria-hidden="true">
+        <Spline scene="https://prod.spline.design/kZDDjO5HlviOnmd9/scene.splinecode" />
+      </div>
 
-      <motion.div style={{ position: 'relative', zIndex: 2, height: '100%', opacity }} className="container">
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 'var(--navbar-height)' }}>
-          {/* Label */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '2rem' }}
-          >
-            <div className="hero-tag-line" style={{ height: '1.5px', width: '48px', background: 'var(--color-primary)' }} />
-            <span style={{ color: 'var(--color-primary)', fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
-              {t.hero.badge}
-            </span>
-          </motion.div>
+      {/* ── Vertical accent bar ─────────────────────── */}
+      <div ref={lineRef} className="hero-accent-bar" />
 
-          {/* Headline */}
-          <div style={{ overflow: 'hidden', marginBottom: '1rem' }}>
-            <motion.h1
-              initial={{ y: '100%' }} animate={{ y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-              style={{
-                fontFamily: 'var(--font-heading)', fontWeight: 900,
-                fontSize: 'clamp(3.2rem, 7.5vw, 6.5rem)',
-                lineHeight: 1.0, letterSpacing: '-0.025em',
-                color: 'white',
-              }}
-            >
-              {t.hero.title}
-            </motion.h1>
-          </div>
-          <div style={{ overflow: 'hidden', marginBottom: '2rem' }}>
-            <motion.h1
-              initial={{ y: '100%' }} animate={{ y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.65 }}
-              style={{
-                fontFamily: 'var(--font-heading)', fontWeight: 900,
-                fontSize: 'clamp(3.2rem, 7.5vw, 6.5rem)',
-                lineHeight: 1.0, letterSpacing: '-0.025em',
-                color: 'var(--color-primary)',
-              }}
-            >
-              {t.hero.titleHighlight}
-            </motion.h1>
-          </div>
-
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.85 }}
-            style={{ color: 'rgba(255,255,255,0.62)', fontSize: 'clamp(0.95rem, 1.8vw, 1.15rem)', lineHeight: 1.75, maxWidth: '520px', marginBottom: '2.75rem' }}
-          >
-            {t.hero.subtitle}
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1 }}
-            style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}
-          >
-            <Link href="/contact" className="btn btn-primary" style={{ padding: '1rem 2.25rem', fontSize: '0.9rem', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-              {t.hero.cta}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </Link>
-            <Link href="/services" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'rgba(255,255,255,0.75)', fontSize: '0.9rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'color 0.2s' }}
-              onMouseOver={e => (e.currentTarget.style.color = 'white')}
-              onMouseOut={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
-            >
-              {t.hero.ctaSecondary}
-              <motion.svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-                animate={{ x: [0, 5, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-                <path d={isRTL ? 'M19 12H5M12 19l-7-7 7-7' : 'M5 12h14M12 5l7 7-7 7'}/>
-              </motion.svg>
-            </Link>
-          </motion.div>
+      {/* ── Text content ────────────────────────────── */}
+      <div className="container hero-content">
+        {/* Badge */}
+        <div ref={badgeRef} className="hero-badge">
+          <span className="hero-badge-dot" />
+          Expert en Construction au Maroc
         </div>
-      </motion.div>
 
-      {/* Stats bar — bottom right */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 1.3 }}
-        style={{
-          position: 'absolute', bottom: 0,
-          right: isRTL ? 'auto' : 0, left: isRTL ? 0 : 'auto',
-          zIndex: 3, display: 'flex',
-          background: 'rgba(255,255,255,0.97)',
-          backdropFilter: 'blur(12px)',
-          borderTopLeftRadius: isRTL ? 0 : '24px',
-          borderTopRightRadius: isRTL ? '24px' : 0,
-        }}
-      >
-        {[
-          { n: '200+', l: t.stats.projects.label },
-          { n: '10+', l: t.stats.years.label },
-          { n: '24/7', l: t.stats.availability.label },
-        ].map((s, i) => (
-          <div key={s.l} style={{
-            padding: '1.5rem 2rem',
-            borderRight: i < 2 ? '1px solid rgba(0,0,0,0.07)' : 'none',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.2rem',
-          }}>
-            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.8rem', color: 'var(--color-primary)', lineHeight: 1 }}>{s.n}</span>
-            <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>{s.l}</span>
-          </div>
-        ))}
-      </motion.div>
+        {/* Headline */}
+        <h1 ref={titleRef} className="hero-title">
+          Construire l&apos;avenir<br />
+          avec <span className="hero-title-accent">précision</span><br />
+          et excellence.
+        </h1>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }}
-        style={{ position: 'absolute', bottom: '2.5rem', left: isRTL ? 'auto' : '50%', right: isRTL ? '50%' : 'auto', transform: 'translateX(-50%)', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
-      >
-        <div style={{ width: '1px', height: '50px', background: 'rgba(255,255,255,0.2)', position: 'relative', overflow: 'hidden' }}>
-          <motion.div
-            animate={{ y: ['-100%', '200%'] }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ position: 'absolute', width: '100%', height: '50%', background: 'var(--color-primary)' }}
-          />
+        {/* Subtitle */}
+        <p ref={subtitleRef} className="hero-subtitle">
+          TAZIRA CONSTRUCTION SARL est votre partenaire de confiance pour tous vos projets
+          de construction, rénovation et travaux publics au Maroc.
+        </p>
+
+        {/* CTAs */}
+        <div ref={ctaRef} className="hero-ctas">
+          <Link href="/contact" className="hero-btn-primary">
+            Demander un devis
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </Link>
+          <Link href="/services" className="hero-btn-ghost">
+            Nos services
+          </Link>
         </div>
-      </motion.div>
+      </div>
+
+      {/* ── Stats bar ───────────────────────────────── */}
+      <div className="hero-statsbar">
+        <div className="container">
+          <div className="hero-statsbar-grid">
+            {[
+              { num: '200+', label: 'Projets réalisés'      },
+              { num: '10+',  label: "Années d'expérience"   },
+              { num: '150+', label: 'Clients satisfaits'     },
+              { num: '24h',  label: 'Disponibilité'          },
+            ].map((s, i) => (
+              <div key={i} className="hero-stat-item">
+                <span className="hero-stat-num">{s.num}</span>
+                <span className="hero-stat-label">{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Scroll indicator ────────────────────────── */}
+      <div ref={scrollRef} className={`hero-scroll${isRTL ? ' rtl' : ''}`} aria-hidden="true">
+        <span className="hero-scroll-text">Défiler</span>
+        <div className="hero-scroll-line" />
+      </div>
+
+      <style jsx>{`
+        .hero-root {
+          position: relative; height: 100vh; min-height: 720px;
+          display: flex; align-items: center; overflow: hidden;
+          direction: ${isRTL ? 'rtl' : 'ltr'};
+        }
+
+        /* Background */
+        .hero-bg { position: absolute; inset: 0; z-index: 0; }
+        .hero-bg-img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+        .hero-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(100deg, rgba(6,6,6,0.95) 0%, rgba(6,6,6,0.83) 42%, rgba(6,6,6,0.28) 100%);
+        }
+        .hero-red-line {
+          position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+          background: linear-gradient(90deg, var(--color-primary) 0%, rgba(212,43,43,0.35) 55%, transparent 100%);
+        }
+
+        /* Spline */
+        .hero-spline {
+          position: absolute;
+          ${isRTL ? 'left: 0;' : 'right: 0;'}
+          top: 0; bottom: 0; width: 54%;
+          z-index: 1; opacity: 0.5; pointer-events: none;
+        }
+
+        /* Vertical bar */
+        .hero-accent-bar {
+          position: absolute;
+          ${isRTL ? 'right: 2.5rem;' : 'left: 2.5rem;'}
+          top: 14%; bottom: 22%;
+          width: 2px;
+          background: linear-gradient(to bottom, transparent, var(--color-primary) 20%, var(--color-primary) 80%, transparent);
+          z-index: 2;
+        }
+
+        /* Content */
+        .hero-content { position: relative; z-index: 3; padding: 0 4rem; }
+
+        /* Badge */
+        .hero-badge {
+          display: inline-flex; align-items: center; gap: 0.6rem;
+          padding: 0.45rem 1.1rem;
+          border: 1px solid rgba(212,43,43,0.42);
+          border-radius: 100px;
+          background: rgba(212,43,43,0.1);
+          backdrop-filter: blur(8px);
+          margin-bottom: 2rem;
+          font-size: 0.72rem; font-weight: 700;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          color: rgba(255,255,255,0.85);
+        }
+        .hero-badge-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: var(--color-primary); flex-shrink: 0;
+          box-shadow: 0 0 7px var(--color-primary);
+          animation: pulse 2.2s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+        /* Title */
+        .hero-title {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: clamp(2.8rem, 5.5vw, 5rem);
+          line-height: 1.04; letter-spacing: -0.03em;
+          color: white; margin-bottom: 1.75rem;
+        }
+        .hero-title-accent { color: var(--color-primary); }
+
+        /* Subtitle */
+        .hero-subtitle {
+          font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+          line-height: 1.8; color: rgba(255,255,255,0.58);
+          margin-bottom: 2.75rem; max-width: 490px;
+        }
+
+        /* CTAs */
+        .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .hero-btn-primary {
+          display: inline-flex; align-items: center; gap: 0.6rem;
+          padding: 0.95rem 2.1rem;
+          background: var(--color-primary); color: white;
+          border-radius: 4px; border: 2px solid var(--color-primary);
+          font-family: var(--font-heading); font-size: 0.8rem;
+          font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+          text-decoration: none; transition: all 0.25s;
+        }
+        .hero-btn-primary:hover { background: var(--color-primary-dark); border-color: var(--color-primary-dark); transform: translateY(-2px); box-shadow: 0 14px 30px rgba(212,43,43,0.42); }
+        .hero-btn-ghost {
+          display: inline-flex; align-items: center; gap: 0.6rem;
+          padding: 0.95rem 2.1rem;
+          background: transparent; color: white;
+          border-radius: 4px; border: 2px solid rgba(255,255,255,0.28);
+          font-family: var(--font-heading); font-size: 0.8rem;
+          font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+          text-decoration: none; transition: all 0.25s;
+        }
+        .hero-btn-ghost:hover { border-color: rgba(255,255,255,0.7); transform: translateY(-2px); }
+
+        /* Stats bar */
+        .hero-statsbar {
+          position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+          background: rgba(0,0,0,0.52); backdrop-filter: blur(18px);
+          border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .hero-statsbar-grid {
+          display: grid; grid-template-columns: repeat(4,1fr);
+          border-left: 1px solid rgba(255,255,255,0.06);
+        }
+        .hero-stat-item {
+          padding: 1.1rem 1.5rem;
+          border-right: 1px solid rgba(255,255,255,0.06);
+          display: flex; align-items: center; gap: 0.85rem;
+        }
+        .hero-stat-num {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: 1.45rem; color: var(--color-primary); line-height: 1;
+        }
+        .hero-stat-label {
+          font-size: 0.67rem; color: rgba(255,255,255,0.42);
+          font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.3;
+        }
+
+        /* Scroll indicator */
+        .hero-scroll {
+          position: absolute; bottom: 108px;
+          right: 2.5rem;
+          z-index: 3;
+          display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+        }
+        .hero-scroll.rtl { right: auto; left: 2.5rem; }
+        .hero-scroll-text {
+          font-size: 0.58rem; color: rgba(255,255,255,0.28);
+          letter-spacing: 0.18em; text-transform: uppercase;
+          writing-mode: vertical-rl;
+        }
+        .hero-scroll-line {
+          width: 1px; height: 52px;
+          background: linear-gradient(to bottom, rgba(255,255,255,0.28), transparent);
+          animation: scrollFade 2s ease-in-out infinite;
+        }
+        @keyframes scrollFade { 0%,100%{opacity:0.3;} 50%{opacity:0.9;} }
+
+        /* Responsive */
+        @media(max-width:768px){
+          .hero-content{ padding: 0 1.5rem; }
+          .hero-spline{ display: none; }
+          .hero-accent-bar{ display: none; }
+          .hero-statsbar-grid{ grid-template-columns: repeat(2,1fr); }
+          .hero-stat-item:nth-child(3){ border-left: none; }
+          .hero-scroll{ display: none; }
+        }
+        @media(max-width:480px){
+          .hero-statsbar-grid{ grid-template-columns: 1fr 1fr; }
+        }
+      `}</style>
     </section>
   );
 }

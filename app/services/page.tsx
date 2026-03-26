@@ -13,14 +13,44 @@ const serviceImages: Record<string, string> = {
   design: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80',
 };
 
-const serviceIcons: Record<string, JSX.Element> = {
-  construction: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
-  renovation: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>,
-  electrical: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
-  publicWorks: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
-  maintenance: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
-  design: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
-};
+function ServiceIcon({ serviceKey }: { serviceKey: string }) {
+  if (serviceKey === 'construction') return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+  );
+  if (serviceKey === 'renovation') return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+    </svg>
+  );
+  if (serviceKey === 'electrical') return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+    </svg>
+  );
+  if (serviceKey === 'publicWorks') return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="1" y="3" width="15" height="13"/>
+      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+      <circle cx="5.5" cy="18.5" r="2.5"/>
+      <circle cx="18.5" cy="18.5" r="2.5"/>
+    </svg>
+  );
+  if (serviceKey === 'maintenance') return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+  );
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <line x1="18" y1="20" x2="18" y2="10"/>
+      <line x1="12" y1="20" x2="12" y2="4"/>
+      <line x1="6" y1="20" x2="6" y2="14"/>
+    </svg>
+  );
+}
 
 function ServiceCard({ serviceKey, data, index, isRTL }: {
   serviceKey: string;
@@ -63,14 +93,8 @@ function ServiceCard({ serviceKey, data, index, isRTL }: {
       }}
       className="service-detail-row"
     >
-      {/* Image */}
       <div style={{ order: isRTL ? (isEven ? 2 : 1) : (isEven ? 1 : 2) }} className="service-img-side">
-        <div style={{
-          borderRadius: 'var(--radius-xl)',
-          overflow: 'hidden',
-          aspectRatio: '4/3',
-          boxShadow: 'var(--shadow-xl)',
-        }}>
+        <div style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', aspectRatio: '4/3', boxShadow: 'var(--shadow-xl)' }}>
           <img
             src={serviceImages[serviceKey]}
             alt={data.title}
@@ -80,7 +104,6 @@ function ServiceCard({ serviceKey, data, index, isRTL }: {
         </div>
       </div>
 
-      {/* Content */}
       <div style={{ order: isRTL ? (isEven ? 1 : 2) : (isEven ? 2 : 1) }} className="service-content-side">
         <div style={{
           width: '56px', height: '56px',
@@ -90,15 +113,13 @@ function ServiceCard({ serviceKey, data, index, isRTL }: {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           marginBottom: '1.25rem',
         }}>
-          {serviceIcons[serviceKey]}
+          <ServiceIcon serviceKey={serviceKey} />
         </div>
 
         <h2 style={{
-          fontFamily: 'var(--font-heading)',
-          fontWeight: 800,
+          fontFamily: 'var(--font-heading)', fontWeight: 800,
           fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-          color: 'var(--color-secondary)',
-          marginBottom: '1rem',
+          color: 'var(--color-secondary)', marginBottom: '1rem',
         }}>{data.title}</h2>
 
         <div className="divider" />
@@ -111,12 +132,9 @@ function ServiceCard({ serviceKey, data, index, isRTL }: {
           {data.features.map((feature) => (
             <li key={feature} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <span style={{
-                width: '20px', height: '20px',
-                borderRadius: '50%',
-                background: 'var(--color-primary-light)',
-                color: 'var(--color-primary)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0,
+                width: '20px', height: '20px', borderRadius: '50%',
+                background: 'var(--color-primary-light)', color: 'var(--color-primary)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
               }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                   <polyline points="20 6 9 17 4 12" />
@@ -139,40 +157,30 @@ export default function ServicesPage() {
     <div style={{ direction: isRTL ? 'rtl' : 'ltr', background: 'var(--color-bg)' }}>
       {/* Hero */}
       <section style={{
-        position: 'relative',
         paddingTop: 'calc(var(--navbar-height) + 5rem)',
-        paddingBottom: '5rem',
-        overflow: 'hidden',
+        paddingBottom: '4rem',
+        background: 'var(--color-bg)',
+        borderBottom: '1px solid var(--color-border)',
       }}>
-        <div style={{
-          position: 'absolute', inset: 0,
-          backgroundImage: `url(https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80)`,
-          backgroundSize: 'cover', backgroundPosition: 'center',
-        }} />
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(166,120,40,0.5) 100%)',
-        }} />
-        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '720px' }}>
-          <span style={{
-            display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.4rem 1.1rem',
-            background: 'rgba(196,147,63,0.15)', border: '1px solid rgba(196,147,63,0.4)',
-            borderRadius: 'var(--radius-full)', color: '#f0c97a',
-            fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
-            textTransform: 'uppercase' as const, marginBottom: '1.5rem',
+        <div className="container" style={{ maxWidth: '760px' }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
+            fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.18em',
+            textTransform: 'uppercase' as const,
+            color: 'var(--color-primary)', marginBottom: '1.5rem',
           }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block' }} />
+            <span style={{ width: 24, height: 1.5, background: 'var(--color-primary)', display: 'inline-block' }} />
             {t.servicesPage.hero.badge}
-          </span>
+          </div>
           <h1 style={{
-            color: 'white', fontFamily: 'var(--font-heading)', fontWeight: 900,
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginBottom: '1rem',
+            fontFamily: 'var(--font-heading)', fontWeight: 800,
+            fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.15,
+            color: 'var(--color-secondary)', marginBottom: '1.25rem',
           }}>
             {t.servicesPage.hero.title}{' '}
             <span style={{ color: 'var(--color-primary)' }}>{t.servicesPage.hero.titleHighlight}</span>
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.7 }}>
+          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '1rem', lineHeight: 1.75, maxWidth: '560px' }}>
             {t.servicesPage.hero.subtitle}
           </p>
         </div>
@@ -197,16 +205,10 @@ export default function ServicesPage() {
 
       <style jsx>{`
         @media (max-width: 768px) {
-          .service-detail-row {
-            grid-template-columns: 1fr !important;
-          }
-          .service-img-side, .service-content-side {
-            order: unset !important;
-          }
+          .service-detail-row { grid-template-columns: 1fr !important; }
+          .service-img-side, .service-content-side { order: unset !important; }
         }
-        .service-detail-img:hover {
-          transform: scale(1.04);
-        }
+        .service-detail-img:hover { transform: scale(1.04); }
       `}</style>
     </div>
   );

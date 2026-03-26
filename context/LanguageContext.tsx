@@ -30,13 +30,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       document.documentElement.lang = lang;
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     }
-    localStorage.setItem('tazira-lang', lang);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('tazira-lang', lang);
+    }
   };
 
+  // Restore saved language after hydration completes — never during SSR
   useEffect(() => {
     const saved = localStorage.getItem('tazira-lang') as Language | null;
-    if (saved && (saved === 'fr' || saved === 'ar')) {
-      setLanguage(saved);
+    if (saved === 'ar') {
+      setLanguageState('ar');
+      document.documentElement.lang = 'ar';
+      document.documentElement.dir = 'rtl';
     }
   }, []);
 

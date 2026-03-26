@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" dir="ltr">
-      <body>
+      <body suppressHydrationWarning>
         <LanguageProvider>
           <Navbar />
           <main>{children}</main>

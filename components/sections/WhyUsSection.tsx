@@ -78,7 +78,7 @@ export default function WhyUsSection() {
         <div ref={titleRef} className="why-header" style={{ opacity: 0 }}>
           <div className="why-eyebrow">
             <span className="why-line"></span>
-            POURQUOI NOUS CHOISIR
+            POURQUOI CHOISIR TAZIRA CONSTRUCTION
           </div>
           <h2 className="why-heading">
             L&apos;excellence au <span>cœur</span> de chaque projet

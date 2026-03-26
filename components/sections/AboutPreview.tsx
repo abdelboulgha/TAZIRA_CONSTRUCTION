@@ -215,15 +215,12 @@ export default function AboutPreview() {
             réaliser des projets qui durent et qui marquent les territoires.
           </p>
 
-          {/* Pillars */}
+          {/* Pillars as small cards */}
           <div ref={pillarsRef} className="about-pillars">
             {PILLARS.map((p) => (
               <div key={p.label} className="about-pillar">
-                <div className="about-pillar-icon">{p.icon}</div>
-                <div>
-                  <div className="about-pillar-label">{p.label}</div>
-                  <div className="about-pillar-desc">{p.desc}</div>
-                </div>
+                <div className="about-pillar-label">{p.label}</div>
+                <div className="about-pillar-desc">{p.desc}</div>
               </div>
             ))}
           </div>
@@ -327,41 +324,34 @@ export default function AboutPreview() {
           opacity: 0;
         }
 
-        /* Pillars */
+        /* Pillars — small cards row */
         .about-pillars {
-          display: flex;
-          flex-direction: column;
-          gap: 1.1rem;
-          margin-bottom: 3rem;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.85rem;
+          margin-bottom: 0;
         }
         .about-pillar {
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
+          background: #f5f4f2;
+          border-radius: 16px;
+          padding: 1.25rem 1.1rem;
           opacity: 0;
+          transition: box-shadow 0.25s, transform 0.25s;
         }
-        .about-pillar-icon {
-          width: 42px;
-          height: 42px;
-          border-radius: 10px;
-          background: var(--color-primary-light);
-          border: 1px solid rgba(212,43,43,0.15);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--color-primary);
-          flex-shrink: 0;
+        .about-pillar:hover {
+          box-shadow: 0 8px 28px rgba(0,0,0,0.07);
+          transform: translateY(-3px);
         }
         .about-pillar-label {
           font-family: var(--font-heading);
           font-weight: 700;
-          font-size: 0.88rem;
+          font-size: 0.9rem;
           color: var(--color-secondary);
-          letter-spacing: 0.01em;
-          margin-bottom: 0.18rem;
+          margin-bottom: 0.45rem;
+          line-height: 1.25;
         }
         .about-pillar-desc {
-          font-size: 0.82rem;
+          font-size: 0.78rem;
           color: var(--color-text-muted);
           line-height: 1.55;
         }

@@ -101,11 +101,6 @@ export default function WhyUsSection() {
                 </div>
               ))}
             </div>
-            {/* Minimal Stats floating over image */}
-            <div className="why-img-badge">
-              <div className="badge-val">100%</div>
-              <div className="badge-lbl">Qualité garantie</div>
-            </div>
           </div>
 
           {/* Right: List of Features */}

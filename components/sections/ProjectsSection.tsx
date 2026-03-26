@@ -4,20 +4,60 @@ import { useRef, useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const PROJECTS = [
-  { key: 'building',   label: 'Immeuble Commercial',     cat: 'Construction',   src: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=85',  col: 2, row: 2 },
-  { key: 'villa',      label: 'Villa Résidentielle',      cat: 'Résidentiel',    src: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85',  col: 1, row: 1 },
-  { key: 'electrical', label: 'Installation Électrique',  cat: 'Travaux Élec.',  src: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=700&q=85',  col: 1, row: 1 },
-  { key: 'public',     label: 'Infrastructure Publique',  cat: 'Travaux Publics',src: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=900&q=85',  col: 2, row: 1 },
-  { key: 'luxury',     label: 'Résidence de Luxe',        cat: 'Résidentiel',    src: 'https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?w=700&q=85', col: 1, row: 1 },
+  {
+    key: 'building',
+    label: 'Immeuble Commercial',
+    location: 'Casablanca, Maroc',
+    cat: 'Construction',
+    year: '2023',
+    src: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=90',
+    col: 2, row: 2,
+    featured: true,
+  },
+  {
+    key: 'villa',
+    label: 'Villa de Luxe',
+    location: 'Rabat, Maroc',
+    cat: 'Résidentiel',
+    year: '2023',
+    src: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85',
+    col: 1, row: 1,
+  },
+  {
+    key: 'electrical',
+    label: 'Installation Industrielle',
+    location: 'Tanger, Maroc',
+    cat: 'Électricité',
+    year: '2022',
+    src: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=700&q=85',
+    col: 1, row: 1,
+  },
+  {
+    key: 'public',
+    label: 'Infrastructure Publique',
+    location: 'Agadir, Maroc',
+    cat: 'Travaux Publics',
+    year: '2022',
+    src: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1100&q=85',
+    col: 2, row: 1,
+  },
+  {
+    key: 'luxury',
+    label: 'Rénovation Résidence',
+    location: 'Marrakech, Maroc',
+    cat: 'Rénovation',
+    year: '2023',
+    src: 'https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?w=700&q=85',
+    col: 1, row: 1,
+  },
 ];
 
 export default function ProjectsSection() {
-  const { t: _t, isRTL } = useLanguage();
-  const t = _t as any;
-  const ref    = useRef<HTMLElement>(null);
-  const [hovered, setHovered] = useState<string | null>(null);
+  const { isRTL } = useLanguage();
+  const ref       = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef   = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
 
   useEffect(() => {
     import('gsap').then(({ gsap }) => {
@@ -25,7 +65,7 @@ export default function ProjectsSection() {
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.fromTo(headerRef.current,
-          { y: 35, opacity: 0 },
+          { y: 38, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
             scrollTrigger: { trigger: headerRef.current, start: 'top 82%', once: true } }
         );
@@ -33,8 +73,8 @@ export default function ProjectsSection() {
         const cells = gridRef.current?.querySelectorAll('.proj-cell');
         if (cells) {
           gsap.fromTo(cells,
-            { scale: 0.94, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out',
+            { scale: 0.93, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.75, stagger: 0.1, ease: 'power3.out',
               scrollTrigger: { trigger: gridRef.current, start: 'top 75%', once: true } }
           );
         }
@@ -43,34 +83,36 @@ export default function ProjectsSection() {
   }, []);
 
   return (
-    <section ref={ref} style={{ background: '#f7f7f7', padding: '8rem 0', direction: isRTL ? 'rtl' : 'ltr' }}>
+    <section ref={ref} style={{ background: '#f3f3f3', padding: '9rem 0', direction: isRTL ? 'rtl' : 'ltr' }}>
       <div className="container">
 
         {/* Header */}
-        <div ref={headerRef} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem', flexWrap: 'wrap', gap: '1.5rem' }}>
+        <div
+          ref={headerRef}
+          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4.5rem', flexWrap: 'wrap', gap: '1.5rem' }}
+        >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.1rem' }}>
-              <div style={{ height: '2px', width: '40px', background: 'var(--color-primary)' }} />
-              <span style={{ color: 'var(--color-primary)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
-                {t.projects.badge}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem' }}>
+              <div style={{ width: '32px', height: '1.5px', background: 'var(--color-primary)' }} />
+              <span style={{ color: 'var(--color-primary)', fontSize: '0.66rem', fontWeight: 800, letterSpacing: '0.24em', textTransform: 'uppercase' }}>
+                Nos Réalisations
               </span>
             </div>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(2.2rem, 4vw, 3.2rem)', lineHeight: 1.08, letterSpacing: '-0.025em', margin: 0 }}>
-              <span style={{ color: 'var(--color-secondary)' }}>{t.projects.title} </span>
-              <span style={{ color: 'var(--color-primary)' }}>{t.projects.titleHighlight}</span>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', lineHeight: 1.0, letterSpacing: '-0.035em', margin: 0, color: 'var(--color-secondary)' }}>
+              Projets{' '}
+              <span style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>réalisés</span>
             </h2>
           </div>
-          <p style={{ fontSize: '0.88rem', color: 'var(--color-text-muted)', maxWidth: '340px', lineHeight: 1.7, textAlign: isRTL ? 'right' : 'left' }}>
-            {t.projects.subtitle}
-          </p>
+
+          <div style={{ textAlign: isRTL ? 'right' : 'left' }}>
+            <p style={{ fontSize: '0.88rem', color: 'var(--color-text-muted)', maxWidth: '300px', lineHeight: 1.75, margin: 0 }}>
+              Plus de 200 projets livrés à travers tout le Maroc avec la plus haute exigence de qualité.
+            </p>
+          </div>
         </div>
 
         {/* Bento grid */}
-        <div
-          ref={gridRef}
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gridTemplateRows: 'repeat(2,280px)', gap: '14px' }}
-          className="proj-grid"
-        >
+        <div ref={gridRef} className="proj-grid">
           {PROJECTS.map((p) => {
             const isActive = hovered === p.key;
             return (
@@ -80,8 +122,6 @@ export default function ProjectsSection() {
                 onMouseEnter={() => setHovered(p.key)}
                 onMouseLeave={() => setHovered(null)}
                 style={{
-                  position: 'relative', borderRadius: '14px', overflow: 'hidden',
-                  cursor: 'pointer',
                   gridColumn: `span ${p.col}`,
                   gridRow: `span ${p.row}`,
                 }}
@@ -90,69 +130,61 @@ export default function ProjectsSection() {
                 <img
                   src={p.src}
                   alt={p.label}
-                  style={{
-                    width: '100%', height: '100%',
-                    objectFit: 'cover', display: 'block',
-                    transition: 'transform 0.6s cubic-bezier(0.25,1,0.5,1)',
-                    transform: isActive ? 'scale(1.07)' : 'scale(1)',
-                  }}
+                  className="proj-img"
+                  style={{ transform: isActive ? 'scale(1.08)' : 'scale(1)' }}
                 />
 
-                {/* Gradient overlay */}
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  background: isActive
-                    ? 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 50%, transparent 100%)'
-                    : 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%)',
-                  transition: 'background 0.4s',
-                }} />
+                {/* Base gradient */}
+                <div className="proj-base-grad" />
 
-                {/* Category badge */}
-                <div style={{
-                  position: 'absolute', top: '1.1rem',
-                  left: isRTL ? 'auto' : '1.1rem',
-                  right: isRTL ? '1.1rem' : 'auto',
-                  background: 'rgba(255,255,255,0.12)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  color: 'white',
-                  padding: '0.3rem 0.8rem',
-                  borderRadius: '100px',
-                  fontSize: '0.65rem', fontWeight: 700,
-                  letterSpacing: '0.1em', textTransform: 'uppercase',
-                  opacity: isActive ? 1 : 0.8,
-                  transition: 'opacity 0.3s',
-                }}>
-                  {p.cat}
+                {/* Active overlay */}
+                <div className="proj-active-overlay" style={{ opacity: isActive ? 1 : 0 }} />
+
+                {/* Category + Year — top */}
+                <div className="proj-top" style={{ [isRTL ? 'right' : 'left']: '1.25rem' }}>
+                  <span className="proj-cat">{p.cat}</span>
+                  <span className="proj-year">{p.year}</span>
                 </div>
 
-                {/* Title + arrow */}
-                <div style={{
-                  position: 'absolute', bottom: '1.25rem',
-                  left: isRTL ? 'auto' : '1.25rem',
-                  right: isRTL ? '1.25rem' : 'auto',
-                  width: 'calc(100% - 2.5rem)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  transform: isActive ? 'translateY(0)' : 'translateY(4px)',
-                  transition: 'transform 0.35s',
-                }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '0.92rem', color: 'white', lineHeight: 1.3 }}>
-                    {p.label}
-                  </span>
-                  <div style={{
-                    width: '34px', height: '34px', borderRadius: '50%',
-                    background: 'var(--color-primary)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    flexShrink: 0,
-                    transform: isActive ? 'scale(1)' : 'scale(0.5)',
-                    opacity: isActive ? 1 : 0,
-                    transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
-                  }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                {/* Label + location — bottom */}
+                <div
+                  className="proj-bottom"
+                  style={{
+                    [isRTL ? 'right' : 'left']: '1.25rem',
+                    transform: isActive ? 'translateY(0)' : 'translateY(6px)',
+                  }}
+                >
+                  <div style={{ flex: 1 }}>
+                    <div className="proj-label">{p.label}</div>
+                    <div className="proj-location" style={{ opacity: isActive ? 1 : 0 }}>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                      {p.location}
+                    </div>
+                  </div>
+
+                  {/* Arrow button */}
+                  <div
+                    className="proj-arrow"
+                    style={{
+                      transform: isActive ? 'scale(1)' : 'scale(0.4)',
+                      opacity: isActive ? 1 : 0,
+                    }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
                       <path d={isRTL ? 'M19 12H5M12 19l-7-7 7-7' : 'M5 12h14M12 5l7 7-7 7'}/>
                     </svg>
                   </div>
                 </div>
+
+                {/* Featured ribbon */}
+                {p.featured && (
+                  <div className="proj-featured">
+                    <span>Projet phare</span>
+                  </div>
+                )}
               </div>
             );
           })}
@@ -160,13 +192,91 @@ export default function ProjectsSection() {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        @media(max-width:900px){
-          .proj-grid{ grid-template-columns:1fr 1fr !important; grid-template-rows:auto !important; }
-          .proj-cell{ grid-column:span 1 !important; grid-row:span 1 !important; height:200px; }
+        .proj-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-template-rows: repeat(2, 300px);
+          gap: 12px;
         }
-        @media(max-width:540px){
-          .proj-grid{ grid-template-columns:1fr !important; }
-          .proj-cell{ height:180px; }
+        .proj-cell {
+          position: relative; border-radius: 12px; overflow: hidden;
+          cursor: pointer;
+        }
+        .proj-img {
+          width: 100%; height: 100%; object-fit: cover; display: block;
+          transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .proj-base-grad {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+        }
+        .proj-active-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+          transition: opacity 0.4s;
+        }
+        .proj-top {
+          position: absolute; top: 1.1rem;
+          display: flex; align-items: center; gap: 0.5rem;
+          z-index: 2;
+        }
+        .proj-cat {
+          background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.2);
+          color: white; padding: 0.28rem 0.72rem; border-radius: 100px;
+          font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        .proj-year {
+          font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.5);
+          letter-spacing: 0.1em;
+        }
+        .proj-bottom {
+          position: absolute; bottom: 1.25rem; right: 1.25rem;
+          display: flex; align-items: flex-end; justify-content: space-between;
+          gap: 0.75rem; z-index: 2;
+          transition: transform 0.35s;
+        }
+        .proj-label {
+          font-family: var(--font-heading); font-weight: 800;
+          font-size: 1rem; color: white; line-height: 1.2;
+          margin-bottom: 0.35rem;
+        }
+        .proj-location {
+          display: flex; align-items: center; gap: 0.35rem;
+          font-size: 0.7rem; color: rgba(255,255,255,0.55); font-weight: 500;
+          transition: opacity 0.35s;
+        }
+        .proj-arrow {
+          width: 38px; height: 38px; border-radius: 50%;
+          background: var(--color-primary); flex-shrink: 0;
+          display: flex; align-items: center; justify-content: center;
+          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: 0 4px 18px rgba(212,43,43,0.5);
+        }
+        .proj-featured {
+          position: absolute; top: 1rem; right: 1rem; z-index: 3;
+          background: var(--color-primary);
+          padding: 0.3rem 0.8rem; border-radius: 100px;
+        }
+        .proj-featured span {
+          font-size: 0.6rem; font-weight: 800; color: white;
+          letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        @media (max-width: 960px) {
+          .proj-grid {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+            gap: 10px;
+          }
+          .proj-cell {
+            grid-column: span 1 !important;
+            grid-row: span 1 !important;
+            height: 220px;
+          }
+        }
+        @media (max-width: 540px) {
+          .proj-grid { grid-template-columns: 1fr; }
+          .proj-cell { height: 200px; }
         }
       `}} />
     </section>

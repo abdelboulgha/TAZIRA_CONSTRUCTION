@@ -5,123 +5,116 @@ import { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const POINTS = [
-  'Spécialisée dans les travaux de construction et d\'infrastructure',
-  'Conformité aux normes marocaines et internationales',
-  'Solutions durables adaptées à chaque projet',
-  'Équipe d\'ingénieurs et techniciens certifiés',
+  { text: 'Spécialisée dans les travaux de construction et d\'infrastructure au Maroc', num: '01' },
+  { text: 'Conformité aux normes marocaines et internationales en vigueur',             num: '02' },
+  { text: 'Solutions durables et techniques adaptées à chaque projet',                  num: '03' },
+  { text: 'Équipe d\'ingénieurs et techniciens certifiés et expérimentés',              num: '04' },
 ];
 
 export default function TrustSection() {
   const { t: _t, isRTL } = useLanguage();
   const t = _t as any;
-  const ref      = useRef<HTMLElement>(null);
-  const textRef  = useRef<HTMLDivElement>(null);
-  const imgRef   = useRef<HTMLDivElement>(null);
-  const listRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const textRef     = useRef<HTMLDivElement>(null);
+  const imgRef      = useRef<HTMLDivElement>(null);
+  const pointRefs   = useRef<(HTMLLIElement | null)[]>([]);
+  const statsRef    = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     import('gsap').then(({ gsap }) => {
       import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
+        const trigger = { trigger: sectionRef.current, start: 'top 72%', once: true };
 
         gsap.fromTo(textRef.current,
-          { x: isRTL ? 60 : -60, opacity: 0 },
-          { x: 0, opacity: 1, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: ref.current, start: 'top 75%', once: true } }
-        );
+          { x: isRTL ? 70 : -70, opacity: 0 },
+          { x: 0, opacity: 1, duration: 1.1, ease: 'power3.out', scrollTrigger: trigger });
 
         gsap.fromTo(imgRef.current,
-          { x: isRTL ? -60 : 60, opacity: 0 },
-          { x: 0, opacity: 1, duration: 1.1, ease: 'power3.out',
-            scrollTrigger: { trigger: ref.current, start: 'top 75%', once: true } }
-        );
+          { x: isRTL ? -70 : 70, opacity: 0 },
+          { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out', scrollTrigger: trigger });
 
-        listRefs.current.forEach((el, i) => {
+        pointRefs.current.forEach((el, i) => {
+          if (!el) return;
           gsap.fromTo(el,
             { x: isRTL ? 30 : -30, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.6, delay: 0.4 + i * 0.1, ease: 'power3.out',
-              scrollTrigger: { trigger: ref.current, start: 'top 75%', once: true } }
-          );
+            { x: 0, opacity: 1, duration: 0.65, delay: 0.3 + i * 0.1, ease: 'power3.out',
+              scrollTrigger: trigger });
         });
+
+        gsap.fromTo(statsRef.current,
+          { y: 25, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, delay: 0.6, ease: 'power3.out',
+            scrollTrigger: trigger });
       });
     });
   }, [isRTL]);
 
   return (
     <section
-      ref={ref}
-      style={{ background: 'white', padding: '8rem 0', direction: isRTL ? 'rtl' : 'ltr', overflow: 'hidden' }}
+      ref={sectionRef}
+      style={{ background: 'white', padding: '9rem 0', direction: isRTL ? 'rtl' : 'ltr', overflow: 'hidden' }}
     >
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '55% 1fr', gap: '6rem', alignItems: 'center' }} className="trust-layout">
+        <div className="trust-layout">
 
-          {/* Text side */}
-          <div ref={textRef} style={{ opacity: 0 }}>
-            {/* Badge */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.5rem' }}>
-              <div style={{ height: '2px', width: '40px', background: 'var(--color-primary)' }} />
-              <span style={{ color: 'var(--color-primary)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
-                {t.aboutPreview.badge}
-              </span>
+          {/* ── Text column ────────────────────────── */}
+          <div ref={textRef} className="trust-text" style={{ opacity: 0 }}>
+
+            {/* Eyebrow */}
+            <div className="trust-eyebrow">
+              <div className="trust-eyebrow-line" />
+              <span>À PROPOS DE NOUS</span>
             </div>
 
-            {/* Title */}
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(2.2rem, 4vw, 3.4rem)', lineHeight: 1.06, letterSpacing: '-0.025em', color: 'var(--color-secondary)', marginBottom: '1.5rem' }}>
-              {t.aboutPreview.title}
-              <br />
-              <span style={{ color: 'var(--color-primary)' }}>{t.aboutPreview.titleHighlight}</span>
-              <span style={{ color: 'var(--color-primary)' }}>.</span>
+            {/* Heading */}
+            <h2 className="trust-heading">
+              {t.aboutPreview.title}{' '}
+              <span style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>
+                {t.aboutPreview.titleHighlight}
+              </span>
             </h2>
 
-            {/* Intro paragraph */}
-            <p style={{ fontSize: '1rem', lineHeight: 1.82, color: 'var(--color-text-muted)', marginBottom: '1rem' }}>
-              {t.aboutPreview.description}
-            </p>
-            <p style={{ fontSize: '0.93rem', lineHeight: 1.8, color: 'var(--color-text-muted)', marginBottom: '2.5rem' }}>
+            {/* Body paragraphs */}
+            <p className="trust-body">{t.aboutPreview.description}</p>
+            <p className="trust-body" style={{ marginTop: '0.85rem', marginBottom: '2.75rem' }}>
               {t.aboutPreview.description2}
             </p>
 
-            {/* Key points */}
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '3rem' }}>
+            {/* Numbered key points */}
+            <ul className="trust-points">
               {POINTS.map((pt, i) => (
                 <li
                   key={i}
-                  ref={el => { listRefs.current[i] = el; }}
-                  style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem', opacity: 0 }}
+                  ref={el => { pointRefs.current[i] = el; }}
+                  className="trust-point"
+                  style={{ opacity: 0 }}
                 >
-                  <div style={{
-                    width: '22px', height: '22px', borderRadius: '50%',
-                    background: 'var(--color-primary-light)',
-                    border: '1px solid rgba(212,43,43,0.2)',
-                    color: 'var(--color-primary)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    flexShrink: 0, marginTop: '1px',
-                  }}>
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                      <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                  </div>
-                  <span style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>{pt}</span>
+                  <span className="trust-point-num">{pt.num}</span>
+                  <span className="trust-point-text">{pt.text}</span>
                 </li>
               ))}
             </ul>
 
-            {/* Inline mini stats */}
-            <div style={{ display: 'flex', gap: '0', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', marginBottom: '2.5rem' }}>
+            {/* Mini stats row */}
+            <div ref={statsRef} className="trust-stats" style={{ opacity: 0 }}>
               {[
                 { value: '200+', label: t.aboutPreview.stats.projects },
                 { value: '10+',  label: t.aboutPreview.stats.years    },
                 { value: '150+', label: t.aboutPreview.stats.clients  },
               ].map((s, i) => (
-                <div key={i} style={{ flex: 1, padding: '1.1rem 0.75rem', borderRight: i < 2 ? '1px solid var(--color-border)' : 'none', textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.55rem', color: i === 0 ? 'var(--color-primary)' : 'var(--color-secondary)', lineHeight: 1 }}>{s.value}</div>
-                  <div style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.09em', marginTop: '0.35rem', lineHeight: 1.3 }}>{s.label}</div>
+                <div key={i} className="trust-stat">
+                  <div className="trust-stat-val"
+                    style={{ color: i === 0 ? 'var(--color-primary)' : 'var(--color-secondary)' }}>
+                    {s.value}
+                  </div>
+                  <div className="trust-stat-lbl">{s.label}</div>
                 </div>
               ))}
             </div>
 
             {/* CTA */}
-            <Link href="/about" className="btn btn-primary" style={{ padding: '0.9rem 2rem', fontSize: '0.82rem', letterSpacing: '0.1em', textTransform: 'uppercase', borderRadius: '4px' }}>
+            <Link href="/about" className="trust-cta">
               {t.aboutPreview.learnMore}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d={isRTL ? 'M19 12H5M12 19l-7-7 7-7' : 'M5 12h14M12 5l7 7-7 7'}/>
@@ -129,64 +122,207 @@ export default function TrustSection() {
             </Link>
           </div>
 
-          {/* Image side */}
-          <div ref={imgRef} style={{ position: 'relative', opacity: 0 }}>
-            <div style={{ borderRadius: '20px', overflow: 'hidden', aspectRatio: '4/5', position: 'relative' }}>
+          {/* ── Image column ───────────────────────── */}
+          <div ref={imgRef} className="trust-img-col" style={{ opacity: 0 }}>
+
+            {/* Main image */}
+            <div className="trust-img-wrap">
               <img
-                src="https://images.unsplash.com/photo-1541888081198-b80c102a9eb7?w=800&q=85"
-                alt="Ingénieurs TAZIRA en réunion"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                src="https://images.unsplash.com/photo-1541888081198-b80c102a9eb7?w=900&q=88"
+                alt="Ingénieurs TAZIRA"
+                className="trust-img"
               />
-              {/* subtle red frame */}
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.25) 0%, transparent 50%)' }} />
+              {/* Gradient overlay */}
+              <div className="trust-img-overlay" />
+              {/* Red frame accent */}
+              <div className="trust-img-frame" />
             </div>
 
-            {/* Floating card */}
-            <div style={{
-              position: 'absolute',
-              bottom: '2.5rem',
-              left: isRTL ? 'auto' : '-2rem',
-              right: isRTL ? '-2rem' : 'auto',
-              background: 'white',
-              borderRadius: '14px',
-              padding: '1.25rem 1.5rem',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.13)',
-              display: 'flex', alignItems: 'center', gap: '1rem',
-              border: '1px solid rgba(0,0,0,0.05)',
-            }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            {/* Small secondary image */}
+            <div className="trust-img-sm">
+              <img
+                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500&q=80"
+                alt="Chantier TAZIRA"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.28)' }} />
+              <div className="trust-img-sm-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-              </div>
-              <div>
-                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '1.3rem', color: 'var(--color-secondary)', lineHeight: 1 }}>ISO</div>
-                <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.07em', marginTop: '0.2rem' }}>
-                  Normes de qualité
+                <div>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.95rem', color: 'white', lineHeight: 1 }}>ISO</div>
+                  <div style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.7)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Certifié</div>
                 </div>
               </div>
             </div>
 
-            {/* Red decorative corner */}
-            <div style={{
-              position: 'absolute',
-              top: '-1.5rem',
-              right: isRTL ? 'auto' : '-1.5rem',
-              left: isRTL ? '-1.5rem' : 'auto',
-              width: '100px', height: '100px',
-              border: '3px solid var(--color-primary)',
-              borderRadius: '16px',
-              opacity: 0.15,
-              pointerEvents: 'none',
-            }} />
+            {/* Experience pill */}
+            <div className="trust-exp-pill">
+              <span className="trust-exp-num">10+</span>
+              <span className="trust-exp-lbl">ans d'expertise</span>
+            </div>
           </div>
+
         </div>
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        @media(max-width:900px){
-          .trust-layout{ grid-template-columns: 1fr !important; gap: 3rem !important; }
-          .trust-layout > div:last-child{ display: none !important; }
+        .trust-layout {
+          display: grid;
+          grid-template-columns: 1.1fr 1fr;
+          gap: 7rem;
+          align-items: center;
+        }
+        .trust-eyebrow {
+          display: flex; align-items: center; gap: 0.85rem;
+          margin-bottom: 1.5rem;
+        }
+        .trust-eyebrow-line {
+          width: 36px; height: 1.5px;
+          background: var(--color-primary); flex-shrink: 0;
+        }
+        .trust-eyebrow span {
+          font-size: 0.66rem; font-weight: 800;
+          letter-spacing: 0.24em; text-transform: uppercase;
+          color: var(--color-primary);
+        }
+        .trust-heading {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+          line-height: 1.04; letter-spacing: -0.03em;
+          color: var(--color-secondary); margin-bottom: 1.5rem;
+        }
+        .trust-body {
+          font-size: 0.975rem; line-height: 1.85;
+          color: var(--color-text-muted);
+        }
+        .trust-points {
+          list-style: none; display: flex; flex-direction: column;
+          gap: 0.85rem; margin-bottom: 3rem;
+        }
+        .trust-point {
+          display: flex; align-items: flex-start; gap: 1rem;
+          padding: 1rem 1.25rem;
+          border: 1px solid var(--color-border-light);
+          border-radius: 8px;
+          background: var(--color-bg-light);
+          transition: border-color 0.25s, transform 0.25s;
+        }
+        .trust-point:hover {
+          border-color: rgba(212,43,43,0.2);
+          transform: translateX(4px);
+        }
+        .trust-point-num {
+          font-family: var(--font-heading); font-size: 0.65rem;
+          font-weight: 900; color: var(--color-primary);
+          letter-spacing: 0.08em; flex-shrink: 0;
+          margin-top: 2px;
+        }
+        .trust-point-text {
+          font-size: 0.86rem; color: var(--color-text-muted);
+          line-height: 1.6;
+        }
+        .trust-stats {
+          display: flex; gap: 0;
+          border-top: 1px solid var(--color-border);
+          border-bottom: 1px solid var(--color-border);
+          margin-bottom: 2.5rem;
+        }
+        .trust-stat {
+          flex: 1; padding: 1.15rem 0.75rem;
+          border-right: 1px solid var(--color-border);
+          text-align: center;
+        }
+        .trust-stat:last-child { border-right: none; }
+        .trust-stat-val {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: 1.65rem; line-height: 1; letter-spacing: -0.02em;
+        }
+        .trust-stat-lbl {
+          font-size: 0.62rem; font-weight: 700;
+          color: var(--color-text-muted); text-transform: uppercase;
+          letter-spacing: 0.1em; margin-top: 0.35rem;
+        }
+        .trust-cta {
+          display: inline-flex; align-items: center; gap: 0.65rem;
+          padding: 0.95rem 2.1rem;
+          background: var(--color-primary); color: white;
+          border-radius: 2px; border: 1.5px solid var(--color-primary);
+          font-family: var(--font-heading); font-size: 0.7rem;
+          font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+          text-decoration: none; transition: all 0.3s;
+        }
+        .trust-cta:hover {
+          background: var(--color-primary-dark);
+          border-color: var(--color-primary-dark);
+          transform: translateY(-3px);
+          box-shadow: 0 14px 36px rgba(212,43,43,0.4);
+        }
+
+        /* Image column */
+        .trust-img-col { position: relative; }
+        .trust-img-wrap {
+          border-radius: 16px; overflow: hidden;
+          aspect-ratio: 4/5; position: relative;
+        }
+        .trust-img {
+          width: 100%; height: 100%;
+          object-fit: cover; display: block;
+          transition: transform 0.7s ease;
+        }
+        .trust-img-wrap:hover .trust-img { transform: scale(1.04); }
+        .trust-img-overlay {
+          position: absolute; inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 50%);
+        }
+        .trust-img-frame {
+          position: absolute;
+          top: -14px; right: -14px;
+          width: 90px; height: 90px;
+          border-top: 3px solid var(--color-primary);
+          border-right: 3px solid var(--color-primary);
+          border-radius: 0 10px 0 0;
+          opacity: 0.5; pointer-events: none;
+        }
+        .trust-img-sm {
+          position: absolute; bottom: -1.5rem; left: -2.5rem;
+          width: 170px; height: 110px;
+          border-radius: 12px; overflow: hidden;
+          border: 3px solid white;
+          box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+        }
+        .trust-img-sm-badge {
+          position: absolute; inset: 0;
+          display: flex; align-items: center; justify-content: center;
+          gap: 0.6rem;
+          background: linear-gradient(135deg, rgba(212,43,43,0.85) 0%, rgba(176,31,31,0.9) 100%);
+        }
+        .trust-exp-pill {
+          position: absolute; top: 2rem; right: -2rem;
+          background: var(--color-secondary);
+          color: white;
+          padding: 0.75rem 1.35rem;
+          border-radius: 100px;
+          display: flex; align-items: center; gap: 0.5rem;
+          box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+        }
+        .trust-exp-num {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: 1.25rem; color: var(--color-primary); line-height: 1;
+        }
+        .trust-exp-lbl {
+          font-size: 0.7rem; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.06em;
+          color: rgba(255,255,255,0.7);
+        }
+
+        @media (max-width: 1024px) {
+          .trust-layout { grid-template-columns: 1fr; gap: 4rem; }
+          .trust-layout > div:last-child { display: none; }
+        }
+        @media (max-width: 600px) {
+          .trust-point { padding: 0.85rem 1rem; }
         }
       `}} />
     </section>

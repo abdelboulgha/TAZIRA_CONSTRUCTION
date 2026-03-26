@@ -5,258 +5,453 @@ import { useRef, useEffect } from 'react';
 const STEPS = [
   {
     num: '01',
-    key: 'study',
-    title: 'Étude du projet',
-    desc: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires pour définir les meilleures solutions adaptées à votre projet.',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <circle cx="11" cy="11" r="8"/>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-    ),
+    title: 'Étude préliminaire & Faisabilité',
+    desc: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires. Nous étudions chaque détail pour concevoir des fondations solides pour votre projet architectural.',
+    align: 'left'
   },
   {
     num: '02',
-    key: 'planning',
-    title: 'Planification',
-    desc: "Élaboration d'un plan de travail détaillé avec calendrier précis, allocation des ressources et jalons de contrôle qualité.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-        <line x1="16" y1="2" x2="16" y2="6"/>
-        <line x1="8" y1="2" x2="8" y2="6"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-        <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
-      </svg>
-    ),
+    title: 'Planification Stratégique',
+    desc: "Élaboration d'un calendrier précis et allocation optimisée des ressources. Nous établissons les jalons stricts de contrôle qualité pour garantir l'efficacité à chaque étape.",
+    align: 'right'
   },
   {
     num: '03',
-    key: 'execution',
-    title: 'Réalisation',
-    desc: 'Exécution rigoureuse des travaux avec contrôles qualité continus, respect des normes et supervision technique permanente.',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/>
-      </svg>
-    ),
+    title: 'Exécution & Superfision',
+    desc: 'Mise en œuvre rigoureuse sur le terrain. Nos ingénieurs supervisent la construction avec des contrôles continus, assurant le respect absolu des normes de sécurité et de la vision.',
+    align: 'left'
   },
   {
     num: '04',
-    key: 'delivery',
-    title: 'Livraison',
-    desc: 'Réception finale avec remise de tous les documents, garanties complètes et accompagnement post-livraison de votre projet.',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-        <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
-        <polyline points="22 4 12 14.01 9 11.01"/>
-      </svg>
-    ),
+    title: 'Livraison & Accompagnement',
+    desc: 'Réception finale avec remise des clés, documents techniques et garanties complètes. Notre engagement se poursuit avec un accompagnement post-livraison réactif.',
+    align: 'right'
   },
 ];
 
 export default function ProcessSection() {
-  const ref       = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const lineRef   = useRef<HTMLDivElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+  const stepsRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     import('gsap').then(({ gsap }) => {
       import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
         gsap.registerPlugin(ScrollTrigger);
 
+        // Header animation
         gsap.fromTo(headerRef.current,
-          { y: 42, opacity: 0 },
+          { y: 40, opacity: 0 },
           { y: 0, opacity: 1, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: headerRef.current, start: 'top 82%', once: true } }
+            scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true } 
+          }
         );
 
+        // Center glowing line animation
         gsap.fromTo(lineRef.current,
-          { scaleX: 0, transformOrigin: 'left center' },
-          { scaleX: 1, duration: 1.8, ease: 'power2.inOut',
-            scrollTrigger: { trigger: lineRef.current, start: 'top 76%', once: true } }
+          { scaleY: 0, transformOrigin: 'top center' },
+          { scaleY: 1, duration: 2, ease: 'power2.inOut',
+            scrollTrigger: { trigger: sectionRef.current, start: 'top 60%', once: true } 
+          }
         );
 
-        gsap.fromTo('.prc-step',
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.18, duration: 0.85, ease: 'power3.out',
-            scrollTrigger: { trigger: ref.current, start: 'top 66%', once: true } }
-        );
+        // Alternating steps animation
+        stepsRefs.current.forEach((el, i) => {
+          if (!el) return;
+          const direction = i % 2 === 0 ? -60 : 60; // Left steps slide right, Right steps slide left
+          
+          gsap.fromTo(el,
+            { x: direction, y: 30, opacity: 0 },
+            { x: 0, y: 0, opacity: 1, duration: 1, ease: 'power3.out',
+              scrollTrigger: { trigger: el, start: 'top 80%', once: true }
+            }
+          );
+        });
       });
     });
   }, []);
 
   return (
-    <section ref={ref} className="prc-section">
-
-      {/* Background subtle pattern */}
-      <div className="prc-pattern" />
-
-      <div className="container">
-
+    <section ref={sectionRef} className="timeline-section">
+      {/* Dark modern grid background */}
+      <div className="timeline-bg-grid" />
+      
+      <div className="container relative z-10">
+        
         {/* Header */}
-        <div ref={headerRef} className="prc-header" style={{ opacity: 0 }}>
-          <div className="prc-eyebrow">
-            <div className="prc-eyebrow-line" />
-            <span>Notre Méthode</span>
-            <div className="prc-eyebrow-line" />
+        <div ref={headerRef} className="timeline-header" style={{ opacity: 0 }}>
+          <div className="timeline-eyebrow">
+            <span className="timeline-dash"></span>
+            NOTRE MÉTHODE
+            <span className="timeline-dash"></span>
           </div>
-          <h2 className="prc-heading">
-            Un processus{' '}
-            <em className="prc-em">éprouvé</em>,{' '}
-            des résultats garantis
+          <h2 className="timeline-heading">
+            L'art de bâtir,<br/> un processus <span>infonillible</span>.
           </h2>
-          <p className="prc-subtext">
-            Chaque étape est maîtrisée avec rigueur pour vous offrir une expérience
-            transparente et un résultat à la hauteur de vos attentes.
+          <p className="timeline-subtext">
+            Découvrez notre méthodologie rigoureuse en quatre étapes. De l'idée initiale 
+            à l'inauguration, la transparence et l'excellence guident chacune de nos actions.
           </p>
         </div>
 
-        {/* Steps */}
-        <div className="prc-steps">
-
-          {/* Connecting line */}
-          <div className="prc-line-wrap">
-            <div className="prc-line-bg" />
-            <div ref={lineRef} className="prc-line-fill" />
+        {/* Timeline Layout */}
+        <div className="timeline-wrapper">
+          
+          {/* Central Vertical Line */}
+          <div className="timeline-center-line">
+            <div ref={lineRef} className="timeline-line-glow"></div>
           </div>
 
-          <div className="prc-grid">
+          <div className="timeline-steps">
             {STEPS.map((step, i) => (
-              <div key={step.key} className="prc-step" style={{ opacity: 0 }}>
-                {/* Step number (top) */}
-                <div className="prc-num">{step.num}</div>
-
-                {/* Circle icon */}
-                <div
-                  className="prc-circle"
-                  style={{
-                    background: i === 0 ? 'var(--color-primary)' : 'white',
-                    border: `2px solid ${i === 0 ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                    color: i === 0 ? 'white' : 'var(--color-primary)',
-                    boxShadow: i === 0 ? '0 12px 36px rgba(212,43,43,0.38)' : '0 4px 18px rgba(0,0,0,0.07)',
-                  }}
-                >
-                  {step.icon}
+              <div 
+                key={step.num}
+                className={`timeline-item ${step.align === 'left' ? 'item-left' : 'item-right'}`}
+              >
+                {/* Node dot on the center line */}
+                <div className="timeline-node">
+                  <div className="node-inner"></div>
                 </div>
 
-                {/* Label */}
-                <div className="prc-step-label">Étape {step.num}</div>
-
-                {/* Title */}
-                <h4 className="prc-step-title">{step.title}</h4>
-
-                {/* Description */}
-                <p className="prc-step-desc">{step.desc}</p>
+                {/* Content Card */}
+                <div 
+                  ref={el => { stepsRefs.current[i] = el; }} 
+                  className="timeline-card"
+                  style={{ opacity: 0 }}
+                >
+                  <div className="card-bg-number">{step.num}</div>
+                  
+                  <div className="card-top">
+                    <span className="card-step-label">Étape {step.num}</span>
+                  </div>
+                  <h3 className="card-title">{step.title}</h3>
+                  <div className="card-divider"></div>
+                  <p className="card-desc">{step.desc}</p>
+                </div>
               </div>
             ))}
           </div>
+
         </div>
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .prc-section {
-          background: white;
-          padding: 10rem 0;
-          position: relative; overflow: hidden;
+        .timeline-section {
+          background-color: var(--color-secondary); /* Dark Background */
+          padding: 9rem 0;
+          position: relative;
+          overflow: hidden;
+          color: white;
         }
-        .prc-pattern {
-          position: absolute; inset: 0;
-          background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
-          background-size: 28px 28px;
+
+        /* Subtle grid pattern for technical/architectural feel */
+        .timeline-bg-grid {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+          background-size: 60px 60px;
           pointer-events: none;
         }
 
-        /* Header */
-        .prc-header { text-align: center; margin-bottom: 7rem; position: relative; z-index: 1; }
-        .prc-eyebrow {
-          display: flex; align-items: center; justify-content: center;
-          gap: 1rem; margin-bottom: 1.6rem;
-        }
-        .prc-eyebrow-line { width: 40px; height: 1.5px; background: var(--color-primary); }
-        .prc-eyebrow span {
-          color: var(--color-primary); font-size: 0.65rem; font-weight: 800;
-          letter-spacing: 0.26em; text-transform: uppercase;
-        }
-        .prc-heading {
-          font-family: var(--font-heading); font-weight: 900;
-          font-size: clamp(2.4rem, 5vw, 4rem);
-          line-height: 1.04; letter-spacing: -0.04em;
-          color: var(--color-secondary); margin: 0 auto 1.25rem;
-          max-width: 660px;
-        }
-        .prc-em { color: var(--color-primary); font-style: italic; }
-        .prc-subtext {
-          font-size: 0.96rem; color: var(--color-text-muted);
-          line-height: 1.82; max-width: 460px; margin: 0 auto;
+        /* Header Styles */
+        .timeline-header {
+          text-align: center;
+          margin-bottom: 7rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
-        /* Steps */
-        .prc-steps { position: relative; z-index: 1; }
-        .prc-line-wrap {
+        .timeline-eyebrow {
+          display: flex;
+          align-items: center;
+          gap: 1.25rem;
+          font-size: 0.75rem;
+          font-weight: 800;
+          letter-spacing: 0.25em;
+          color: var(--color-primary);
+          margin-bottom: 1.5rem;
+        }
+
+        .timeline-dash {
+          width: 30px;
+          height: 2px;
+          background-color: var(--color-primary);
+        }
+
+        .timeline-heading {
+          font-family: var(--font-heading);
+          font-weight: 800;
+          font-size: clamp(2.5rem, 5vw, 4.5rem);
+          line-height: 1.1;
+          color: white;
+          max-width: 800px;
+          margin-bottom: 1.5rem;
+          letter-spacing: -0.02em;
+        }
+
+        .timeline-heading span {
+          color: var(--color-primary);
+          font-style: italic;
+        }
+
+        .timeline-subtext {
+          font-size: 1.05rem;
+          line-height: 1.8;
+          color: rgba(255,255,255,0.7);
+          max-width: 600px;
+        }
+
+        /* Timeline Layout Variables */
+        .timeline-wrapper {
+          position: relative;
+          max-width: 1100px;
+          margin: 0 auto;
+        }
+
+        /* The central line */
+        .timeline-center-line {
           position: absolute;
-          top: 44px; left: 12.5%; right: 12.5%;
-          height: 2px; overflow: hidden;
-        }
-        .prc-line-bg {
-          position: absolute; inset: 0;
-          background: var(--color-border);
-        }
-        .prc-line-fill {
-          position: absolute; inset: 0;
-          background: linear-gradient(90deg, var(--color-primary) 0%, rgba(212,43,43,0.25) 100%);
-        }
-        .prc-grid {
-          display: grid; grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem; position: relative; z-index: 1;
-        }
-        .prc-step {
-          text-align: center; padding-top: 0.5rem;
-        }
-        .prc-num {
-          font-family: var(--font-heading); font-weight: 900;
-          font-size: 0.6rem; color: rgba(0,0,0,0.2);
-          letter-spacing: 0.18em; text-transform: uppercase;
-          margin-bottom: 0.6rem;
-        }
-        .prc-circle {
-          width: 80px; height: 80px; border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          margin: 0 auto 2.25rem;
-          transition: all 0.4s ease;
-          position: relative; z-index: 2;
-        }
-        .prc-step:hover .prc-circle {
-          background: var(--color-primary) !important;
-          border-color: var(--color-primary) !important;
-          color: white !important;
-          box-shadow: 0 12px 36px rgba(212,43,43,0.42) !important;
-          transform: scale(1.1);
-        }
-        .prc-step-label {
-          font-family: var(--font-heading); font-weight: 900;
-          font-size: 0.6rem; color: var(--color-primary);
-          letter-spacing: 0.18em; text-transform: uppercase;
-          margin-bottom: 0.65rem;
-        }
-        .prc-step-title {
-          font-family: var(--font-heading); font-weight: 800;
-          font-size: 1.1rem; color: var(--color-secondary);
-          margin-bottom: 0.8rem; line-height: 1.2;
-        }
-        .prc-step-desc {
-          font-size: 0.85rem; color: var(--color-text-muted);
-          line-height: 1.78; margin: 0;
-          max-width: 220px; margin-left: auto; margin-right: auto;
+          top: 0;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 2px;
+          background-color: rgba(255,255,255,0.08); /* Faded track */
+          z-index: 1;
         }
 
-        @media (max-width: 900px) {
-          .prc-grid { grid-template-columns: repeat(2, 1fr); gap: 3.5rem 2rem; }
-          .prc-line-wrap { display: none; }
-          .prc-section { padding: 6rem 0; }
+        .timeline-line-glow {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(to bottom, var(--color-primary) 0%, rgba(212,43,43,0) 100%);
+          box-shadow: 0 0 15px var(--color-primary);
         }
-        @media (max-width: 480px) {
-          .prc-grid { grid-template-columns: 1fr; }
+
+        .timeline-steps {
+          display: flex;
+          flex-direction: column;
+          gap: 4rem;
+          position: relative;
+          z-index: 2;
+        }
+
+        /* Individual Items */
+        .timeline-item {
+          display: flex;
+          justify-content: flex-end;
+          padding-right: 50%;
+          position: relative;
+          width: 100%;
+        }
+
+        .timeline-item.item-right {
+          justify-content: flex-start;
+          padding-right: 0;
+          padding-left: 50%;
+        }
+
+        /* The Circle Node on the timeline */
+        .timeline-node {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background-color: var(--color-secondary);
+          border: 2px solid var(--color-primary);
+          box-shadow: 0 0 0 6px rgba(212,43,43,0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.4s ease;
+          z-index: 3;
+        }
+
+        .node-inner {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: var(--color-primary);
+          transition: transform 0.4s ease;
+        }
+
+        .timeline-item:hover .timeline-node {
+          box-shadow: 0 0 0 10px rgba(212,43,43,0.25);
+          background-color: var(--color-primary);
+        }
+
+        .timeline-item:hover .node-inner {
+          background-color: white;
+          transform: scale(1.2);
+        }
+
+        /* The Card */
+        .timeline-card {
+          width: 85%;
+          max-width: 450px;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
+          padding: 3rem;
+          position: relative;
+          overflow: hidden;
+          transition: all 0.4s ease;
+        }
+
+        .timeline-item.item-left .timeline-card {
+          margin-right: 4rem;
+          text-align: right;
+        }
+
+        .timeline-item.item-right .timeline-card {
+          margin-left: 4rem;
+          text-align: left;
+        }
+
+        .timeline-card:hover {
+          background: rgba(255, 255, 255, 0.06);
+          border-color: rgba(212, 43, 43, 0.3);
+          transform: translateY(-5px);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Huge watermark number inside card */
+        .card-bg-number {
+          position: absolute;
+          bottom: -20px;
+          right: -10px;
+          font-family: var(--font-heading);
+          font-size: 8rem;
+          font-weight: 900;
+          color: rgba(255,255,255,0.03);
+          line-height: 1;
+          pointer-events: none;
+          user-select: none;
+          transition: color 0.4s ease;
+        }
+
+        .timeline-item.item-left .card-bg-number {
+          right: auto;
+          left: -10px;
+        }
+
+        .timeline-card:hover .card-bg-number {
+          color: rgba(212,43,43,0.06);
+        }
+
+        /* Card Content */
+        .card-top {
+          margin-bottom: 1rem;
+        }
+
+        .card-step-label {
+          display: inline-block;
+          font-family: var(--font-heading);
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: var(--color-primary);
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+        }
+
+        .card-title {
+          font-family: var(--font-heading);
+          font-size: 1.6rem;
+          font-weight: 700;
+          color: white;
+          margin-bottom: 1.5rem;
+          line-height: 1.3;
+        }
+
+        .card-divider {
+          width: 50px;
+          height: 2px;
+          background-color: var(--color-primary);
+          margin-bottom: 1.5rem;
+          margin-left: auto; /* For left alignment */
+        }
+
+        .timeline-item.item-right .card-divider {
+          margin-left: 0;
+        }
+
+        .card-desc {
+          font-size: 1rem;
+          line-height: 1.7;
+          color: rgba(255, 255, 255, 0.65);
+          margin: 0;
+          position: relative;
+          z-index: 2;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 992px) {
+          .timeline-center-line {
+            left: 30px;
+            transform: none;
+          }
+
+          .timeline-node {
+            left: 30px;
+            transform: translate(-50%, -50%);
+          }
+
+          .timeline-item, .timeline-item.item-right {
+            justify-content: flex-start;
+            padding-left: 70px; /* Space for the line */
+            padding-right: 0;
+          }
+
+          .timeline-item.item-left .timeline-card, 
+          .timeline-item.item-right .timeline-card {
+            margin: 0;
+            width: 100%;
+            max-width: 100%;
+            text-align: left;
+            padding: 2.5rem 2rem;
+          }
+
+          .timeline-item.item-left .card-divider,
+          .timeline-item.item-right .card-divider {
+            margin-left: 0;
+          }
+
+          .timeline-item.item-left .card-bg-number {
+            left: auto;
+            right: -10px;
+          }
+
+          .timeline-steps {
+            gap: 2.5rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .timeline-section {
+            padding: 6rem 0;
+          }
+          
+          .timeline-heading {
+            font-size: 2.25rem;
+          }
+
+          .card-title {
+            font-size: 1.35rem;
+          }
+
+          .card-desc {
+            font-size: 0.95rem;
+          }
         }
       `}} />
     </section>

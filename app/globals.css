@@ -8,25 +8,25 @@
    DESIGN TOKENS
    ============================================= */
 :root {
-  /* Colors */
-  --color-primary:       #d42b2b;
-  --color-primary-dark:  #b01f1f;
-  --color-primary-light: rgba(212, 43, 43, 0.08);
-  --color-secondary:     #0a0a0a;
-  --color-secondary-mid: #141414;
-  --color-secondary-light: #1e1e1e;
-  --color-accent:        #c0392b;
+  /* Colors - Option 1: Élégance Industrielle */
+  --color-primary:       #BC2026;
+  --color-primary-dark:  #9C151B;
+  --color-primary-light: rgba(188, 32, 38, 0.08);
+  --color-secondary:     #1A1A1A;
+  --color-secondary-mid: #242424;
+  --color-secondary-light: #333333;
+  --color-accent:        #A31A20;
   --color-white:         #ffffff;
-  --color-bg:            #ffffff;
-  --color-bg-light:      #f9f9f9;
-  --color-bg-gray:       #f3f3f3;
-  --color-bg-dark:       #080808;
-  --color-text:          #111111;
-  --color-text-muted:    #666666;
-  --color-text-light:    #999999;
-  --color-border:        #e5e5e5;
-  --color-border-light:  #efefef;
-  --color-border-dark:   rgba(255, 255, 255, 0.07);
+  --color-bg:            #F7F5F2;
+  --color-bg-light:      #ffffff;
+  --color-bg-gray:       #EBE7E0;
+  --color-bg-dark:       #141414;
+  --color-text:          #2B2B2B;
+  --color-text-muted:    #6E6C68;
+  --color-text-light:    #A3A09B;
+  --color-border:        #E2DED8;
+  --color-border-light:  #EBE7E0;
+  --color-border-dark:   rgba(255, 255, 255, 0.09);
 
   /* Typography */
   --font-heading: 'Montserrat', sans-serif;
@@ -44,7 +44,7 @@
   --shadow-md:  0 4px 20px rgba(0, 0, 0, 0.08);
   --shadow-lg:  0 12px 48px rgba(0, 0, 0, 0.12);
   --shadow-xl:  0 24px 72px rgba(0, 0, 0, 0.15);
-  --shadow-red: 0 8px 32px rgba(212, 43, 43, 0.28);
+  --shadow-red: 0 8px 32px rgba(188, 32, 38, 0.28);
 
   /* Border radius */
   --radius-sm:   4px;

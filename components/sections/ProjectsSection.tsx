@@ -191,7 +191,7 @@ export default function ProjectsSection() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         .proj-section {
-          background: #f2f2f2;
+          background: var(--color-bg-gray);
           padding: 10rem 0;
           position: relative;
         }
@@ -320,7 +320,7 @@ export default function ProjectsSection() {
           transition: all 0.3s;
         }
         .proj-view-all:hover {
-          background: var(--color-secondary); color: white;
+          background: var(--color-dark-surface); color: var(--color-text);
           transform: translateY(-3px);
           box-shadow: 0 14px 36px rgba(0,0,0,0.15);
         }

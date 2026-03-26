@@ -267,7 +267,7 @@ export default function AboutPreview() {
       <style dangerouslySetInnerHTML={{ __html: `
         /* Root */
         .about-root {
-          background: #fff;
+          background: var(--color-bg-light);
           padding: 7rem 0 3rem;
           overflow: hidden;
           position: relative;
@@ -276,7 +276,7 @@ export default function AboutPreview() {
           content: '';
           position: absolute;
           inset: 0;
-          background-image: radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px);
+          background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
           background-size: 28px 28px;
           pointer-events: none;
         }
@@ -311,7 +311,7 @@ export default function AboutPreview() {
           font-weight: 900;
           line-height: 1.06;
           letter-spacing: -0.03em;
-          color: var(--color-secondary);
+          color: var(--color-text);
           margin-bottom: 1.75rem;
           opacity: 0;
         }
@@ -332,7 +332,7 @@ export default function AboutPreview() {
           margin-bottom: 0;
         }
         .about-pillar {
-          background: #f5f4f2;
+          background: var(--color-bg-gray);
           border-radius: 16px;
           padding: 1.25rem 1.1rem;
           opacity: 0;
@@ -346,7 +346,7 @@ export default function AboutPreview() {
           font-family: var(--font-heading);
           font-weight: 700;
           font-size: 0.9rem;
-          color: var(--color-secondary);
+          color: var(--color-text);
           margin-bottom: 0.45rem;
           line-height: 1.25;
         }
@@ -370,7 +370,7 @@ export default function AboutPreview() {
           gap: 0.45rem;
           font-size: 0.82rem;
           font-weight: 700;
-          color: var(--color-secondary);
+          color: var(--color-text);
           letter-spacing: 0.04em;
           text-decoration: none;
           border-bottom: 1.5px solid var(--color-border);

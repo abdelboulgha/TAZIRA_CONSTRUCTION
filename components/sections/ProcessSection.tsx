@@ -138,7 +138,7 @@ export default function ProcessSection() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         .timeline-section {
-          background-color: var(--color-secondary); /* Dark Background */
+          background-color: var(--color-dark-surface); /* Dark Background */
           padding: 9rem 0;
           position: relative;
           overflow: hidden;
@@ -266,7 +266,7 @@ export default function ProcessSection() {
           width: 24px;
           height: 24px;
           border-radius: 50%;
-          background-color: var(--color-secondary);
+          background-color: var(--color-dark-surface);
           border: 2px solid var(--color-primary);
           box-shadow: 0 0 0 6px rgba(212,43,43,0.15);
           display: flex;

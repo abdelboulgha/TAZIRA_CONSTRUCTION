@@ -10,7 +10,7 @@ export default function Footer() {
   const serviceKeys = ['construction', 'renovation', 'electrical', 'publicWorks', 'maintenance', 'design'];
 
   return (
-    <footer style={{ background: 'var(--color-secondary)', color: 'rgba(255,255,255,0.65)', direction: isRTL ? 'rtl' : 'ltr' }}>
+    <footer style={{ background: 'var(--color-bg-dark)', color: 'rgba(255,255,255,0.65)', direction: isRTL ? 'rtl' : 'ltr' }}>
 
       {/* Main grid */}
       <div className="container" style={{ padding: '4.5rem 1.5rem 3rem' }}>

@@ -99,7 +99,7 @@ export default function TrustSection() {
               { value: '150+', label: 'Clients satisfaits', accent: false },
             ].map((s, i) => (
               <div key={i} className="trust-stat">
-                <div className="trust-stat-val" style={{ color: s.accent ? 'var(--color-primary)' : 'var(--color-secondary)' }}>
+                <div className="trust-stat-val" style={{ color: s.accent ? 'var(--color-primary)' : 'var(--color-text)' }}>
                   {s.value}
                 </div>
                 <div className="trust-stat-lbl">{s.label}</div>
@@ -166,7 +166,7 @@ export default function TrustSection() {
       <style dangerouslySetInnerHTML={{ __html: `
         /* ─── Section ──────────────────────── */
         .trust-section {
-          background: #ffffff;
+          background: var(--color-bg-light);
           padding: 10rem 0;
           position: relative;
           overflow: hidden;
@@ -179,7 +179,7 @@ export default function TrustSection() {
           font-size: clamp(10rem, 20vw, 20rem); line-height: 1;
           letter-spacing: -0.06em;
           color: transparent;
-          -webkit-text-stroke: 1px rgba(0,0,0,0.032);
+          -webkit-text-stroke: 1px rgba(255,255,255,0.032);
           user-select: none; pointer-events: none;
         }
 
@@ -212,7 +212,7 @@ export default function TrustSection() {
           font-family: var(--font-heading); font-weight: 900;
           font-size: clamp(2.5rem, 4.5vw, 3.8rem);
           line-height: 1.04; letter-spacing: -0.035em;
-          color: var(--color-secondary); margin-bottom: 1.75rem;
+          color: var(--color-text); margin-bottom: 1.75rem;
         }
         .trust-em {
           color: var(--color-primary); font-style: italic;
@@ -325,7 +325,7 @@ export default function TrustSection() {
         /* ─── Badge card ───────────────────── */
         .trust-badge-card {
           position: absolute; bottom: 2.5rem; left: -2.5rem;
-          background: white;
+          background: var(--color-bg-light);
           border-radius: 12px; padding: 1rem 1.25rem;
           display: flex; align-items: center; gap: 0.85rem;
           box-shadow: 0 18px 52px rgba(0,0,0,0.18);
@@ -338,7 +338,7 @@ export default function TrustSection() {
         }
         .trust-badge-title {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: 0.9rem; color: var(--color-secondary); line-height: 1;
+          font-size: 0.9rem; color: var(--color-text); line-height: 1;
         }
         .trust-badge-sub {
           font-size: 0.65rem; color: var(--color-text-muted); margin-top: 0.2rem;
@@ -347,7 +347,7 @@ export default function TrustSection() {
         /* ─── Experience pill ──────────────── */
         .trust-exp-pill {
           position: absolute; top: 2.5rem; right: -2rem;
-          background: var(--color-secondary); color: white;
+          background: var(--color-dark-surface); color: var(--color-text);
           padding: 0.8rem 1.4rem; border-radius: 100px;
           display: flex; align-items: center; gap: 0.55rem;
           box-shadow: 0 12px 38px rgba(0,0,0,0.38);
@@ -367,7 +367,7 @@ export default function TrustSection() {
           position: absolute; top: -1.5rem; right: -2rem;
           width: 140px; height: 110px;
           border-radius: 10px; overflow: hidden;
-          border: 3px solid white;
+          border: 3px solid var(--color-bg-light);
           box-shadow: 0 14px 40px rgba(0,0,0,0.22);
         }
         .trust-img-sm-overlay {

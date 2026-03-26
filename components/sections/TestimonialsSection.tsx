@@ -40,7 +40,7 @@ function Stars({ count }: { count: number }) {
     <div style={{ display: 'flex', gap: '3px', marginBottom: '1.5rem' }}>
       {Array.from({ length: 5 }).map((_, i) => (
         <svg key={i} width="14" height="14" viewBox="0 0 24 24"
-          fill={i < count ? 'var(--color-primary)' : 'rgba(0,0,0,0.1)'}
+          fill={i < count ? 'var(--color-primary)' : 'rgba(255,255,255,0.12)'}
           stroke="none">
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
@@ -130,7 +130,7 @@ export default function TestimonialsSection() {
               {/* Author */}
               <div className="tsm-author">
                 <div className="tsm-avatar" style={{
-                  background: item.dark ? 'var(--color-secondary)' : 'var(--color-primary)',
+                  background: item.dark ? 'var(--color-bg-dark)' : 'var(--color-primary)',
                 }}>
                   {item.initial}
                 </div>
@@ -158,7 +158,7 @@ export default function TestimonialsSection() {
             ))}
           </div>
           <p style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', margin: 0, textAlign: 'center' }}>
-            <strong style={{ color: 'var(--color-secondary)', fontFamily: 'var(--font-heading)' }}>4.9/5</strong>
+            <strong style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>4.9/5</strong>
             {' '}— Basé sur plus de 150 avis clients vérifiés
           </p>
         </div>
@@ -166,13 +166,13 @@ export default function TestimonialsSection() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         .tsm-section {
-          background: white;
+          background: var(--color-bg);
           padding: 10rem 0;
           position: relative; overflow: hidden;
         }
         .tsm-dots {
           position: absolute; inset: 0; pointer-events: none;
-          background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+          background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
           background-size: 28px 28px;
         }
 
@@ -191,7 +191,7 @@ export default function TestimonialsSection() {
           font-family: var(--font-heading); font-weight: 900;
           font-size: clamp(2.4rem, 5vw, 4rem);
           line-height: 1.04; letter-spacing: -0.04em;
-          color: var(--color-secondary); margin: 0 auto 1.25rem;
+          color: var(--color-text); margin: 0 auto 1.25rem;
         }
         .tsm-em { color: var(--color-primary); font-style: italic; }
         .tsm-subtext {
@@ -206,7 +206,7 @@ export default function TestimonialsSection() {
           position: relative; z-index: 1;
         }
         .tsm-card {
-          background: white;
+          background: var(--color-bg-light);
           border-radius: 16px; padding: 2.5rem;
           border: 1px solid var(--color-border-light);
           box-shadow: 0 2px 18px rgba(0,0,0,0.05);
@@ -261,7 +261,7 @@ export default function TestimonialsSection() {
         }
         .tsm-author-name {
           font-family: var(--font-heading); font-weight: 800;
-          font-size: 0.92rem; color: var(--color-secondary); line-height: 1.2;
+          font-size: 0.92rem; color: var(--color-text); line-height: 1.2;
         }
         .tsm-author-role {
           font-size: 0.73rem; color: var(--color-text-muted); margin-top: 0.2rem;

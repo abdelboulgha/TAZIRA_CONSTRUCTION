@@ -179,7 +179,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             style={{
-              background: 'white',
+              background: 'var(--color-bg-light)',
               borderTop: '1px solid var(--color-border)',
               overflow: 'hidden',
             }}

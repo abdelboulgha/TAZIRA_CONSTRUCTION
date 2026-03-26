@@ -140,7 +140,7 @@ export default function WhyUsSection() {
       <style dangerouslySetInnerHTML={{ __html: `
         .why-interactive-section {
           padding: 8rem 0;
-          background-color: var(--color-background);
+          background-color: var(--color-bg);
           overflow: hidden;
         }
 
@@ -237,7 +237,7 @@ export default function WhyUsSection() {
           position: absolute;
           bottom: 2rem;
           left: 2rem;
-          background: rgba(255,255,255,0.9);
+          background: rgba(20,20,20,0.88);
           backdrop-filter: blur(10px);
           padding: 1rem 1.5rem;
           border-radius: 12px;

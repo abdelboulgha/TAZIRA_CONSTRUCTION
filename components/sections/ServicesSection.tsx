@@ -129,7 +129,7 @@ export default function ServicesSection() {
               gsap.to(c, { flexGrow: FLEX_DEFAULT, borderColor: 'var(--color-border-light)', boxShadow: 'none', duration: 0.48, ease: 'power3.inOut' });
             });
             gsap.to(imgEl,    { opacity: 0, scale: 1, duration: 0.4 });
-            gsap.to(numEl,    { color: 'rgba(0,0,0,0.045)', duration: 0.3 });
+            gsap.to(numEl,    { color: 'rgba(255,255,255,0.045)', duration: 0.3 });
             gsap.to(iconEl,   { background: 'rgba(212,43,43,0.07)', color: 'var(--color-primary)', boxShadow: 'none', duration: 0.35 });
             gsap.to(lineEl,   { width: '48px', duration: 0.45, ease: 'power3.inOut' });
             gsap.to(descEl,   { opacity: 0, y: 10, duration: 0.22 });
@@ -212,14 +212,14 @@ export default function ServicesSection() {
       <style dangerouslySetInnerHTML={{ __html: `
         /* Section */
         .svc2-section {
-          background: #fff;
+          background: var(--color-bg-light);
           padding: 4rem 0 9rem;
           position: relative;
           overflow: hidden;
         }
         .svc2-dots {
           position: absolute; inset: 0; pointer-events: none;
-          background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+          background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
           background-size: 28px 28px;
         }
 
@@ -241,7 +241,7 @@ export default function ServicesSection() {
           font-family: var(--font-heading); font-weight: 900;
           font-size: clamp(2.2rem, 4.5vw, 3.8rem);
           line-height: 1.02; letter-spacing: -0.04em;
-          color: var(--color-secondary); margin: 0;
+          color: var(--color-text); margin: 0;
         }
         .svc2-em { color: var(--color-primary); font-style: italic; }
         .svc2-viewall {
@@ -297,7 +297,7 @@ export default function ServicesSection() {
           position: absolute; bottom: 1rem; right: 1.25rem;
           font-family: var(--font-heading); font-weight: 900;
           font-size: 5rem; line-height: 1; letter-spacing: -0.06em;
-          color: rgba(0,0,0,0.045);
+          color: rgba(255,255,255,0.045);
           user-select: none; pointer-events: none; z-index: 1;
           transition: color 0.35s;
         }

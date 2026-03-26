@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { useLanguage } from '@/context/LanguageContext';
 
 const PROJECTS = [
   {
@@ -53,7 +52,6 @@ const PROJECTS = [
 ];
 
 export default function ProjectsSection() {
-  const { isRTL } = useLanguage();
   const ref       = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef   = useRef<HTMLDivElement>(null);
@@ -65,17 +63,20 @@ export default function ProjectsSection() {
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.fromTo(headerRef.current,
-          { y: 38, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+          { y: 42, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: 'power3.out',
             scrollTrigger: { trigger: headerRef.current, start: 'top 82%', once: true } }
         );
 
         const cells = gridRef.current?.querySelectorAll('.proj-cell');
         if (cells) {
           gsap.fromTo(cells,
-            { scale: 0.93, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.75, stagger: 0.1, ease: 'power3.out',
-              scrollTrigger: { trigger: gridRef.current, start: 'top 75%', once: true } }
+            { scale: 0.92, opacity: 0, y: 20 },
+            {
+              scale: 1, opacity: 1, y: 0,
+              duration: 0.8, stagger: 0.1, ease: 'power3.out',
+              scrollTrigger: { trigger: gridRef.current, start: 'top 72%', once: true }
+            }
           );
         }
       });
@@ -83,29 +84,26 @@ export default function ProjectsSection() {
   }, []);
 
   return (
-    <section ref={ref} style={{ background: '#f3f3f3', padding: '9rem 0', direction: isRTL ? 'rtl' : 'ltr' }}>
+    <section ref={ref} className="proj-section">
+      {/* Subtle noise overlay */}
+      <div className="proj-noise" />
+
       <div className="container">
 
         {/* Header */}
-        <div
-          ref={headerRef}
-          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4.5rem', flexWrap: 'wrap', gap: '1.5rem' }}
-        >
+        <div ref={headerRef} className="proj-header" style={{ opacity: 0 }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem' }}>
-              <div style={{ width: '32px', height: '1.5px', background: 'var(--color-primary)' }} />
-              <span style={{ color: 'var(--color-primary)', fontSize: '0.66rem', fontWeight: 800, letterSpacing: '0.24em', textTransform: 'uppercase' }}>
-                Nos Réalisations
-              </span>
+            <div className="proj-eyebrow">
+              <div className="proj-eyebrow-line" />
+              <span>Nos Réalisations</span>
             </div>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', lineHeight: 1.0, letterSpacing: '-0.035em', margin: 0, color: 'var(--color-secondary)' }}>
+            <h2 className="proj-heading">
               Projets{' '}
-              <span style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>réalisés</span>
+              <em className="proj-em">réalisés</em>
             </h2>
           </div>
-
-          <div style={{ textAlign: isRTL ? 'right' : 'left' }}>
-            <p style={{ fontSize: '0.88rem', color: 'var(--color-text-muted)', maxWidth: '300px', lineHeight: 1.75, margin: 0 }}>
+          <div className="proj-header-right">
+            <p className="proj-header-text">
               Plus de 200 projets livrés à travers tout le Maroc avec la plus haute exigence de qualité.
             </p>
           </div>
@@ -126,60 +124,50 @@ export default function ProjectsSection() {
                   gridRow: `span ${p.row}`,
                 }}
               >
-                {/* Image */}
                 <img
                   src={p.src}
                   alt={p.label}
                   className="proj-img"
-                  style={{ transform: isActive ? 'scale(1.08)' : 'scale(1)' }}
+                  style={{ transform: isActive ? 'scale(1.09)' : 'scale(1)' }}
                 />
-
-                {/* Base gradient */}
                 <div className="proj-base-grad" />
-
-                {/* Active overlay */}
                 <div className="proj-active-overlay" style={{ opacity: isActive ? 1 : 0 }} />
 
-                {/* Category + Year — top */}
-                <div className="proj-top" style={{ [isRTL ? 'right' : 'left']: '1.25rem' }}>
+                {/* Top: category + year */}
+                <div className="proj-top">
                   <span className="proj-cat">{p.cat}</span>
                   <span className="proj-year">{p.year}</span>
                 </div>
 
-                {/* Label + location — bottom */}
+                {/* Bottom: label + arrow */}
                 <div
                   className="proj-bottom"
-                  style={{
-                    [isRTL ? 'right' : 'left']: '1.25rem',
-                    transform: isActive ? 'translateY(0)' : 'translateY(6px)',
-                  }}
+                  style={{ transform: isActive ? 'translateY(0)' : 'translateY(8px)' }}
                 >
-                  <div style={{ flex: 1 }}>
+                  <div className="proj-bottom-info">
                     <div className="proj-label">{p.label}</div>
                     <div className="proj-location" style={{ opacity: isActive ? 1 : 0 }}>
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="2.5">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
                         <circle cx="12" cy="10" r="3"/>
                       </svg>
                       {p.location}
                     </div>
                   </div>
-
-                  {/* Arrow button */}
                   <div
                     className="proj-arrow"
                     style={{
-                      transform: isActive ? 'scale(1)' : 'scale(0.4)',
+                      transform: isActive ? 'scale(1)' : 'scale(0.3)',
                       opacity: isActive ? 1 : 0,
                     }}
                   >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                      <path d={isRTL ? 'M19 12H5M12 19l-7-7 7-7' : 'M5 12h14M12 5l7 7-7 7'}/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                   </div>
                 </div>
 
-                {/* Featured ribbon */}
+                {/* Featured */}
                 {p.featured && (
                   <div className="proj-featured">
                     <span>Projet phare</span>
@@ -189,69 +177,121 @@ export default function ProjectsSection() {
             );
           })}
         </div>
+
+        {/* View all link */}
+        <div className="proj-footer">
+          <a href="#" className="proj-view-all">
+            Voir tous les projets
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        .proj-section {
+          background: #f2f2f2;
+          padding: 10rem 0;
+          position: relative;
+        }
+        .proj-noise {
+          position: absolute; inset: 0; z-index: 0; pointer-events: none;
+          background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+          background-size: 28px 28px;
+          opacity: 0.6;
+        }
+
+        /* Header */
+        .proj-header {
+          display: flex; justify-content: space-between;
+          align-items: flex-end; margin-bottom: 5rem;
+          flex-wrap: wrap; gap: 1.5rem;
+          position: relative; z-index: 1;
+        }
+        .proj-eyebrow {
+          display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.25rem;
+        }
+        .proj-eyebrow-line { width: 32px; height: 1.5px; background: var(--color-primary); }
+        .proj-eyebrow span {
+          color: var(--color-primary); font-size: 0.65rem; font-weight: 800;
+          letter-spacing: 0.24em; text-transform: uppercase;
+        }
+        .proj-heading {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          line-height: 1.0; letter-spacing: -0.04em; margin: 0;
+          color: var(--color-secondary);
+        }
+        .proj-em { color: var(--color-primary); font-style: italic; }
+        .proj-header-right { max-width: 300px; }
+        .proj-header-text {
+          font-size: 0.89rem; color: var(--color-text-muted);
+          max-width: 300px; line-height: 1.78; margin: 0;
+        }
+
+        /* Grid */
         .proj-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: repeat(2, 300px);
-          gap: 12px;
+          grid-template-rows: repeat(2, 320px);
+          gap: 14px;
+          position: relative; z-index: 1;
         }
         .proj-cell {
-          position: relative; border-radius: 12px; overflow: hidden;
+          position: relative; border-radius: 14px; overflow: hidden;
           cursor: pointer;
         }
         .proj-img {
           width: 100%; height: 100%; object-fit: cover; display: block;
-          transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+          transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .proj-base-grad {
           position: absolute; inset: 0;
-          background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+          background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%);
         }
         .proj-active-overlay {
           position: absolute; inset: 0;
-          background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
-          transition: opacity 0.4s;
+          background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+          transition: opacity 0.42s;
         }
         .proj-top {
-          position: absolute; top: 1.1rem;
-          display: flex; align-items: center; gap: 0.5rem;
-          z-index: 2;
+          position: absolute; top: 1.1rem; left: 1.25rem;
+          display: flex; align-items: center; gap: 0.5rem; z-index: 2;
         }
         .proj-cat {
           background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
           border: 1px solid rgba(255,255,255,0.2);
-          color: white; padding: 0.28rem 0.72rem; border-radius: 100px;
-          font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+          color: white; padding: 0.28rem 0.75rem; border-radius: 100px;
+          font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
         }
         .proj-year {
-          font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.5);
-          letter-spacing: 0.1em;
+          font-size: 0.6rem; font-weight: 700;
+          color: rgba(255,255,255,0.45); letter-spacing: 0.1em;
         }
         .proj-bottom {
-          position: absolute; bottom: 1.25rem; right: 1.25rem;
+          position: absolute; bottom: 1.25rem; left: 1.25rem; right: 1.25rem;
           display: flex; align-items: flex-end; justify-content: space-between;
           gap: 0.75rem; z-index: 2;
-          transition: transform 0.35s;
+          transition: transform 0.38s ease;
         }
+        .proj-bottom-info { flex: 1; }
         .proj-label {
           font-family: var(--font-heading); font-weight: 800;
-          font-size: 1rem; color: white; line-height: 1.2;
-          margin-bottom: 0.35rem;
+          font-size: 1.05rem; color: white; line-height: 1.2;
+          margin-bottom: 0.38rem;
         }
         .proj-location {
-          display: flex; align-items: center; gap: 0.35rem;
-          font-size: 0.7rem; color: rgba(255,255,255,0.55); font-weight: 500;
-          transition: opacity 0.35s;
+          display: flex; align-items: center; gap: 0.38rem;
+          font-size: 0.7rem; color: rgba(255,255,255,0.5); font-weight: 500;
+          transition: opacity 0.38s;
         }
         .proj-arrow {
-          width: 38px; height: 38px; border-radius: 50%;
+          width: 40px; height: 40px; border-radius: 50%;
           background: var(--color-primary); flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
-          transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-          box-shadow: 0 4px 18px rgba(212,43,43,0.5);
+          transition: all 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+          box-shadow: 0 5px 20px rgba(212,43,43,0.55);
         }
         .proj-featured {
           position: absolute; top: 1rem; right: 1rem; z-index: 3;
@@ -259,24 +299,47 @@ export default function ProjectsSection() {
           padding: 0.3rem 0.8rem; border-radius: 100px;
         }
         .proj-featured span {
-          font-size: 0.6rem; font-weight: 800; color: white;
+          font-size: 0.58rem; font-weight: 800; color: white;
           letter-spacing: 0.1em; text-transform: uppercase;
         }
+
+        /* Footer */
+        .proj-footer {
+          display: flex; justify-content: center;
+          margin-top: 4rem;
+          position: relative; z-index: 1;
+        }
+        .proj-view-all {
+          display: inline-flex; align-items: center; gap: 0.65rem;
+          padding: 1rem 2.4rem;
+          border: 1.5px solid var(--color-secondary);
+          border-radius: 2px;
+          font-family: var(--font-heading); font-size: 0.68rem;
+          font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;
+          color: var(--color-secondary); text-decoration: none;
+          transition: all 0.3s;
+        }
+        .proj-view-all:hover {
+          background: var(--color-secondary); color: white;
+          transform: translateY(-3px);
+          box-shadow: 0 14px 36px rgba(0,0,0,0.15);
+        }
+
         @media (max-width: 960px) {
           .proj-grid {
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto;
-            gap: 10px;
+            grid-template-rows: auto; gap: 10px;
           }
           .proj-cell {
             grid-column: span 1 !important;
             grid-row: span 1 !important;
-            height: 220px;
+            height: 230px;
           }
+          .proj-section { padding: 6rem 0; }
         }
         @media (max-width: 540px) {
           .proj-grid { grid-template-columns: 1fr; }
-          .proj-cell { height: 200px; }
+          .proj-cell { height: 220px; }
         }
       `}} />
     </section>

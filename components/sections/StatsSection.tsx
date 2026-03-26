@@ -1,10 +1,8 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { useLanguage } from '@/context/LanguageContext';
 
-/* ── Animated counter hook ─────────────────────────────────── */
-function useCounter(target: number, active: boolean, duration = 2.4) {
+function useCounter(target: number, active: boolean, duration = 2.2) {
   const [val, setVal] = useState(0);
   useEffect(() => {
     if (!active) return;
@@ -36,29 +34,28 @@ function StatItem({
   const val = useCounter(num, show);
 
   return (
-    <div className="stat-item">
-      <div className="stat-num">
-        {val}<span className="stat-suffix">{suffix}</span>
+    <div className="stt-item">
+      <div className="stt-num">
+        {val}<span className="stt-suffix">{suffix}</span>
       </div>
-      <div className="stat-divider" />
-      <div className="stat-label">{label}</div>
-      <div className="stat-sublabel">{sublabel}</div>
+      <div className="stt-bar" />
+      <div className="stt-label">{label}</div>
+      <div className="stt-sublabel">{sublabel}</div>
     </div>
   );
 }
 
 const STATS = [
-  { num: 200, suffix: '+', label: 'Projets',     sublabel: 'Réalisés avec succès'   },
-  { num: 10,  suffix: '+', label: 'Années',      sublabel: 'D\'expérience terrain'  },
-  { num: 150, suffix: '+', label: 'Clients',     sublabel: 'Pleinement satisfaits'  },
-  { num: 24,  suffix: 'H', label: 'Disponible',  sublabel: 'Service & assistance'   },
+  { num: 200, suffix: '+', label: 'Projets',     sublabel: 'Réalisés avec succès'  },
+  { num: 10,  suffix: '+', label: 'Années',       sublabel: "D'expérience terrain"  },
+  { num: 150, suffix: '+', label: 'Clients',      sublabel: 'Pleinement satisfaits' },
+  { num: 24,  suffix: 'H', label: 'Disponible',   sublabel: 'Service & assistance'  },
 ];
 
 export default function StatsSection() {
-  const { isRTL } = useLanguage();
   const ref       = useRef<HTMLElement>(null);
-  const triggered = useRef(false);
   const bgImgRef  = useRef<HTMLDivElement>(null);
+  const triggered = useRef(false);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
@@ -74,28 +71,30 @@ export default function StatsSection() {
             if (triggered.current) return;
             triggered.current = true;
             setActive(true);
-
-            gsap.fromTo('.stats-headline',
-              { y: 45, opacity: 0 },
+            gsap.fromTo('.stt-headline',
+              { y: 50, opacity: 0 },
               { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
             );
-            gsap.fromTo('.stat-item',
-              { y: 55, opacity: 0 },
-              { y: 0, opacity: 1, duration: 0.8, stagger: 0.13, ease: 'power3.out', delay: 0.25 }
+            gsap.fromTo('.stt-item',
+              { y: 60, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.85, stagger: 0.14, ease: 'power3.out', delay: 0.3 }
+            );
+            gsap.fromTo('.stt-trust-bar',
+              { y: 20, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.8, delay: 0.9, ease: 'power3.out' }
             );
           },
         });
 
-        /* Subtle parallax on background image */
         if (bgImgRef.current) {
           gsap.to(bgImgRef.current, {
-            yPercent: 15,
+            yPercent: 18,
             ease: 'none',
             scrollTrigger: {
               trigger: ref.current,
               start: 'top bottom',
               end: 'bottom top',
-              scrub: 1,
+              scrub: 1.2,
             },
           });
         }
@@ -104,18 +103,10 @@ export default function StatsSection() {
   }, []);
 
   return (
-    <section
-      ref={ref}
-      style={{
-        background: '#080808',
-        padding: '9rem 0',
-        direction: isRTL ? 'rtl' : 'ltr',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Background construction image with parallax */}
-      <div ref={bgImgRef} style={{ position: 'absolute', inset: '-15%', zIndex: 0 }}>
+    <section ref={ref} className="stt-section">
+
+      {/* Parallax background */}
+      <div ref={bgImgRef} className="stt-parallax">
         <img
           src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=60"
           alt=""
@@ -124,47 +115,32 @@ export default function StatsSection() {
         />
       </div>
 
-      {/* Dark overlay layers */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.88) 50%, rgba(8,8,8,0.97) 100%)',
-      }} />
+      {/* Overlays */}
+      <div className="stt-overlay-dark" />
+      <div className="stt-overlay-glow" />
+      <div className="stt-grid-lines" />
 
-      {/* Red radial glows */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-        backgroundImage: 'radial-gradient(ellipse 60% 50% at 15% 50%, rgba(212,43,43,0.08) 0%, transparent 100%), radial-gradient(ellipse 60% 50% at 85% 50%, rgba(212,43,43,0.06) 0%, transparent 100%)',
-      }} />
-
-      {/* Subtle grid lines */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.03, pointerEvents: 'none',
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
-        backgroundSize: '80px 80px',
-      }} />
-
-      <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+      <div className="container stt-content">
 
         {/* Headline */}
-        <div className="stats-headline" style={{ textAlign: 'center', marginBottom: '6rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
-            <div style={{ height: '1px', width: '48px', background: 'rgba(212,43,43,0.5)' }} />
-            <span style={{ color: 'var(--color-primary)', fontSize: '0.66rem', fontWeight: 800, letterSpacing: '0.26em', textTransform: 'uppercase' }}>
-              Chiffres clés
-            </span>
-            <div style={{ height: '1px', width: '48px', background: 'rgba(212,43,43,0.5)' }} />
+        <div className="stt-headline" style={{ opacity: 0 }}>
+          <div className="stt-headline-eyebrow">
+            <div className="stt-headline-line" />
+            <span>Chiffres clés</span>
+            <div className="stt-headline-line" />
           </div>
-          <h2 style={{
-            fontFamily: 'var(--font-heading)', fontWeight: 900,
-            fontSize: 'clamp(2.4rem, 5vw, 4rem)',
-            color: 'white', lineHeight: 1.04, letterSpacing: '-0.03em', margin: 0,
-          }}>
+          <h2 className="stt-headline-title">
             Des résultats qui{' '}
-            <span style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>parlent</span>{' '}
+            <em className="stt-em">parlent</em>{' '}
             d&apos;eux-mêmes
           </h2>
+          <p className="stt-headline-sub">
+            Une décennie de projets livrés avec excellence, confiance et rigueur professionnelle.
+          </p>
         </div>
 
         {/* Stats */}
-        <div className="stats-grid">
+        <div className="stt-grid">
           {STATS.map((s, i) => (
             <StatItem
               key={i}
@@ -173,20 +149,20 @@ export default function StatsSection() {
               label={s.label}
               sublabel={s.sublabel}
               active={active}
-              delay={i * 150}
+              delay={i * 160}
             />
           ))}
         </div>
 
-        {/* Bottom trust bar */}
-        <div style={{ marginTop: '6rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2.5rem', flexWrap: 'wrap' }}>
+        {/* Trust bar */}
+        <div className="stt-trust-bar" style={{ opacity: 0 }}>
           {[
             'Entreprise certifiée',
             'Normes internationales',
             'Équipe d\'experts',
             'Garantie travaux',
           ].map((item, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', color: 'rgba(255,255,255,0.3)', fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.06em' }}>
+            <div key={i} className="stt-trust-item">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
@@ -197,67 +173,137 @@ export default function StatsSection() {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          position: relative;
+        .stt-section {
+          background: #060606;
+          padding: 10rem 0;
+          position: relative; overflow: hidden;
         }
-        .stats-grid::before {
-          content: '';
-          position: absolute;
-          top: 0; bottom: 0;
-          left: 25%; right: 0;
-          border-left: 1px solid rgba(255,255,255,0.05);
+        .stt-parallax {
+          position: absolute; inset: -18%; z-index: 0;
         }
-        .stat-item {
-          padding: 2.75rem 2rem;
+        .stt-overlay-dark {
+          position: absolute; inset: 0; z-index: 1;
+          background: linear-gradient(to bottom,
+            rgba(6,6,6,0.97) 0%,
+            rgba(6,6,6,0.88) 50%,
+            rgba(6,6,6,0.97) 100%);
+        }
+        .stt-overlay-glow {
+          position: absolute; inset: 0; z-index: 1; pointer-events: none;
+          background-image:
+            radial-gradient(ellipse 65% 55% at 15% 50%, rgba(212,43,43,0.09) 0%, transparent 100%),
+            radial-gradient(ellipse 65% 55% at 85% 50%, rgba(212,43,43,0.06) 0%, transparent 100%);
+        }
+        .stt-grid-lines {
+          position: absolute; inset: 0; z-index: 1; opacity: 0.028; pointer-events: none;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+          background-size: 80px 80px;
+        }
+        .stt-content {
+          position: relative; z-index: 2;
+        }
+
+        /* Headline */
+        .stt-headline {
+          text-align: center; margin-bottom: 6.5rem;
+        }
+        .stt-headline-eyebrow {
+          display: flex; align-items: center; justify-content: center;
+          gap: 1rem; margin-bottom: 1.75rem;
+        }
+        .stt-headline-line {
+          height: 1px; width: 52px;
+          background: rgba(212,43,43,0.5);
+        }
+        .stt-headline-eyebrow span {
+          color: var(--color-primary); font-size: 0.65rem;
+          font-weight: 800; letter-spacing: 0.26em; text-transform: uppercase;
+        }
+        .stt-headline-title {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+          color: white; line-height: 1.04; letter-spacing: -0.035em;
+          margin: 0 auto 1.25rem; max-width: 680px;
+        }
+        .stt-em { color: var(--color-primary); font-style: italic; }
+        .stt-headline-sub {
+          font-size: 0.96rem; color: rgba(255,255,255,0.32);
+          line-height: 1.8; max-width: 440px; margin: 0 auto;
+        }
+
+        /* Stats grid */
+        .stt-grid {
+          display: grid; grid-template-columns: repeat(4, 1fr);
+          border: 1px solid rgba(255,255,255,0.05);
+          border-radius: 16px; overflow: hidden;
+          margin-bottom: 5rem;
+          background: rgba(255,255,255,0.02);
+        }
+        .stt-item {
+          padding: 3.25rem 2rem;
           text-align: center;
-          position: relative;
-          opacity: 0;
+          position: relative; opacity: 0;
           border-right: 1px solid rgba(255,255,255,0.05);
           transition: background 0.35s;
         }
-        .stat-item:last-child { border-right: none; }
-        .stat-item::before {
+        .stt-item:last-child { border-right: none; }
+        .stt-item::before {
           content: '';
-          position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-          width: 0; height: 2px; background: var(--color-primary);
+          position: absolute; top: 0; left: 50%;
+          transform: translateX(-50%);
+          width: 0; height: 2px;
+          background: var(--color-primary);
           transition: width 0.5s ease;
         }
-        .stat-item:hover { background: rgba(255,255,255,0.02); }
-        .stat-item:hover::before { width: 60%; }
-        .stat-num {
+        .stt-item:hover { background: rgba(255,255,255,0.028); }
+        .stt-item:hover::before { width: 65%; }
+        .stt-num {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: clamp(3.2rem, 5.5vw, 5rem);
+          font-size: clamp(3.5rem, 5.5vw, 5.2rem);
           color: white; line-height: 1;
-          letter-spacing: -0.04em; margin-bottom: 0.85rem;
+          letter-spacing: -0.045em; margin-bottom: 1rem;
         }
-        .stat-suffix { color: var(--color-primary); }
-        .stat-divider {
+        .stt-suffix { color: var(--color-primary); }
+        .stt-bar {
           width: 28px; height: 1.5px;
-          background: rgba(212,43,43,0.4);
-          margin: 0 auto 0.85rem;
+          background: rgba(212,43,43,0.45);
+          margin: 0 auto 0.9rem;
         }
-        .stat-label {
+        .stt-label {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: 0.82rem; color: rgba(255,255,255,0.7);
-          text-transform: uppercase; letter-spacing: 0.15em;
-          margin-bottom: 0.35rem;
+          font-size: 0.78rem; color: rgba(255,255,255,0.65);
+          text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 0.4rem;
         }
-        .stat-sublabel {
-          font-size: 0.7rem; font-weight: 500;
-          color: rgba(255,255,255,0.25);
-          letter-spacing: 0.04em;
+        .stt-sublabel {
+          font-size: 0.68rem; font-weight: 500;
+          color: rgba(255,255,255,0.22); letter-spacing: 0.04em;
         }
+
+        /* Trust bar */
+        .stt-trust-bar {
+          display: flex; align-items: center; justify-content: center;
+          gap: 2.5rem; flex-wrap: wrap;
+        }
+        .stt-trust-item {
+          display: flex; align-items: center; gap: 0.5rem;
+          color: rgba(255,255,255,0.28); font-size: 0.72rem;
+          font-weight: 600; letter-spacing: 0.06em;
+        }
+
         @media (max-width: 900px) {
-          .stats-grid { grid-template-columns: repeat(2, 1fr); }
-          .stat-item:nth-child(2) { border-right: none; }
-          .stat-item:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05); }
-          .stat-item:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.05); }
+          .stt-grid { grid-template-columns: repeat(2, 1fr); border-radius: 12px; }
+          .stt-item:nth-child(2) { border-right: none; }
+          .stt-item:nth-child(3) {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-right: 1px solid rgba(255,255,255,0.05);
+          }
+          .stt-item:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.05); }
+          .stt-section { padding: 6rem 0; }
         }
         @media (max-width: 480px) {
-          .stats-grid { grid-template-columns: 1fr 1fr; }
-          .stat-item { padding: 2rem 1rem; }
+          .stt-item { padding: 2rem 1rem; }
         }
       `}} />
     </section>

@@ -1,14 +1,13 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import { useLanguage } from '@/context/LanguageContext';
 
 const STEPS = [
   {
     num: '01',
     key: 'study',
     title: 'Étude du projet',
-    desc: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires pour définir les meilleures solutions.',
+    desc: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires pour définir les meilleures solutions adaptées à votre projet.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
         <circle cx="11" cy="11" r="8"/>
@@ -20,7 +19,7 @@ const STEPS = [
     num: '02',
     key: 'planning',
     title: 'Planification',
-    desc: 'Élaboration d\'un plan de travail détaillé avec calendrier précis, allocation des ressources et jalons de contrôle.',
+    desc: "Élaboration d'un plan de travail détaillé avec calendrier précis, allocation des ressources et jalons de contrôle qualité.",
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
@@ -35,7 +34,7 @@ const STEPS = [
     num: '03',
     key: 'execution',
     title: 'Réalisation',
-    desc: 'Exécution rigoureuse des travaux avec contrôles qualité continus, respect des normes et supervision technique.',
+    desc: 'Exécution rigoureuse des travaux avec contrôles qualité continus, respect des normes et supervision technique permanente.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
         <path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/>
@@ -46,7 +45,7 @@ const STEPS = [
     num: '04',
     key: 'delivery',
     title: 'Livraison',
-    desc: 'Réception finale avec remise de tous les documents, garanties et accompagnement post-livraison de votre projet.',
+    desc: 'Réception finale avec remise de tous les documents, garanties complètes et accompagnement post-livraison de votre projet.',
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
         <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
@@ -57,7 +56,6 @@ const STEPS = [
 ];
 
 export default function ProcessSection() {
-  const { isRTL } = useLanguage();
   const ref       = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const lineRef   = useRef<HTMLDivElement>(null);
@@ -68,97 +66,88 @@ export default function ProcessSection() {
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.fromTo(headerRef.current,
-          { y: 38, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+          { y: 42, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: 'power3.out',
             scrollTrigger: { trigger: headerRef.current, start: 'top 82%', once: true } }
         );
 
         gsap.fromTo(lineRef.current,
-          { scaleX: 0, transformOrigin: isRTL ? 'right center' : 'left center' },
-          { scaleX: 1, duration: 1.6, ease: 'power2.inOut',
-            scrollTrigger: { trigger: lineRef.current, start: 'top 78%', once: true } }
+          { scaleX: 0, transformOrigin: 'left center' },
+          { scaleX: 1, duration: 1.8, ease: 'power2.inOut',
+            scrollTrigger: { trigger: lineRef.current, start: 'top 76%', once: true } }
         );
 
-        gsap.fromTo('.proc-step',
-          { y: 44, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.15, duration: 0.78, ease: 'power3.out',
-            scrollTrigger: { trigger: ref.current, start: 'top 68%', once: true } }
+        gsap.fromTo('.prc-step',
+          { y: 50, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.18, duration: 0.85, ease: 'power3.out',
+            scrollTrigger: { trigger: ref.current, start: 'top 66%', once: true } }
         );
       });
     });
-  }, [isRTL]);
+  }, []);
 
   return (
-    <section ref={ref} style={{ background: 'white', padding: '9rem 0', direction: isRTL ? 'rtl' : 'ltr' }}>
+    <section ref={ref} className="prc-section">
+
+      {/* Background subtle pattern */}
+      <div className="prc-pattern" />
+
       <div className="container">
 
         {/* Header */}
-        <div ref={headerRef} style={{ textAlign: 'center', marginBottom: '6.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1.4rem' }}>
-            <div style={{ width: '40px', height: '1.5px', background: 'var(--color-primary)' }} />
-            <span style={{ color: 'var(--color-primary)', fontSize: '0.66rem', fontWeight: 800, letterSpacing: '0.26em', textTransform: 'uppercase' }}>
-              Notre Méthode
-            </span>
-            <div style={{ width: '40px', height: '1.5px', background: 'var(--color-primary)' }} />
+        <div ref={headerRef} className="prc-header" style={{ opacity: 0 }}>
+          <div className="prc-eyebrow">
+            <div className="prc-eyebrow-line" />
+            <span>Notre Méthode</span>
+            <div className="prc-eyebrow-line" />
           </div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(2.4rem, 4.5vw, 3.8rem)', lineHeight: 1.04, letterSpacing: '-0.035em', margin: '0 auto', maxWidth: '620px', color: 'var(--color-secondary)' }}>
+          <h2 className="prc-heading">
             Un processus{' '}
-            <span style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>éprouvé</span>,{' '}
+            <em className="prc-em">éprouvé</em>,{' '}
             des résultats garantis
           </h2>
+          <p className="prc-subtext">
+            Chaque étape est maîtrisée avec rigueur pour vous offrir une expérience
+            transparente et un résultat à la hauteur de vos attentes.
+          </p>
         </div>
 
         {/* Steps */}
-        <div style={{ position: 'relative' }}>
+        <div className="prc-steps">
 
-          {/* Connecting line background */}
-          <div className="proc-connector-wrap">
-            <div style={{
-              position: 'absolute', top: 0, left: 0, right: 0, height: '100%',
-              background: 'var(--color-border)',
-            }} />
-            <div
-              ref={lineRef}
-              style={{
-                position: 'absolute', top: 0, left: 0, right: 0, height: '100%',
-                background: `linear-gradient(${isRTL ? '270deg' : '90deg'}, var(--color-primary) 0%, rgba(212,43,43,0.3) 100%)`,
-              }}
-            />
+          {/* Connecting line */}
+          <div className="prc-line-wrap">
+            <div className="prc-line-bg" />
+            <div ref={lineRef} className="prc-line-fill" />
           </div>
 
-          <div className="proc-grid">
+          <div className="prc-grid">
             {STEPS.map((step, i) => (
-              <div key={step.key} className="proc-step" style={{ opacity: 0 }}>
+              <div key={step.key} className="prc-step" style={{ opacity: 0 }}>
+                {/* Step number (top) */}
+                <div className="prc-num">{step.num}</div>
 
                 {/* Circle icon */}
                 <div
-                  className="proc-circle"
+                  className="prc-circle"
                   style={{
                     background: i === 0 ? 'var(--color-primary)' : 'white',
                     border: `2px solid ${i === 0 ? 'var(--color-primary)' : 'var(--color-border)'}`,
                     color: i === 0 ? 'white' : 'var(--color-primary)',
-                    boxShadow: i === 0 ? '0 10px 32px rgba(212,43,43,0.35)' : '0 4px 16px rgba(0,0,0,0.07)',
+                    boxShadow: i === 0 ? '0 12px 36px rgba(212,43,43,0.38)' : '0 4px 18px rgba(0,0,0,0.07)',
                   }}
                 >
                   {step.icon}
                 </div>
 
-                {/* Step label */}
-                <div style={{
-                  fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: '0.62rem',
-                  color: 'var(--color-primary)', letterSpacing: '0.18em', textTransform: 'uppercase',
-                  marginBottom: '0.65rem',
-                }}>
-                  Étape {step.num}
-                </div>
+                {/* Label */}
+                <div className="prc-step-label">Étape {step.num}</div>
 
-                <h4 style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1.08rem', color: 'var(--color-secondary)', marginBottom: '0.75rem', lineHeight: 1.2 }}>
-                  {step.title}
-                </h4>
+                {/* Title */}
+                <h4 className="prc-step-title">{step.title}</h4>
 
-                <p style={{ fontSize: '0.84rem', color: 'var(--color-text-muted)', lineHeight: 1.74, margin: 0, maxWidth: '220px', marginLeft: 'auto', marginRight: 'auto' }}>
-                  {step.desc}
-                </p>
+                {/* Description */}
+                <p className="prc-step-desc">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -166,41 +155,108 @@ export default function ProcessSection() {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .proc-connector-wrap {
+        .prc-section {
+          background: white;
+          padding: 10rem 0;
+          position: relative; overflow: hidden;
+        }
+        .prc-pattern {
+          position: absolute; inset: 0;
+          background-image: radial-gradient(circle, rgba(0,0,0,0.04) 1px, transparent 1px);
+          background-size: 28px 28px;
+          pointer-events: none;
+        }
+
+        /* Header */
+        .prc-header { text-align: center; margin-bottom: 7rem; position: relative; z-index: 1; }
+        .prc-eyebrow {
+          display: flex; align-items: center; justify-content: center;
+          gap: 1rem; margin-bottom: 1.6rem;
+        }
+        .prc-eyebrow-line { width: 40px; height: 1.5px; background: var(--color-primary); }
+        .prc-eyebrow span {
+          color: var(--color-primary); font-size: 0.65rem; font-weight: 800;
+          letter-spacing: 0.26em; text-transform: uppercase;
+        }
+        .prc-heading {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: clamp(2.4rem, 5vw, 4rem);
+          line-height: 1.04; letter-spacing: -0.04em;
+          color: var(--color-secondary); margin: 0 auto 1.25rem;
+          max-width: 660px;
+        }
+        .prc-em { color: var(--color-primary); font-style: italic; }
+        .prc-subtext {
+          font-size: 0.96rem; color: var(--color-text-muted);
+          line-height: 1.82; max-width: 460px; margin: 0 auto;
+        }
+
+        /* Steps */
+        .prc-steps { position: relative; z-index: 1; }
+        .prc-line-wrap {
           position: absolute;
-          top: 38px; left: 12.5%; right: 12.5%;
+          top: 44px; left: 12.5%; right: 12.5%;
           height: 2px; overflow: hidden;
         }
-        .proc-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem;
-          position: relative; z-index: 1;
+        .prc-line-bg {
+          position: absolute; inset: 0;
+          background: var(--color-border);
         }
-        .proc-step {
-          text-align: center;
-          padding-top: 0.5rem;
+        .prc-line-fill {
+          position: absolute; inset: 0;
+          background: linear-gradient(90deg, var(--color-primary) 0%, rgba(212,43,43,0.25) 100%);
         }
-        .proc-circle {
-          width: 76px; height: 76px; border-radius: 50%;
+        .prc-grid {
+          display: grid; grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem; position: relative; z-index: 1;
+        }
+        .prc-step {
+          text-align: center; padding-top: 0.5rem;
+        }
+        .prc-num {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: 0.6rem; color: rgba(0,0,0,0.2);
+          letter-spacing: 0.18em; text-transform: uppercase;
+          margin-bottom: 0.6rem;
+        }
+        .prc-circle {
+          width: 80px; height: 80px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          margin: 0 auto 2rem;
-          transition: all 0.35s;
+          margin: 0 auto 2.25rem;
+          transition: all 0.4s ease;
           position: relative; z-index: 2;
         }
-        .proc-step:hover .proc-circle {
+        .prc-step:hover .prc-circle {
           background: var(--color-primary) !important;
           border-color: var(--color-primary) !important;
           color: white !important;
-          box-shadow: 0 10px 32px rgba(212,43,43,0.4) !important;
-          transform: scale(1.08);
+          box-shadow: 0 12px 36px rgba(212,43,43,0.42) !important;
+          transform: scale(1.1);
         }
+        .prc-step-label {
+          font-family: var(--font-heading); font-weight: 900;
+          font-size: 0.6rem; color: var(--color-primary);
+          letter-spacing: 0.18em; text-transform: uppercase;
+          margin-bottom: 0.65rem;
+        }
+        .prc-step-title {
+          font-family: var(--font-heading); font-weight: 800;
+          font-size: 1.1rem; color: var(--color-secondary);
+          margin-bottom: 0.8rem; line-height: 1.2;
+        }
+        .prc-step-desc {
+          font-size: 0.85rem; color: var(--color-text-muted);
+          line-height: 1.78; margin: 0;
+          max-width: 220px; margin-left: auto; margin-right: auto;
+        }
+
         @media (max-width: 900px) {
-          .proc-grid { grid-template-columns: repeat(2, 1fr); gap: 3rem 2rem; }
-          .proc-connector-wrap { display: none; }
+          .prc-grid { grid-template-columns: repeat(2, 1fr); gap: 3.5rem 2rem; }
+          .prc-line-wrap { display: none; }
+          .prc-section { padding: 6rem 0; }
         }
         @media (max-width: 480px) {
-          .proc-grid { grid-template-columns: 1fr; }
+          .prc-grid { grid-template-columns: 1fr; }
         }
       `}} />
     </section>

@@ -155,7 +155,7 @@ export default function ServicesSection() {
         <div ref={headerRef} className="svc2-header" style={{ opacity: 0 }}>
           <div>
             <div className="svc2-eyebrow">
-              <div className="svc2-eyeline" />
+              
               <span>Nos Expertises</span>
             </div>
             <h2 className="svc2-heading">

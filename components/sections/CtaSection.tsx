@@ -120,11 +120,6 @@ export default function CtaSection() {
           text-transform: uppercase; color: var(--color-primary);
           margin-bottom: 1.25rem;
         }
-        .cta-label::before {
-          content: ''; display: block;
-          width: 24px; height: 1.5px;
-          background: var(--color-primary);
-        }
 
         .cta-heading {
           font-family: var(--font-heading); font-weight: 800;

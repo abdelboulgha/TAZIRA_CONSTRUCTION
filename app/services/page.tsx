@@ -169,7 +169,7 @@ export default function ServicesPage() {
             textTransform: 'uppercase' as const,
             color: 'var(--color-primary)', marginBottom: '1.5rem',
           }}>
-            <span style={{ width: 24, height: 1.5, background: 'var(--color-primary)', display: 'inline-block' }} />
+            
             {t.servicesPage.hero.badge}
           </div>
           <h1 style={{

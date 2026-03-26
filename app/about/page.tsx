@@ -277,7 +277,7 @@ export default function AboutPage() {
 
           <div className="ab-story-text" style={{ opacity: 0 }}>
             <div className="ab-eyebrow">
-              <div className="ab-eline" />
+              
               <span>Notre Histoire</span>
             </div>
             <h2 className="ab-heading">
@@ -345,9 +345,9 @@ export default function AboutPage() {
 
           <div className="ab-mv-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              <div className="ab-eline-r" />
+              
               <span className="ab-eyebrow-span-r">Mission &amp; Vision</span>
-              <div className="ab-eline-r" />
+              
             </div>
             <h2 className="ab-heading ab-heading-white ab-heading-center">
               Notre raison d&apos;être
@@ -410,9 +410,9 @@ export default function AboutPage() {
         <div className="container">
           <div className="ab-val-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              <div className="ab-eline" />
+              
               <span>Nos Valeurs</span>
-              <div className="ab-eline" />
+              
             </div>
             <h2 className="ab-heading ab-heading-center">
               Les principes qui{' '}
@@ -450,9 +450,9 @@ export default function AboutPage() {
         <div className="container ab-tl-inner">
           <div className="ab-tl-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              <div className="ab-eline-r" />
+              
               <span className="ab-eyebrow-span-r">Notre Parcours</span>
-              <div className="ab-eline-r" />
+              
             </div>
             <h2 className="ab-heading ab-heading-white ab-heading-center">
               Une croissance <em className="ab-em">continue</em>
@@ -485,9 +485,9 @@ export default function AboutPage() {
         <div className="container">
           <div className="ab-dom-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              <div className="ab-eline" />
+              
               <span>Nos Domaines</span>
-              <div className="ab-eline" />
+              
             </div>
             <h2 className="ab-heading ab-heading-center">
               Expertise <em className="ab-em">complète</em>
@@ -533,14 +533,8 @@ export default function AboutPage() {
           margin-bottom: 1.6rem;
         }
         .ab-eyebrow-center { justify-content: center; }
-        .ab-eline {
-          width: 36px; height: 1.5px;
-          background: var(--color-primary); flex-shrink: 0;
-        }
-        .ab-eline-r {
-          width: 36px; height: 1.5px;
-          background: rgba(196,147,63,0.55); flex-shrink: 0;
-        }
+        .ab-eline { display: none; }
+        .ab-eline-r { display: none; }
         .ab-eyebrow span {
           font-size: 0.65rem; font-weight: 800;
           letter-spacing: 0.24em; text-transform: uppercase;

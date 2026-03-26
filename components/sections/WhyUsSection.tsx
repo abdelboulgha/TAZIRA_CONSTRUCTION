@@ -77,7 +77,7 @@ export default function WhyUsSection() {
         {/* Header */}
         <div ref={titleRef} className="why-header" style={{ opacity: 0 }}>
           <div className="why-eyebrow">
-            <span className="why-line"></span>
+            
             POURQUOI CHOISIR TAZIRA CONSTRUCTION
           </div>
           <h2 className="why-heading">
@@ -155,11 +155,7 @@ export default function WhyUsSection() {
           text-transform: uppercase;
         }
 
-        .why-line {
-          width: 40px;
-          height: 2px;
-          background-color: var(--color-primary);
-        }
+        .why-line { display: none; }
 
         .why-heading {
           font-family: var(--font-heading);

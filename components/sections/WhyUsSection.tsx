@@ -31,10 +31,19 @@ const FEATURES = [
 
 export default function WhyUsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const listRefs = useRef<(HTMLDivElement | null)[]>([]);
   const imgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % FEATURES.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
   useEffect(() => {
     import('gsap').then(({ gsap }) => {
@@ -104,7 +113,11 @@ export default function WhyUsSection() {
           </div>
 
           {/* Right: List of Features */}
-          <div className="why-list-wrapper">
+          <div 
+            className="why-list-wrapper"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
             {FEATURES.map((feat, i) => (
               <div 
                 key={feat.num}
@@ -315,7 +328,7 @@ export default function WhyUsSection() {
           font-family: var(--font-heading);
           font-size: 1.5rem;
           font-weight: 700;
-          color: var(--color-secondary);
+          color: var(--color-text-muted); /* Faded color for inactive items */
           margin-bottom: 0;
           display: flex;
           align-items: center;
@@ -332,6 +345,7 @@ export default function WhyUsSection() {
 
         .why-list-item.active .why-item-title {
           transform: translateX(10px);
+          color: var(--color-secondary); /* Full prominent color for active item */
         }
 
         .why-list-item.active .why-item-arrow {

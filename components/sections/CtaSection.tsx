@@ -12,28 +12,38 @@ export default function CtaSection() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section ref={ref} style={{ position: 'relative', overflow: 'hidden', direction: isRTL ? 'rtl' : 'ltr' }}>
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?w=1600&q=80)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(120deg, rgba(10,10,10,0.94) 0%, rgba(170,15,15,0.72) 100%)' }} />
-
-      <div className="container" style={{ position: 'relative', zIndex: 1, padding: '6.5rem 1.5rem' }}>
+    <section ref={ref} style={{ background: 'white', direction: isRTL ? 'rtl' : 'ltr', padding: '6rem 0' }}>
+      <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ maxWidth: '680px', margin: '0 auto', textAlign: 'center' }}
+          style={{
+            background: '#f8f8f8',
+            borderRadius: '24px',
+            padding: '5rem 3rem',
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+            border: '1px solid var(--color-border-light)',
+          }}
         >
-          {/* Label */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.5rem' }}>
-            <div style={{ height: '1px', width: '30px', background: 'rgba(255,255,255,0.35)' }} />
-            <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>TAZIRA CONSTRUCTION</span>
-            <div style={{ height: '1px', width: '30px', background: 'rgba(255,255,255,0.35)' }} />
-          </div>
+          {/* Decorative circles */}
+          <div style={{ position: 'absolute', top: '-60px', right: '-60px', width: '220px', height: '220px', borderRadius: '50%', background: 'rgba(212,43,43,0.05)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '-80px', left: '-80px', width: '280px', height: '280px', borderRadius: '50%', background: 'rgba(212,43,43,0.04)', pointerEvents: 'none' }} />
 
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', lineHeight: 1.08, color: 'white', letterSpacing: '-0.025em', marginBottom: '1.25rem' }}>
+          {/* Top red accent line */}
+          <div style={{ width: '48px', height: '3px', background: 'var(--color-primary)', borderRadius: '2px', margin: '0 auto 2rem' }} />
+
+          <h2 style={{
+            fontFamily: 'var(--font-heading)', fontWeight: 900,
+            fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+            lineHeight: 1.08, letterSpacing: '-0.025em',
+            color: 'var(--color-secondary)', marginBottom: '1.25rem',
+          }}>
             {t.cta.title}
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '2.75rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '2.75rem', maxWidth: '520px', margin: '0 auto 2.75rem' }}>
             {t.cta.subtitle}
           </p>
 

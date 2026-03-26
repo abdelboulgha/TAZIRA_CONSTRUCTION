@@ -9,12 +9,10 @@ function Counter({ target, active }: { target: number; active: boolean }) {
   useEffect(() => {
     if (!active) return;
     let start = 0;
-    const duration = 2000;
     const step = (ts: number) => {
       if (!start) start = ts;
-      const prog = Math.min((ts - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - prog, 3);
-      setVal(Math.floor(ease * target));
+      const prog = Math.min((ts - start) / 2000, 1);
+      setVal(Math.floor((1 - Math.pow(1 - prog, 3)) * target));
       if (prog < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -29,38 +27,43 @@ export default function StatsSection() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   const stats = [
-    { raw: t.stats.projects.value, label: t.stats.projects.label, num: 200, suffix: '+', prefix: '' },
-    { raw: t.stats.years.value,    label: t.stats.years.label,    num: 10,  suffix: '+', prefix: '' },
-    { raw: t.stats.availability.value, label: t.stats.availability.label, num: 24, suffix: 'H', prefix: '' },
-    { raw: t.stats.clients.value,  label: t.stats.clients.label,  num: 150, suffix: '+', prefix: '' },
+    { label: t.stats.projects.label,     num: 200, suffix: '+' },
+    { label: t.stats.years.label,        num: 10,  suffix: '+' },
+    { label: t.stats.availability.label, num: 24,  suffix: 'H' },
+    { label: t.stats.clients.label,      num: 150, suffix: '+' },
   ];
 
   return (
-    <section ref={ref} style={{ position: 'relative', overflow: 'hidden', direction: isRTL ? 'rtl' : 'ltr' }}>
-      {/* Background image with dark overlay */}
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=60)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(12,12,12,0.88)' }} />
-
-      <div className="container" style={{ position: 'relative', zIndex: 1, padding: '5.5rem 1.5rem' }}>
+    <section ref={ref} style={{ background: '#f8f8f8', direction: isRTL ? 'rtl' : 'ltr' }}>
+      <div className="container" style={{ padding: '5rem 1.5rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }} className="stats-grid">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
               style={{
-                textAlign: 'center', padding: '2rem 1rem',
-                borderRight: i < 3 ? '1px solid rgba(255,255,255,0.08)' : 'none',
+                textAlign: 'center', padding: '2.5rem 1rem',
+                borderRight: i < 3 ? '1px solid var(--color-border)' : 'none',
+                position: 'relative',
               }}
               className="stat-item"
             >
-              <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 'clamp(2.8rem, 5vw, 4.5rem)', lineHeight: 1, color: 'white', letterSpacing: '-0.02em', marginBottom: '0.5rem' }}>
-                <span style={{ color: 'var(--color-primary)' }}>{s.prefix}</span>
+              {/* Red top accent line */}
+              {i === 0 && (
+                <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '32px', height: '3px', background: 'var(--color-primary)', borderRadius: '2px' }} />
+              )}
+              <div style={{
+                fontFamily: 'var(--font-heading)', fontWeight: 900,
+                fontSize: 'clamp(2.8rem, 5vw, 4.2rem)', lineHeight: 1,
+                color: 'var(--color-secondary)', letterSpacing: '-0.025em',
+                marginBottom: '0.5rem',
+              }}>
                 <Counter target={s.num} active={inView} />
                 <span style={{ color: 'var(--color-primary)' }}>{s.suffix}</span>
               </div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'rgba(255,255,255,0.45)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>
+              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
                 {s.label}
               </div>
             </motion.div>
@@ -69,7 +72,12 @@ export default function StatsSection() {
       </div>
 
       <style dangerouslySetInnerHTML={{__html:`
-        @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)!important;}.stat-item{border-right:none!important;border-bottom:1px solid rgba(255,255,255,0.08)!important;}}
+        @media(max-width:768px){
+          .stats-grid{grid-template-columns:repeat(2,1fr)!important;}
+          .stat-item{border-right:none!important;border-bottom:1px solid var(--color-border)!important;}
+          .stat-item:nth-child(2n){border-right:none!important;}
+          .stat-item:nth-child(odd){border-right:1px solid var(--color-border)!important;}
+        }
       `}}/>
     </section>
   );

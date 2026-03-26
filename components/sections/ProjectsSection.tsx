@@ -37,7 +37,7 @@ const PROJECTS = [
     location: 'Agadir, Maroc',
     cat: 'Travaux Publics',
     year: '2022',
-    src: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=1100&q=85',
+    src: '/assets/project-public.png',
     col: 2, row: 1,
   },
   {
@@ -46,7 +46,7 @@ const PROJECTS = [
     location: 'Marrakech, Maroc',
     cat: 'Rénovation',
     year: '2023',
-    src: 'https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?w=700&q=85',
+    src: '/assets/project-renovation.png',
     col: 1, row: 1,
   },
 ];

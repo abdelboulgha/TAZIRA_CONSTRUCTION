@@ -1,0 +1,202 @@
+'use client';
+
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
+import CtaSection from '@/components/sections/CtaSection';
+import Link from 'next/link';
+
+const serviceImages: Record<string, string> = {
+  construction: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80',
+  renovation: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80',
+  electrical: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+  publicWorks: 'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=600&q=80',
+  maintenance: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
+  design: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80',
+};
+
+const serviceIcons: Record<string, JSX.Element> = {
+  construction: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  renovation: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>,
+  electrical: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+  publicWorks: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
+  maintenance: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+  design: <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+};
+
+function ServiceCard({ serviceKey, data, index, inView, isRTL }: {
+  serviceKey: string;
+  data: { title: string; description: string; features: string[] };
+  index: number;
+  inView: boolean;
+  isRTL: boolean;
+}) {
+  const isEven = index % 2 === 0;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: isEven ? '1fr 1fr' : '1fr 1fr',
+        gap: '3rem',
+        alignItems: 'center',
+        marginBottom: '5rem',
+      }}
+      className="service-detail-row"
+    >
+      {/* Image */}
+      <div style={{ order: isRTL ? (isEven ? 2 : 1) : (isEven ? 1 : 2) }} className="service-img-side">
+        <div style={{
+          borderRadius: 'var(--radius-xl)',
+          overflow: 'hidden',
+          aspectRatio: '4/3',
+          boxShadow: 'var(--shadow-xl)',
+        }}>
+          <img
+            src={serviceImages[serviceKey]}
+            alt={data.title}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
+            className="service-detail-img"
+          />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div style={{ order: isRTL ? (isEven ? 1 : 2) : (isEven ? 2 : 1) }} className="service-content-side">
+        <div style={{
+          width: '56px', height: '56px',
+          borderRadius: 'var(--radius-md)',
+          background: 'var(--color-primary-light)',
+          color: 'var(--color-primary)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          marginBottom: '1.25rem',
+        }}>
+          {serviceIcons[serviceKey]}
+        </div>
+
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          fontWeight: 800,
+          fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+          color: 'var(--color-secondary)',
+          marginBottom: '1rem',
+        }}>{data.title}</h2>
+
+        <div className="divider" />
+
+        <p style={{ marginTop: '1.25rem', marginBottom: '1.75rem', lineHeight: 1.8 }}>
+          {data.description}
+        </p>
+
+        <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+          {data.features.map((feature) => (
+            <li key={feature} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <span style={{
+                width: '20px', height: '20px',
+                borderRadius: '50%',
+                background: 'var(--color-primary-light)',
+                color: 'var(--color-primary)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              </span>
+              <span style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function ServicesPage() {
+  const { t, isRTL } = useLanguage();
+  const servicesRef = useRef(null);
+  const servicesInView = useInView(servicesRef, { once: true, margin: '-80px' });
+
+  const services = t.servicesPage.items;
+
+  return (
+    <div style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+      {/* Hero */}
+      <section style={{
+        position: 'relative',
+        paddingTop: 'calc(var(--navbar-height) + 5rem)',
+        paddingBottom: '5rem',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: `url(https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=80)`,
+          backgroundSize: 'cover', backgroundPosition: 'center',
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(135deg, rgba(26,26,26,0.88) 0%, rgba(180,20,20,0.5) 100%)',
+        }} />
+        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', maxWidth: '720px' }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+              padding: '0.4rem 1.1rem',
+              background: 'rgba(212,43,43,0.15)', border: '1px solid rgba(212,43,43,0.4)',
+              borderRadius: 'var(--radius-full)', color: '#ff9999',
+              fontSize: '0.8rem', fontWeight: 600, letterSpacing: '0.08em',
+              textTransform: 'uppercase' as const, marginBottom: '1.5rem',
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-primary)', display: 'inline-block' }} />
+              {t.servicesPage.hero.badge}
+            </span>
+            <h1 style={{
+              color: 'white', fontFamily: 'var(--font-heading)', fontWeight: 900,
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginBottom: '1rem',
+            }}>
+              {t.servicesPage.hero.title}{' '}
+              <span style={{ color: 'var(--color-primary)' }}>{t.servicesPage.hero.titleHighlight}</span>
+            </h1>
+            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.7 }}>
+              {t.servicesPage.hero.subtitle}
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services List */}
+      <section className="section" ref={servicesRef}>
+        <div className="container">
+          {Object.entries(services).map(([key, data], i) => (
+            <ServiceCard
+              key={key}
+              serviceKey={key}
+              data={data as { title: string; description: string; features: string[] }}
+              index={i}
+              inView={servicesInView}
+              isRTL={isRTL}
+            />
+          ))}
+        </div>
+      </section>
+
+      <CtaSection />
+
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .service-detail-row {
+            grid-template-columns: 1fr !important;
+          }
+          .service-img-side, .service-content-side {
+            order: unset !important;
+          }
+        }
+        .service-detail-img:hover {
+          transform: scale(1.04);
+        }
+      `}</style>
+    </div>
+  );
+}

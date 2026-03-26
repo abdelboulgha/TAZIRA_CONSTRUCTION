@@ -9,7 +9,7 @@ export default function HeroSection() {
   const line2Ref    = useRef<HTMLSpanElement>(null);
   const leftColRef  = useRef<HTMLDivElement>(null);
   const cardsRef    = useRef<HTMLDivElement>(null);
-  const scrollRef   = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     import('gsap').then(({ gsap }) => {
@@ -29,10 +29,7 @@ export default function HeroSection() {
           { y: 0, opacity: 1, duration: 1 }, 1.0)
         .fromTo(cardsRef.current,
           { y: 36, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1 }, 1.1)
-        .fromTo(scrollRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.7 }, 1.7);
+          { y: 0, opacity: 1, duration: 1 }, 1.1);
     });
   }, []);
 
@@ -147,13 +144,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── Scroll indicator ───────────────── */}
-      <div ref={scrollRef} className="h-scroll" aria-hidden="true" style={{ opacity: 0 }}>
-        <div className="h-scroll-mouse">
-          <div className="h-scroll-dot" />
-        </div>
-        <span className="h-scroll-text">SCROLL</span>
-      </div>
+
 
       <style jsx>{`
         /* ─── Root ──────────────────────────── */
@@ -336,36 +327,7 @@ export default function HeroSection() {
           font-weight: 500;
         }
 
-        /* ─── Scroll indicator ───────────────── */
-        .h-scroll {
-          position: absolute; right: 3.5rem; bottom: 3.5rem;
-          z-index: 3;
-          display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
-        }
-        .h-scroll-mouse {
-          width: 22px; height: 36px;
-          border: 1.5px solid rgba(255,255,255,0.2);
-          border-radius: 11px;
-          display: flex; justify-content: center; align-items: flex-start;
-          padding-top: 6px;
-        }
-        .h-scroll-dot {
-          width: 3px; height: 7px;
-          background: var(--color-primary);
-          border-radius: 2px;
-          animation: scrollDot 2.2s ease-in-out infinite;
-        }
-        @keyframes scrollDot {
-          0% { opacity: 1; transform: translateY(0); }
-          70% { opacity: 0; transform: translateY(10px); }
-          100% { opacity: 0; transform: translateY(10px); }
-        }
-        .h-scroll-text {
-          font-size: 0.5rem; font-weight: 800;
-          letter-spacing: 0.22em; text-transform: uppercase;
-          color: rgba(255,255,255,0.18);
-          writing-mode: vertical-rl;
-        }
+
 
         /* ─── Responsive ─────────────────────── */
         @media (max-width: 1100px) {

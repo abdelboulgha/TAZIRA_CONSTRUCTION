@@ -135,15 +135,15 @@ export default function ServicesSection() {
                   className="svc-card-bg"
                   style={{
                     backgroundImage: `url(${svc.img})`,
-                    opacity: isActive ? 0.38 : 0.1,
+                    opacity: isActive ? 0.12 : 0,
                     transform: isActive ? 'scale(1.05)' : 'scale(1)',
                   }}
                 />
-                {/* Dark overlay */}
+                {/* Light overlay */}
                 <div className="svc-card-overlay" style={{
                   background: isActive
-                    ? 'linear-gradient(to top, rgba(4,4,4,0.97) 0%, rgba(4,4,4,0.72) 55%, rgba(4,4,4,0.18) 100%)'
-                    : 'linear-gradient(to top, rgba(4,4,4,0.99) 0%, rgba(4,4,4,0.9) 100%)',
+                    ? 'linear-gradient(to top, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.6) 55%, rgba(255,255,255,0.1) 100%)'
+                    : 'none',
                 }} />
                 {/* Top accent line */}
                 <div className="svc-topline" style={{ width: isActive ? '100%' : '48px' }} />
@@ -151,16 +151,16 @@ export default function ServicesSection() {
                 {/* Content */}
                 <div className="svc-inner">
                   {/* Large background number */}
-                  <div className="svc-bg-num" style={{ color: isActive ? 'rgba(212,43,43,0.18)' : 'rgba(255,255,255,0.04)' }}>
+                  <div className="svc-bg-num" style={{ color: isActive ? 'rgba(212,43,43,0.12)' : 'rgba(0,0,0,0.04)' }}>
                     {svc.num}
                   </div>
 
                   {/* Icon box */}
                   <div className="svc-icon-box" style={{
-                    background: isActive ? 'var(--color-primary)' : 'rgba(255,255,255,0.06)',
-                    color: isActive ? 'white' : 'rgba(255,255,255,0.5)',
-                    border: `1px solid ${isActive ? 'transparent' : 'rgba(255,255,255,0.08)'}`,
-                    boxShadow: isActive ? '0 10px 32px rgba(212,43,43,0.45)' : 'none',
+                    background: isActive ? 'var(--color-primary)' : 'rgba(212,43,43,0.07)',
+                    color: isActive ? 'white' : 'var(--color-primary)',
+                    border: `1px solid ${isActive ? 'transparent' : 'rgba(212,43,43,0.15)'}`,
+                    boxShadow: isActive ? '0 10px 32px rgba(212,43,43,0.35)' : 'none',
                   }}>
                     {svc.icon}
                   </div>
@@ -186,24 +186,25 @@ export default function ServicesSection() {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        /* ─── Section ─── */
         .svc-section {
-          background: #070707;
+          background: #ffffff;
           padding: 10rem 0;
           position: relative; overflow: hidden;
         }
         .svc-dots {
           position: absolute; inset: 0; z-index: 0; pointer-events: none;
-          background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+          background-image: radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px);
           background-size: 30px 30px;
         }
         .svc-glow {
           position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%);
           width: 80%; height: 60%; z-index: 0; pointer-events: none;
-          background: radial-gradient(ellipse at center, rgba(212,43,43,0.065) 0%, transparent 70%);
+          background: radial-gradient(ellipse at center, rgba(212,43,43,0.05) 0%, transparent 70%);
         }
         .svc-container { position: relative; z-index: 1; }
 
-        /* Header */
+        /* ─── Header ─── */
         .svc-header {
           display: flex; justify-content: space-between; align-items: flex-end;
           margin-bottom: 5.5rem; flex-wrap: wrap; gap: 2rem;
@@ -219,45 +220,53 @@ export default function ServicesSection() {
         .svc-heading {
           font-family: var(--font-heading); font-weight: 900;
           font-size: clamp(2.5rem, 5vw, 4rem);
-          line-height: 1.0; letter-spacing: -0.04em; margin: 0; color: white;
+          line-height: 1.0; letter-spacing: -0.04em; margin: 0;
+          color: var(--color-secondary);
         }
         .svc-em { color: var(--color-primary); font-style: italic; }
         .svc-view-all {
           display: flex; align-items: center; gap: 0.55rem;
-          color: rgba(255,255,255,0.45); font-size: 0.68rem; font-weight: 700;
+          color: var(--color-text-muted); font-size: 0.68rem; font-weight: 700;
           letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none;
           border-bottom: 1px solid rgba(212,43,43,0.45); padding-bottom: 3px;
           transition: color 0.25s;
           white-space: nowrap;
         }
-        .svc-view-all:hover { color: rgba(255,255,255,0.8); }
+        .svc-view-all:hover { color: var(--color-primary); }
 
-        /* Cards */
+        /* ─── Cards grid ─── */
         .svc-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 2px;
+          gap: 16px;
         }
         .svc-card {
           position: relative; overflow: hidden;
-          min-height: 420px; cursor: default;
-          transition: transform 0.38s ease;
+          min-height: 400px; cursor: default;
+          border-radius: 8px;
+          border: 1px solid var(--color-border-light);
+          background: var(--color-bg-light);
+          transition: transform 0.38s ease, box-shadow 0.38s ease;
         }
-        .svc-card:hover { transform: translateY(-5px); }
+        .svc-card:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
         .svc-card-bg {
           position: absolute; inset: 0;
           background-size: cover; background-position: center;
           transition: opacity 0.55s ease, transform 0.7s ease;
-          z-index: 0;
+          z-index: 0; border-radius: 8px;
         }
         .svc-card-overlay {
           position: absolute; inset: 0; z-index: 1;
-          transition: background 0.45s ease;
+          transition: background 0.45s ease; border-radius: 8px;
         }
         .svc-topline {
           position: absolute; top: 0; left: 0; height: 2px;
           background: var(--color-primary); z-index: 3;
           transition: width 0.55s cubic-bezier(0.25,1,0.5,1);
+          border-radius: 8px 8px 0 0;
         }
         .svc-inner {
           position: relative; z-index: 2;
@@ -276,10 +285,11 @@ export default function ServicesSection() {
         }
         .svc-title {
           font-family: var(--font-heading); font-weight: 800;
-          font-size: 1.2rem; color: white; margin-bottom: 1rem; line-height: 1.2;
+          font-size: 1.2rem; color: var(--color-secondary);
+          margin-bottom: 1rem; line-height: 1.2;
         }
         .svc-desc {
-          font-size: 0.86rem; color: rgba(255,255,255,0.42);
+          font-size: 0.86rem; color: var(--color-text-muted);
           line-height: 1.78; margin: 0; max-width: 380px;
         }
         .svc-link {
@@ -292,7 +302,7 @@ export default function ServicesSection() {
         }
         @media (max-width: 768px) {
           .svc-grid { grid-template-columns: 1fr; }
-          .svc-card { min-height: 340px; }
+          .svc-card { min-height: 320px; }
           .svc-section { padding: 6rem 0; }
         }
       `}} />

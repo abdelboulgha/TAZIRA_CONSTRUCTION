@@ -1,210 +1,254 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const STEPS = [
   {
     num: '01',
     title: 'Étude & Faisabilité',
-    desc: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires pour concevoir des fondations solides.',
+    desc: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires pour concevoir des fondations solides pour votre projet.',
   },
   {
     num: '02',
-    title: 'Planification',
-    desc: "Élaboration d'un calendrier précis et allocation optimisée des ressources avec des jalons de contrôle qualité.",
+    title: 'Planification Stratégique',
+    desc: "Élaboration d'un calendrier précis et allocation optimisée des ressources avec des jalons stricts de contrôle qualité à chaque étape.",
   },
   {
     num: '03',
     title: 'Exécution & Supervision',
-    desc: 'Mise en œuvre rigoureuse sur le terrain avec contrôles continus et respect absolu des normes de sécurité.',
+    desc: 'Mise en œuvre rigoureuse sur le terrain. Nos ingénieurs supervisent la construction avec des contrôles continus et respect absolu des normes.',
   },
   {
     num: '04',
     title: 'Livraison & Suivi',
-    desc: 'Réception finale avec remise des clés, documents techniques et accompagnement post-livraison réactif.',
+    desc: 'Réception finale avec remise des clés, documents techniques et garanties complètes. Accompagnement post-livraison réactif inclus.',
   },
 ];
 
 export default function ProcessSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headerRef  = useRef<HTMLDivElement>(null);
-  const stepsRef   = useRef<HTMLDivElement>(null);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const activeRef   = useRef(0);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
-    import('gsap').then(({ gsap }) => {
-      import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-        gsap.registerPlugin(ScrollTrigger);
+    const onScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const { top, height } = el.getBoundingClientRect();
+      const scrolled = -top;
+      const scrollable = height - window.innerHeight;
+      if (scrolled < 0 || scrolled > scrollable) return;
+      const progress = scrolled / scrollable;
+      const step = Math.min(
+        Math.floor(progress * STEPS.length),
+        STEPS.length - 1,
+      );
+      if (step !== activeRef.current) {
+        activeRef.current = step;
+        setActive(step);
+      }
+    };
 
-        gsap.fromTo(headerRef.current,
-          { y: 36, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: sectionRef.current, start: 'top 78%', once: true } }
-        );
-
-        const cards = stepsRef.current?.querySelectorAll('.proc-card');
-        if (cards) {
-          gsap.fromTo(cards,
-            { y: 48, opacity: 0 },
-            { y: 0, opacity: 1, stagger: 0.14, duration: 0.85, ease: 'power3.out',
-              scrollTrigger: { trigger: stepsRef.current, start: 'top 80%', once: true } }
-          );
-        }
-      });
-    });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <section ref={sectionRef} className="proc-section">
       <div className="proc-noise" />
 
-      <div className="container">
+      {/* Sticky wrapper — both columns stick inside the tall section */}
+      <div className="proc-sticky">
+        <div className="container proc-layout">
 
-        {/* Header */}
-        <div ref={headerRef} className="proc-header" style={{ opacity: 0 }}>
-          <span className="proc-eyebrow">Notre Méthode</span>
-          <h2 className="proc-heading">
-            Un processus <em className="proc-em">rigoureux</em>,<br />
-            de la conception à la livraison
-          </h2>
-          <p className="proc-subtext">
-            Chaque projet suit quatre étapes précises pour garantir
-            transparence, qualité et respect des délais.
-          </p>
-        </div>
+          {/* ── LEFT ── */}
+          <div className="proc-left">
+            <span className="proc-eyebrow">Notre Méthode</span>
+            <h2 className="proc-heading">
+              Un processus{' '}
+              <em className="proc-em">rigoureux</em>,<br />
+              de la conception<br />à la livraison
+            </h2>
+            <p className="proc-subtext">
+              Chaque projet suit quatre étapes précises pour garantir
+              transparence, qualité et respect des délais.
+            </p>
 
-        {/* Steps grid */}
-        <div ref={stepsRef} className="proc-grid">
-          {STEPS.map((step, i) => (
-            <div key={step.num} className="proc-card" style={{ opacity: 0 }}>
-              {/* Connector line between cards */}
-              {i < STEPS.length - 1 && <div className="proc-connector" />}
-
-              <div className="proc-num">{step.num}</div>
-              <div className="proc-accent" />
-              <h3 className="proc-title">{step.title}</h3>
-              <p className="proc-desc">{step.desc}</p>
+            {/* Dot indicators */}
+            <div className="proc-dots">
+              {STEPS.map((s, i) => (
+                <div
+                  key={s.num}
+                  className={`proc-dot ${i === active ? 'proc-dot-active' : ''}`}
+                />
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
+          {/* ── RIGHT: stacked steps ── */}
+          <div className="proc-steps-wrap">
+            {STEPS.map((step, i) => {
+              const state =
+                i === active ? 'active' :
+                i < active  ? 'exit'   : 'enter';
+              return (
+                <div
+                  key={step.num}
+                  className={`proc-step proc-step--${state}`}
+                >
+                  <div className="proc-step-num">{step.num}</div>
+                  <div className="proc-step-accent" />
+                  <h3 className="proc-step-title">{step.title}</h3>
+                  <p className="proc-step-desc">{step.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        /* Section is tall — provides the scroll space */
         .proc-section {
+          height: calc(${STEPS.length} * 100vh);
           background: var(--color-bg-light);
-          padding: 9rem 0;
           position: relative;
-          overflow: hidden;
         }
         .proc-noise {
-          position: absolute; inset: 0; pointer-events: none;
+          position: absolute; inset: 0; pointer-events: none; z-index: 0;
           background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
           background-size: 28px 28px;
         }
 
-        /* Header */
-        .proc-header {
-          max-width: 640px;
-          margin-bottom: 5rem;
+        /* Sticky inner — sticks for the entire section scroll */
+        .proc-sticky {
+          position: sticky;
+          top: 0;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          z-index: 1;
+          overflow: hidden;
         }
+
+        /* Two columns */
+        .proc-layout {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8rem;
+          align-items: center;
+          width: 100%;
+        }
+
+        /* Left */
+        .proc-left { display: flex; flex-direction: column; }
         .proc-eyebrow {
-          display: inline-block;
           font-size: 0.65rem; font-weight: 800;
           letter-spacing: 0.26em; text-transform: uppercase;
           color: var(--color-primary);
-          margin-bottom: 1.5rem;
+          margin-bottom: 1.75rem; display: block;
         }
         .proc-heading {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: clamp(2.2rem, 4vw, 3.4rem);
-          line-height: 1.1; letter-spacing: -0.03em;
-          color: var(--color-text);
-          margin-bottom: 1.25rem;
+          font-size: clamp(2rem, 3vw, 3rem);
+          line-height: 1.12; letter-spacing: -0.03em;
+          color: var(--color-text); margin-bottom: 1.5rem;
         }
-        .proc-em {
-          color: var(--color-primary); font-style: italic;
-        }
+        .proc-em { color: var(--color-primary); font-style: italic; }
         .proc-subtext {
-          font-size: 0.96rem; line-height: 1.8;
+          font-size: 0.93rem; line-height: 1.82;
           color: var(--color-text-muted);
-          max-width: 480px;
+          max-width: 340px; margin-bottom: 3rem;
+        }
+        .proc-dots { display: flex; gap: 0.6rem; }
+        .proc-dot {
+          width: 7px; height: 7px; border-radius: 50%;
+          background: var(--color-border);
+          transition: background 0.4s, transform 0.4s;
+        }
+        .proc-dot-active {
+          background: var(--color-primary);
+          transform: scale(1.5);
         }
 
-        /* Grid */
-        .proc-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 0;
+        /* Steps container */
+        .proc-steps-wrap {
           position: relative;
+          height: 300px;
         }
 
-        /* Card */
-        .proc-card {
-          position: relative;
-          padding: 2.5rem 2.5rem 2.5rem 0;
-          border-top: 1px solid var(--color-border);
-        }
-        .proc-card:not(:last-child) {
-          padding-right: 3rem;
-        }
-        .proc-card:not(:first-child) {
-          padding-left: 3rem;
-          border-left: 1px solid var(--color-border);
+        /* Base step */
+        .proc-step {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          transition: opacity 0.55s cubic-bezier(0.25,0.46,0.45,0.94),
+                      transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94);
+          will-change: opacity, transform;
         }
 
-        /* Step number */
-        .proc-num {
+        /* Entering — waiting below */
+        .proc-step--enter {
+          opacity: 0;
+          transform: translateY(50px);
+          pointer-events: none;
+        }
+        /* Active — fully visible */
+        .proc-step--active {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        /* Exiting — gone above */
+        .proc-step--exit {
+          opacity: 0;
+          transform: translateY(-50px);
+          pointer-events: none;
+        }
+
+        .proc-step-num {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: 3.5rem; line-height: 1;
+          font-size: 5rem; line-height: 1;
           color: rgba(255,255,255,0.05);
-          letter-spacing: -0.04em;
-          margin-bottom: 1.5rem;
-          transition: color 0.3s;
+          letter-spacing: -0.06em; margin-bottom: 1.25rem;
         }
-        .proc-card:hover .proc-num {
-          color: rgba(196,147,63,0.12);
-        }
-
-        /* Gold accent line */
-        .proc-accent {
-          width: 32px; height: 2px;
+        .proc-step-accent {
+          width: 36px; height: 2px;
           background: var(--color-primary);
           margin-bottom: 1.25rem;
-          transition: width 0.4s ease;
         }
-        .proc-card:hover .proc-accent {
-          width: 56px;
-        }
-
-        /* Title */
-        .proc-title {
+        .proc-step-title {
           font-family: var(--font-heading); font-weight: 700;
-          font-size: 1.05rem; color: var(--color-text);
-          line-height: 1.3; margin-bottom: 0.9rem;
+          font-size: clamp(1.5rem, 2.5vw, 2rem);
+          color: var(--color-text);
+          line-height: 1.2; margin-bottom: 1rem;
+        }
+        .proc-step-desc {
+          font-size: 0.95rem; line-height: 1.82;
+          color: var(--color-text-muted); margin: 0;
+          max-width: 400px;
         }
 
-        /* Description */
-        .proc-desc {
-          font-size: 0.86rem; line-height: 1.78;
-          color: var(--color-text-muted);
-          margin: 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-          .proc-grid { grid-template-columns: repeat(2, 1fr); }
-          .proc-card:nth-child(2) { border-left: 1px solid var(--color-border); }
-          .proc-card:nth-child(3) { border-top: 1px solid var(--color-border); padding-left: 0; border-left: none; }
-          .proc-card:nth-child(4) { border-top: 1px solid var(--color-border); border-left: 1px solid var(--color-border); }
-          .proc-card:not(:last-child) { padding-right: 2rem; }
-          .proc-card:not(:first-child) { padding-left: 2rem; }
-          .proc-card:nth-child(3) { padding-left: 0; }
-        }
-        @media (max-width: 600px) {
-          .proc-section { padding: 6rem 0; }
-          .proc-grid { grid-template-columns: 1fr; }
-          .proc-card { padding: 2rem 0 !important; border-left: none !important; }
-          .proc-card:not(:first-child) { border-top: 1px solid var(--color-border); }
+        /* Responsive — disable sticky, show all steps */
+        @media (max-width: 900px) {
+          .proc-section { height: auto; }
+          .proc-sticky {
+            position: static;
+            height: auto;
+            padding: 6rem 0;
+          }
+          .proc-layout { grid-template-columns: 1fr; gap: 3rem; }
+          .proc-steps-wrap { position: static; height: auto; }
+          .proc-step {
+            position: static;
+            opacity: 1 !important;
+            transform: none !important;
+            padding: 2rem 0;
+            border-top: 1px solid var(--color-border);
+          }
+          .proc-step-num { font-size: 3rem; }
         }
       `}} />
     </section>

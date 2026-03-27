@@ -117,14 +117,25 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="nb-mobile-link"
-                style={active ? { color: 'var(--color-primary)', fontWeight: 700, background: 'rgba(196,147,63,0.08)' } : undefined}
+                className={`nb-mobile-link ${active ? 'active' : ''}`}
                 onClick={() => setMenuOpen(false)}
               >
-                {link.label}
+                <span className="nb-ml-text">{link.label}</span>
+                <span className="nb-ml-arrow">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    {isRTL ? <polyline points="15 18 9 12 15 6" /> : <polyline points="9 18 15 12 9 6" />}
+                  </svg>
+                </span>
               </Link>
             );
           })}
+        </div>
+        
+        {/* Decorative background logo */}
+        <div className="nb-mobile-deco">
+          <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="rgba(196,147,63,0.03)" strokeWidth="1">
+            <path d="M3 21h18M5 21V5l7-3 7 3v16M12 9v12M9 13h6"/>
+          </svg>
         </div>
       </div>
 
@@ -234,32 +245,68 @@ export default function Navbar() {
 
         /* ── Mobile menu ───────────────────────── */
         .nb-mobile {
-          background: var(--color-bg-light);
-          border-top: 1px solid var(--color-border);
+          position: fixed; top: var(--navbar-height); left: 0; right: 0;
+          height: calc(100vh - var(--navbar-height));
+          background: rgba(10, 10, 10, 0.96);
+          backdrop-filter: blur(24px) saturate(180%);
+          -webkit-backdrop-filter: blur(24px) saturate(180%);
+          border-top: 1px solid rgba(255,255,255,0.06);
           max-height: 0; overflow: hidden;
-          transition: max-height 0.35s ease;
+          transition: max-height 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+          opacity: 0;
+          display: flex; flex-direction: column;
         }
-        .nb-mobile-open { max-height: 400px; }
+        .nb-mobile-open { max-height: 100vh; opacity: 1; }
+        
         .nb-mobile-inner {
-          padding: 1rem 1.5rem 1.5rem;
-          display: flex; flex-direction: column; gap: 0.25rem;
+          padding: 2.5rem 1.5rem;
+          display: flex; flex-direction: column; gap: 1rem;
+          position: relative; z-index: 2;
         }
+        
+        .nb-mobile-deco {
+          position: absolute; bottom: 10%; right: -2rem;
+          z-index: 1; opacity: 0.8; pointer-events: none;
+        }
+
         .nb-mobile-link {
-          padding: 0.75rem 1rem;
-          border-radius: var(--radius-md);
-          font-family: var(--font-heading); font-weight: 500;
-          font-size: 1rem; color: var(--color-text);
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 1.25rem 1.5rem;
+          border-radius: 14px;
+          font-family: var(--font-heading); font-weight: 600;
+          font-size: 1.15rem; color: rgba(255,255,255,0.55);
           text-decoration: none;
-          transition: background 0.2s, color 0.2s;
+          background: rgba(255,255,255,0.015);
+          border: 1px solid rgba(255,255,255,0.03);
+          transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
+        
         .nb-mobile-link:hover {
-          background: rgba(255,255,255,0.05);
-          color: var(--color-secondary);
+          background: rgba(255,255,255,0.04);
+          color: white; border-color: rgba(255,255,255,0.08);
+          transform: translateX(${isRTL ? '-6px' : '6px'});
         }
-        .nb-mobile-link-active {
-          background: var(--color-primary-light);
+        
+        .nb-mobile-link.active {
+          background: linear-gradient(${isRTL ? '-135deg' : '135deg'}, rgba(196,147,63,0.18) 0%, rgba(196,147,63,0.03) 100%);
+          border-color: rgba(196,147,63,0.25);
           color: var(--color-primary);
+          font-weight: 800;
+          box-shadow: 0 8px 32px rgba(196,147,63,0.08);
         }
+        
+        .nb-ml-arrow {
+          opacity: 0; transform: translateX(${isRTL ? '12px' : '-12px'});
+          transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          display: flex; align-items: center;
+        }
+        
+        .nb-mobile-link:hover .nb-ml-arrow,
+        .nb-mobile-link.active .nb-ml-arrow {
+          opacity: 1; transform: translateX(0);
+        }
+        
+        .nb-ml-text { letter-spacing: 0.02em; }
 
         /* ── Responsive ────────────────────────── */
         @media (max-width: 768px) {

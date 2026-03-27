@@ -828,6 +828,10 @@ export default function AboutPage() {
           .ab-domain-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 960px) {
+          .ab-hero { min-height: auto; }
+          .ab-hero-content { padding-top: calc(var(--navbar-height) + 2.5rem); }
+          .ab-hero-title-block { margin: 3rem 0; flex: none; }
+          .ab-hero-bottom { padding-bottom: 4rem; }
           .ab-story-layout { grid-template-columns: 1fr; gap: 4rem; }
           .ab-story-imgs { height: 420px; }
           .ab-mv-grid { grid-template-columns: 1fr; }
@@ -837,10 +841,11 @@ export default function AboutPage() {
           .ab-hero-eyebrow,
           .ab-hero-title-block,
           .ab-hero-bottom { padding-left: 2rem; padding-right: 2rem; }
-          .ab-hero-bottom { flex-direction: column; align-items: flex-start; }
+          .ab-hero-bottom { flex-direction: column; align-items: flex-start; gap: 3rem; }
           .ab-story, .ab-mission, .ab-values, .ab-timeline, .ab-domains { padding: 6rem 0; }
         }
         @media (max-width: 600px) {
+          .ab-hero-title-block { margin: 2rem 0; }
           .ab-hero-title { font-size: clamp(2.2rem, 11vw, 4.5rem); word-wrap: break-word; }
           .ab-hero-ghost { -webkit-text-stroke: 1.5px rgba(255,255,255,0.32); }
           .ab-val-grid { grid-template-columns: 1fr; }

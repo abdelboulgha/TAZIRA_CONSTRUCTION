@@ -305,16 +305,18 @@ export default function HeroSection() {
           .h-cards { display: none; }
         }
         @media (max-width: 900px) {
+          .h-root { min-height: auto; }
           .h-content { padding-top: calc(var(--navbar-height) + 2.5rem); }
           .h-tagline { padding: 0 2rem; }
-          .h-title-block { padding: 0 2rem; }
-          .h-bottom { padding: 0 2rem 3rem; flex-direction: column; align-items: flex-start; }
+          .h-title-block { padding: 0 2rem; margin: 3rem 0; flex: none; }
+          .h-bottom { padding: 0 2rem 4rem; flex-direction: column; align-items: flex-start; }
           .h-left { max-width: 100%; }
         }
         @media (max-width: 600px) {
           .h-title { font-size: clamp(2rem, 11vw, 5.5rem); word-wrap: break-word; overflow-wrap: break-word; }
           .h-line-ghost { -webkit-text-stroke: 1.5px rgba(255,255,255,0.35); }
           .h-tagline { display: none; }
+          .h-title-block { margin: 1.5rem 0 2.5rem; }
         }
       `}</style>
     </section>

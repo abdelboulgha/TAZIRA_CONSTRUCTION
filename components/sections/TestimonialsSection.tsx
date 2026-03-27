@@ -3,38 +3,6 @@
 import { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
-const TESTIMONIALS = [
-  {
-    name: 'Mohammed Alaoui',
-    role: 'Directeur',
-    company: 'Alaoui Immobilier',
-    text: 'TAZIRA CONSTRUCTION a réalisé notre immeuble résidentiel dans les délais convenus et avec une qualité exceptionnelle. Une équipe sérieuse et professionnelle à qui nous faisons entièrement confiance.',
-    rating: 5,
-    project: 'Immeuble résidentiel, Casablanca',
-    initial: 'MA',
-    dark: true,
-  },
-  {
-    name: 'Karim Benali',
-    role: 'Gérant',
-    company: 'Benali Groupe',
-    text: 'Nous avons confié nos travaux électriques à TAZIRA et nous n\'avons pas été déçus. Intervention rapide, résultat impeccable. Je recommande vivement leurs services à toute entreprise sérieuse.',
-    rating: 5,
-    project: 'Installation électrique industrielle',
-    initial: 'KB',
-    dark: false,
-  },
-  {
-    name: 'Fatima Ouahbi',
-    role: 'Propriétaire',
-    company: 'Villa Ouahbi, Marrakech',
-    text: 'La rénovation de notre villa a été réalisée avec un soin exceptionnel. L\'équipe a parfaitement respecté notre budget et nos délais. Un travail de grande qualité que nous apprécions chaque jour.',
-    rating: 5,
-    project: 'Rénovation complète, Marrakech',
-    initial: 'FO',
-    dark: true,
-  },
-];
 
 function Stars({ count }: { count: number }) {
   return (
@@ -98,10 +66,10 @@ export default function TestimonialsSection() {
           <p className="tsm-subtext">{d.subtext}</p>
         </div>
 
-        {/* Cards — content is always French, force ltr */}
+        {/* Cards */}
         <div className="tsm-grid">
-          {TESTIMONIALS.map((item, i) => (
-            <div key={i} className="tsm-card" style={{ opacity: 0, direction: 'ltr', textAlign: 'left' }}>
+          {d.items.map((item: any, i: number) => (
+            <div key={i} className="tsm-card" style={{ opacity: 0, direction: isRTL ? 'rtl' : 'ltr', textAlign: isRTL ? 'right' : 'left' }}>
               {/* Quote icon */}
               <div className="tsm-quote-icon">
                 <svg width="52" height="52" viewBox="0 0 24 24" fill="currentColor">

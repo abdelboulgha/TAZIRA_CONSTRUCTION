@@ -119,17 +119,21 @@ export default function AboutPreview() {
             },
           );
           /* subtle parallax on scroll */
-          imgs.forEach((img, i) => {
-            gsap.to(img, {
-              yPercent: i % 2 === 0 ? -6 : 6,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: 1.5,
-              },
-            });
+          imgs.forEach((wrap, i) => {
+            const innerImg = wrap.querySelector('.about-img');
+            if (innerImg) {
+              gsap.to(innerImg, {
+                yPercent: i % 2 === 0 ? -15 : 15,
+                scale: 1.25,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: sectionRef.current,
+                  start: 'top bottom',
+                  end: 'bottom top',
+                  scrub: 1.5,
+                },
+              });
+            }
           });
         };
 

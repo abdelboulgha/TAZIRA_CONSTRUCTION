@@ -3,8 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
-/* ─── Form ───────────────────────────────────────────────────── */
-function ContactForm({ t }: { t: any }) {
+/* ─── Form ───────────────────────────────────────────────── */
+function ContactForm({ tc, isRTL }: { tc: any; isRTL: boolean }) {
   const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', message: '' });
 
@@ -26,8 +26,8 @@ function ContactForm({ t }: { t: any }) {
             <polyline points="20 6 9 17 4 12"/>
           </svg>
         </div>
-        <h3 className="cf-success-title">Message envoyé !</h3>
-        <p className="cf-success-sub">Nous vous répondrons dans les 24 heures.</p>
+        <h3 className="cf-success-title">{tc.form.successTitle}</h3>
+        <p className="cf-success-sub">{tc.form.successSub}</p>
         <style jsx>{`
           .cf-success { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
           .cf-success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(196,147,63,0.1); border: 1.5px solid rgba(196,147,63,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
@@ -39,43 +39,39 @@ function ContactForm({ t }: { t: any }) {
   }
 
   return (
-    <form className="cf-form" onSubmit={handleSubmit} noValidate>
+    <form className="cf-form" onSubmit={handleSubmit} noValidate style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
       <div className="cf-field">
-        <label className="cf-label">Nom complet *</label>
+        <label className="cf-label">{tc.form.name} *</label>
         <input className="cf-input" type="text" name="name"
-          placeholder="Votre nom complet"
+          placeholder={tc.form.namePlaceholder}
           value={form.name} onChange={handleChange} required />
       </div>
       <div className="cf-field">
-        <label className="cf-label">Adresse e-mail *</label>
+        <label className="cf-label">{tc.form.email} *</label>
         <input className="cf-input" type="email" name="email"
-          placeholder="votre@email.com"
+          placeholder={tc.form.emailPlaceholder}
           value={form.email} onChange={handleChange} required />
       </div>
       <div className="cf-field">
-        <label className="cf-label">Téléphone</label>
+        <label className="cf-label">{tc.form.phone}</label>
         <input className="cf-input" type="tel" name="phone"
-          placeholder="+213 6XX XXX XXX"
+          placeholder={tc.form.phonePlaceholder}
           value={form.phone} onChange={handleChange} />
       </div>
       <div className="cf-field">
-        <label className="cf-label">Service concerné</label>
+        <label className="cf-label">{tc.form.serviceLabel}</label>
         <select className="cf-input cf-select" name="service"
           value={form.service} onChange={handleChange}>
-          <option value="">Sélectionner un service</option>
-          <option>Construction de bâtiment</option>
-          <option>Travaux électriques</option>
-          <option>Rénovation & finition</option>
-          <option>Maintenance & dépannage</option>
-          <option>Travaux publics</option>
-          <option>Demande de devis</option>
-          <option>Autre</option>
+          <option value="">{tc.form.serviceDefault}</option>
+          {tc.form.serviceOptions.map((opt: string) => (
+            <option key={opt}>{opt}</option>
+          ))}
         </select>
       </div>
       <div className="cf-field">
-        <label className="cf-label">Message *</label>
+        <label className="cf-label">{tc.form.message} *</label>
         <textarea className="cf-input" name="message"
-          placeholder="Décrivez votre projet ou votre demande..."
+          placeholder={tc.form.messagePlaceholder}
           value={form.message} onChange={handleChange}
           rows={5} required />
       </div>
@@ -86,11 +82,11 @@ function ContactForm({ t }: { t: any }) {
               style={{ animation: 'cf-spin 1s linear infinite' }}>
               <circle cx="12" cy="12" r="10" strokeDasharray="31.42" strokeDashoffset="10"/>
             </svg>
-            Envoi en cours...
+            {tc.form.sending}
           </>
         ) : (
           <>
-            Envoyer le message
+            {tc.form.send}
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
             </svg>
@@ -143,9 +139,10 @@ function ContactForm({ t }: { t: any }) {
   );
 }
 
-/* ─── Page ───────────────────────────────────────────────────── */
+/* ─── Page ───────────────────────────────────────────────── */
 export default function ContactPage() {
   const { t, isRTL } = useLanguage();
+  const tc = t.contact;
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -173,12 +170,11 @@ export default function ContactPage() {
       <section className="cp-hero">
         <div className="cp-hero-noise" />
         <div className="container cp-hero-inner">
-          <p className="cp-hero-eyebrow">Contact</p>
-          <h1 className="cp-hero-title">Parlons de votre <span>projet</span></h1>
-          <p className="cp-hero-sub">
-            Notre équipe est disponible pour répondre à toutes vos questions
-            et vous accompagner de la conception à la réalisation.
-          </p>
+          <p className="cp-hero-eyebrow">{tc.hero.badge}</p>
+          <h1 className="cp-hero-title">
+            {tc.hero.title} <span>{tc.hero.titleHighlight}</span>
+          </h1>
+          <p className="cp-hero-sub">{tc.hero.subtitle}</p>
         </div>
       </section>
 
@@ -187,11 +183,7 @@ export default function ContactPage() {
       ══════════════════════════════════════ */}
       <section className="cp-stats gs-fade">
         <div className="container cp-stats-grid">
-          {[
-            { value: '24h', label: 'Délai de réponse garanti' },
-            { value: '100%', label: 'Devis gratuit & sans engagement' },
-            { value: '200+', label: 'Projets réalisés en Algérie' },
-          ].map(s => (
+          {tc.stats.map((s: { value: string; label: string }) => (
             <div key={s.value} className="cp-stat">
               <div className="cp-stat-value">{s.value}</div>
               <div className="cp-stat-label">{s.label}</div>
@@ -207,38 +199,38 @@ export default function ContactPage() {
         <div className="container">
           <div className="cp-methods-grid">
 
-            <a href="tel:+213650596613" className="cp-method">
+            <a href="tel:+212650596613" className="cp-method">
               <div className="cp-method-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.82a19.79 19.79 0 01-3.07-8.64A2 2 0 012.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
                 </svg>
               </div>
-              <div className="cp-method-label">Téléphone</div>
-              <div className="cp-method-value">+213 650 596 613</div>
-              <div className="cp-method-sub">Lun – Sam · 8h – 18h</div>
+              <div className="cp-method-label">{tc.methods.phone.label}</div>
+              <div className="cp-method-value">{tc.info.phone.value}</div>
+              <div className="cp-method-sub">{tc.methods.phone.sub}</div>
             </a>
 
-            <a href="mailto:contact@tazira-construction.dz" className="cp-method">
+            <a href={`mailto:${tc.info.email.value}`} className="cp-method">
               <div className="cp-method-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                   <polyline points="22,6 12,13 2,6"/>
                 </svg>
               </div>
-              <div className="cp-method-label">E-mail</div>
-              <div className="cp-method-value">contact@tazira-construction.dz</div>
-              <div className="cp-method-sub">Réponse sous 24h garantie</div>
+              <div className="cp-method-label">{tc.methods.email.label}</div>
+              <div className="cp-method-value">{tc.info.email.value}</div>
+              <div className="cp-method-sub">{tc.methods.email.sub}</div>
             </a>
 
-            <a href="https://wa.me/213650596613" target="_blank" rel="noopener noreferrer" className="cp-method cp-method-wa">
+            <a href="https://wa.me/212650596613" target="_blank" rel="noopener noreferrer" className="cp-method cp-method-wa">
               <div className="cp-method-icon cp-method-icon-wa">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
               </div>
-              <div className="cp-method-label">WhatsApp</div>
-              <div className="cp-method-value">+213 650 596 613</div>
-              <div className="cp-method-sub">Réponse instantanée</div>
+              <div className="cp-method-label">{tc.methods.whatsapp.label}</div>
+              <div className="cp-method-value">{tc.info.phone.value}</div>
+              <div className="cp-method-sub">{tc.methods.whatsapp.sub}</div>
             </a>
 
           </div>
@@ -250,15 +242,11 @@ export default function ContactPage() {
       ══════════════════════════════════════ */}
       <section className="cp-process gs-fade">
         <div className="container">
-          <h2 className="cp-process-title">Comment ça fonctionne ?</h2>
+          <h2 className="cp-process-title">{tc.process.title}</h2>
           <div className="cp-process-steps">
-            {[
-              { n: '01', title: 'Contactez-nous', desc: 'Par téléphone, e-mail ou via le formulaire ci-dessous. Nous accusons réception immédiatement.' },
-              { n: '02', title: 'Devis gratuit', desc: 'Nous analysons votre projet et vous envoyons une proposition détaillée et chiffrée sous 24h.' },
-              { n: '03', title: 'On réalise', desc: "Après accord, nos équipes se mobilisent et votre projet prend vie dans les délais convenus." },
-            ].map((s, i) => (
+            {tc.process.steps.map((s: { n: string; title: string; desc: string }, i: number) => (
               <div key={s.n} className="cp-process-step">
-                {i < 2 && <div className="cp-process-connector" />}
+                {i < tc.process.steps.length - 1 && <div className="cp-process-connector" />}
                 <div className="cp-process-num">{s.n}</div>
                 <h3 className="cp-process-step-title">{s.title}</h3>
                 <p className="cp-process-step-desc">{s.desc}</p>
@@ -274,16 +262,15 @@ export default function ContactPage() {
       <section className="cp-form-section gs-fade">
         <div className="container cp-form-wrap">
           <div className="cp-form-left">
-            <span className="cp-form-eyebrow">Formulaire de contact</span>
+            <span className="cp-form-eyebrow">{tc.formSection.eyebrow}</span>
             <h2 className="cp-form-heading">
-              Envoyez-nous<br />un message
+              {tc.formSection.heading.split('\n').map((line: string, i: number) => (
+                <span key={i}>{line}{i === 0 && <br />}</span>
+              ))}
             </h2>
-            <p className="cp-form-sub">
-              Décrivez votre projet et nous vous recontactons rapidement
-              avec une proposition adaptée à vos besoins.
-            </p>
+            <p className="cp-form-sub">{tc.formSection.sub}</p>
             <div className="cp-form-assurance">
-              {['Réponse sous 24h', 'Devis gratuit', 'Sans engagement'].map(a => (
+              {tc.formSection.assurance.map((a: string) => (
                 <div key={a} className="cp-assurance-item">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
                     <polyline points="20 6 9 17 4 12"/>
@@ -295,7 +282,7 @@ export default function ContactPage() {
           </div>
 
           <div className="cp-form-right">
-            <ContactForm t={t} />
+            <ContactForm tc={tc} isRTL={isRTL} />
           </div>
         </div>
       </section>

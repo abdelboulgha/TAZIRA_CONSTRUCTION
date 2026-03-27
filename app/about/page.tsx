@@ -363,7 +363,7 @@ export default function AboutPage() {
           </div>
 
           <div className="ab-tl-track">
-            <div className="ab-tl-line">
+            <div className="ab-tl-line" style={{ [isRTL ? 'right' : 'left']: '18px' }}>
               <div className="ab-tl-line-fill" />
             </div>
             {ta.timeline.items.map((item: { year: string; title: string; desc: string }, i: number) => (
@@ -727,7 +727,7 @@ export default function AboutPage() {
         .ab-tl-header { text-align: center; margin-bottom: 6rem; }
         .ab-tl-track { position: relative; max-width: 760px; margin: 0 auto; }
         .ab-tl-line {
-          position: absolute; left: 18px; top: 8px; bottom: 8px;
+          position: absolute; top: 8px; bottom: 8px;
           width: 2px; background: rgba(255,255,255,0.06); overflow: hidden;
         }
         .ab-tl-line-fill {

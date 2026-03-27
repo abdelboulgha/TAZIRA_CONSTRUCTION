@@ -58,16 +58,23 @@ export default function Navbar() {
 
         {/* ── Desktop links ─────────────────────── */}
         <div className="nb-links">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`nb-link${isActive(link.href) ? ' nb-link-active' : ''}`}
-            >
-              {link.label}
-              <span className="nb-link-bar" />
-            </Link>
-          ))}
+          {links.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="nb-link"
+                style={{
+                  color: active ? 'var(--color-primary)' : undefined,
+                  fontWeight: active ? 700 : undefined,
+                }}
+              >
+                {link.label}
+                <span className="nb-link-bar" style={{ transform: active ? 'scaleX(1)' : undefined }} />
+              </Link>
+            );
+          })}
         </div>
 
         {/* ── Right actions ─────────────────────── */}
@@ -104,16 +111,20 @@ export default function Navbar() {
       {/* ── Mobile menu ───────────────────────── */}
       <div className={`nb-mobile${menuOpen ? ' nb-mobile-open' : ''}`}>
         <div className="nb-mobile-inner">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`nb-mobile-link${isActive(link.href) ? ' nb-mobile-link-active' : ''}`}
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="nb-mobile-link"
+                style={active ? { color: 'var(--color-primary)', fontWeight: 700, background: 'rgba(196,147,63,0.08)' } : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
 
@@ -161,23 +172,26 @@ export default function Navbar() {
         }
         .nb-link {
           font-family: var(--font-heading); font-weight: 500;
-          font-size: 0.9rem; color: var(--color-text);
+          font-size: 0.9rem; color: rgba(255,255,255,0.6);
           text-decoration: none; position: relative;
-          padding-bottom: 4px;
+          padding-bottom: 6px;
           transition: color 0.2s ease;
         }
-        .nb-link:hover { color: var(--color-primary); }
-        .nb-link-active { color: var(--color-primary); }
+        .nb-link:hover { color: white; }
+        .nb-link-active {
+          color: var(--color-primary) !important;
+          font-weight: 700;
+        }
         .nb-link-bar {
           position: absolute; bottom: 0; left: 0; right: 0;
           height: 2px; background: var(--color-primary);
           border-radius: 1px;
           transform: scaleX(0);
-          transform-origin: left center;
+          transform-origin: center;
           transition: transform 0.25s ease;
         }
         .nb-link-active .nb-link-bar { transform: scaleX(1); }
-        .nb-link:hover .nb-link-bar { transform: scaleX(1); }
+        .nb-link:hover .nb-link-bar { transform: scaleX(0.6); }
 
         /* ── Actions ───────────────────────────── */
         .nb-actions {

@@ -317,7 +317,7 @@ export default function AboutPage() {
             </div>
             <div className="ab-story-img ab-story-img2">
               <img
-                src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=85"
+                src="/assets/image2.png"
                 alt="Equipe TAZIRA"
                 className="ab-img-inner"
               />
@@ -325,7 +325,7 @@ export default function AboutPage() {
             </div>
             <div className="ab-story-img ab-story-img3">
               <img
-                src="https://images.unsplash.com/photo-1541888081198-b80c102a9eb7?w=600&q=85"
+                src="/assets/image3.png"
                 alt="Realisation TAZIRA"
                 className="ab-img-inner"
               />

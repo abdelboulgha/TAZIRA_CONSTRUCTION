@@ -3,7 +3,6 @@
 import { useRef, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import CtaSection from '@/components/sections/CtaSection';
-import Spline from '@splinetool/react-spline';
 import Link from 'next/link';
 
 const SERVICE_IMAGES: Record<string, string> = {
@@ -92,7 +91,7 @@ export default function ServicesPage() {
             </div>
 
             <div className="srv-hero-img-col srv-spline-wrapper" style={{ position: 'relative', height: '600px', borderRadius: 'var(--radius-xl)', overflow: 'hidden', background: '#090909' }}>
-              <Spline scene="https://prod.spline.design/kZIGLN1HLGgcI12g/scene.splinecode" style={{ width: '100%', height: '100%', pointerEvents: 'none' }} />
+              <img src="/assets/service_construction.png" alt="TAZIRA Construction Services" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%)', pointerEvents: 'none' }} />
             </div>
 

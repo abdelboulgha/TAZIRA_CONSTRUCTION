@@ -279,7 +279,7 @@ const fr = {
     services: 'Services',
     contact: 'Contact',
     rights: 'Tous droits réservés.',
-    madeWith: 'Fait avec passion au Maroc',
+    madeWith: '',
   },
 };
 

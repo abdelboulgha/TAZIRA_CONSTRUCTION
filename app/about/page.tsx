@@ -94,12 +94,12 @@ const DOMAINS = [
   {
     title: 'Rénovation',
     desc: "Réhabilitation et modernisation de bâtiments avec finitions haut de gamme et respect du patrimoine.",
-    img: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=800&q=85',
+    img: '/assets/service_renovation.png',
   },
   {
     title: 'Travaux Publics',
     desc: "Routes, VRD, réseaux d'assainissement et aménagements urbains conformes aux normes en vigueur.",
-    img: 'https://images.unsplash.com/photo-1541888081198-b80c102a9eb7?w=800&q=85',
+    img: '/assets/service_public_works.png',
   },
 ];
 

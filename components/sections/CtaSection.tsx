@@ -200,11 +200,18 @@ export default function CtaSection() {
             padding: 2.5rem 2rem;
             gap: 2.5rem;
           }
-          .cta-right { min-width: unset; }
+          .cta-right { min-width: unset; align-items: center; }
+          .cta-btn-primary, .cta-btn-wa { width: 100%; max-width: 360px; justify-content: center; }
+          .cta-phone { justify-content: center; }
+          .cta-left { text-align: center; }
+          .cta-label { justify-content: center; }
+          .cta-desc { margin-left: auto; margin-right: auto; }
+          .cta-trust { justify-content: center; }
         }
         @media (max-width: 600px) {
           .cta-section { padding: 4rem 0; }
-          .cta-card { border-left-width: 2px; }
+          .cta-card { border-left-width: 2px; padding: 2rem 1.25rem; }
+          .cta-btn-primary, .cta-btn-wa { max-width: 100%; }
         }
       `}} />
     </section>

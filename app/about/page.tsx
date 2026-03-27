@@ -590,11 +590,11 @@ export default function AboutPage() {
           color: rgba(255,255,255,0.5);
         }
         .ab-pills {
-          display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2.5rem;
+          display: flex; flex-wrap: nowrap; gap: 0.6rem; margin-top: 2.5rem;
         }
         .ab-pill {
           display: inline-flex; align-items: center; gap: 0.45rem;
-          padding: 0.5rem 0.9rem;
+          padding: 0.5rem 0.9rem; white-space: nowrap;
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.08);
           border-radius: 100px;

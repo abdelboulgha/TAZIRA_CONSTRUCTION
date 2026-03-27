@@ -408,6 +408,8 @@ export default function AboutPreview() {
           }
           .about-col-3 { display: none; }
           .about-col-2 { margin-top: 28px; }
+          .about-pillars { grid-template-columns: 1fr; gap: 1rem; }
+          .about-headline { font-size: clamp(2.2rem, 8vw, 3rem); word-wrap: break-word; overflow-wrap: break-word; }
         }
       `}} />
     </section>

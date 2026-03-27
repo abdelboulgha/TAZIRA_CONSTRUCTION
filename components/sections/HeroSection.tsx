@@ -144,7 +144,7 @@ export default function HeroSection() {
       <style jsx>{`
         .h-root {
           position: relative;
-          width: 100%; height: 100vh; min-height: 680px;
+          width: 100%; min-height: 100vh;
           overflow: hidden;
           display: flex; flex-direction: column; justify-content: flex-end;
         }
@@ -312,7 +312,7 @@ export default function HeroSection() {
           .h-left { max-width: 100%; }
         }
         @media (max-width: 600px) {
-          .h-title { font-size: clamp(3.2rem, 13vw, 5.5rem); }
+          .h-title { font-size: clamp(2rem, 11vw, 5.5rem); word-wrap: break-word; overflow-wrap: break-word; }
           .h-line-ghost { -webkit-text-stroke: 1.5px rgba(255,255,255,0.35); }
           .h-tagline { display: none; }
         }

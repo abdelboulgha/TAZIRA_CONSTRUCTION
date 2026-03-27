@@ -443,7 +443,7 @@ export default function AboutPage() {
           font-size: clamp(2.4rem, 4.5vw, 3.8rem);
           line-height: 1.04; letter-spacing: -0.04em;
           color: var(--color-secondary);
-          margin-bottom: 1.25rem;
+          margin-bottom: 1.25rem; word-wrap: break-word; overflow-wrap: break-word;
         }
         .ab-heading-white { color: white; }
         .ab-heading-center { text-align: center; }
@@ -463,7 +463,7 @@ export default function AboutPage() {
         /* ── HERO ───────────────────────────────────────────── */
         .ab-hero {
           position: relative;
-          width: 100%; height: 100vh; min-height: 680px;
+          width: 100%; min-height: 100vh;
           overflow: hidden;
           display: flex; flex-direction: column; justify-content: flex-end;
         }
@@ -502,7 +502,7 @@ export default function AboutPage() {
         .ab-hero-eyebrow span {
           font-size: 0.58rem; font-weight: 700;
           letter-spacing: 0.26em; text-transform: uppercase;
-          color: rgba(255,255,255,0.3); white-space: nowrap;
+          color: rgba(255,255,255,0.3); word-break: break-word;
         }
         .ab-hero-title-block {
           padding: 0 4rem; flex: 1;
@@ -841,11 +841,13 @@ export default function AboutPage() {
           .ab-story, .ab-mission, .ab-values, .ab-timeline, .ab-domains { padding: 6rem 0; }
         }
         @media (max-width: 600px) {
-          .ab-hero-title { font-size: clamp(3.5rem, 13vw, 6rem); }
+          .ab-hero-title { font-size: clamp(2.2rem, 11vw, 4.5rem); word-wrap: break-word; }
           .ab-hero-ghost { -webkit-text-stroke: 1.5px rgba(255,255,255,0.32); }
           .ab-val-grid { grid-template-columns: 1fr; }
           .ab-domain-grid { grid-template-columns: 1fr; }
           .ab-tl-item { gap: 1.5rem; }
+          .ab-pills { flex-direction: column; align-items: stretch; }
+          .ab-pill { justify-content: flex-start; }
           .ab-story-imgs {
             grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; height: 280px;
           }

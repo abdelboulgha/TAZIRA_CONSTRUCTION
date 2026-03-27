@@ -164,10 +164,23 @@ export default function ServicesPage() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 1000px) {
-          .srv-item { grid-template-columns: 1fr !important; gap: 3rem !important; }
+          .srv-item { grid-template-columns: 1fr !important; gap: 4rem !important; }
           .srv-item > div { order: unset !important; }
           .srv-item-img-wrap { aspect-ratio: 16/10 !important; }
-          .srv-item-num { font-size: 6rem !important; top: -1rem !important; }
+          .srv-item-num { font-size: 6rem !important; top: -2.5rem !important; left: 0 !important; right: 0 !important; text-align: center; }
+          .srv-item-content { text-align: center; }
+          .srv-item-feature { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+          .srv-hero { min-height: 60vh !important; padding-top: calc(var(--navbar-height) + 3rem) !important; padding-bottom: 4rem !important; }
+          .srv-hero-title { font-size: clamp(2.2rem, 8vw, 3.5rem) !important; }
+          .srv-items { gap: 6rem !important; }
+          .srv-item-img-wrap { aspect-ratio: 4/3 !important; }
+        }
+        @media (max-width: 500px) {
+          .srv-item-img-wrap { aspect-ratio: 1/1 !important; }
+          .srv-item-num { font-size: 5rem !important; }
+          .srv-item-content h2 { font-size: 1.8rem !important; }
         }
       `}} />
     </div>

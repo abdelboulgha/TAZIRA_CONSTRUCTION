@@ -2,15 +2,13 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-
-const POINTS = [
-  { num: '01', text: 'Spécialisée dans les travaux de construction et d\'infrastructure au Maroc' },
-  { num: '02', text: 'Conformité aux normes marocaines et internationales en vigueur' },
-  { num: '03', text: 'Solutions durables et techniques adaptées à chaque projet' },
-  { num: '04', text: 'Équipe d\'ingénieurs et techniciens certifiés et expérimentés' },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function TrustSection() {
+  const { t, isRTL } = useLanguage();
+  const d = t.trust;
+  const POINTS = d.points.map((text, i) => ({ num: `0${i + 1}`, text }));
+
   const sectionRef  = useRef<HTMLElement>(null);
   const textRef     = useRef<HTMLDivElement>(null);
   const imgRef      = useRef<HTMLDivElement>(null);
@@ -46,7 +44,7 @@ export default function TrustSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="trust-section">
+    <section ref={sectionRef} className="trust-section" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
 
       {/* Decorative bg element */}
       <div className="trust-bg-text" aria-hidden="true">SINCE</div>
@@ -57,23 +55,17 @@ export default function TrustSection() {
         <div ref={textRef} className="trust-text" style={{ opacity: 0 }}>
 
           <div className="trust-eyebrow">
-            <span>À propos de nous</span>
+            <span>{d.eyebrow}</span>
           </div>
 
           <h2 className="trust-heading">
-            Votre partenaire de{' '}
-            <em className="trust-em">confiance</em>{' '}
-            en construction
+            {d.heading}{' '}
+            <em className="trust-em">{d.headingHighlight}</em>{' '}
+            {d.headingSuffix}
           </h2>
 
-          <p className="trust-body">
-            Spécialisée dans les travaux de construction et d&apos;infrastructure, notre entreprise
-            s&apos;engage à fournir des solutions durables, conformes aux normes les plus exigeantes.
-          </p>
-          <p className="trust-body" style={{ marginTop: '0.9rem', marginBottom: '3rem' }}>
-            Notre approche allie expertise technique, rigueur dans l&apos;exécution et
-            transparence totale avec nos clients, du premier rendez-vous jusqu&apos;à la livraison clés en main.
-          </p>
+          <p className="trust-body">{d.p1}</p>
+          <p className="trust-body" style={{ marginTop: '0.9rem', marginBottom: '3rem' }}>{d.p2}</p>
 
           {/* Numbered points */}
           <ul className="trust-points">
@@ -93,9 +85,9 @@ export default function TrustSection() {
           {/* Mini stats */}
           <div ref={statsRef} className="trust-stats" style={{ opacity: 0 }}>
             {[
-              { value: '200+', label: 'Projets réalisés',   accent: true  },
-              { value: '10+',  label: "Années d'expertise", accent: false },
-              { value: '150+', label: 'Clients satisfaits', accent: false },
+              { value: t.stats.projects.value, label: t.stats.projects.label, accent: true  },
+              { value: t.stats.years.value,    label: t.stats.years.label,    accent: false },
+              { value: t.stats.clients.value,  label: t.stats.clients.label,  accent: false },
             ].map((s, i) => (
               <div key={i} className="trust-stat">
                 <div className="trust-stat-val" style={{ color: s.accent ? 'var(--color-primary)' : 'var(--color-text)' }}>
@@ -107,7 +99,7 @@ export default function TrustSection() {
           </div>
 
           <Link href="/about" className="trust-cta">
-            En savoir plus
+            {d.cta}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -138,15 +130,15 @@ export default function TrustSection() {
               </svg>
             </div>
             <div>
-              <div className="trust-badge-title">ISO Certifié</div>
-              <div className="trust-badge-sub">Normes internationales</div>
+              <div className="trust-badge-title">{d.isoCertified}</div>
+              <div className="trust-badge-sub">{d.isoSub}</div>
             </div>
           </div>
 
           {/* Experience pill */}
           <div className="trust-exp-pill">
-            <span className="trust-exp-num">10+</span>
-            <span className="trust-exp-lbl">ans d'expertise</span>
+            <span className="trust-exp-num">{d.expNum}</span>
+            <span className="trust-exp-lbl">{d.expLabel}</span>
           </div>
 
           {/* Small secondary image */}

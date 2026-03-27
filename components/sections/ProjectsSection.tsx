@@ -1,57 +1,61 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-
-const PROJECTS = [
-  {
-    key: 'building',
-    label: 'Immeuble Commercial',
-    location: 'Casablanca, Maroc',
-    cat: 'Construction',
-    year: '2023',
-    src: '/assets/project-commercial.png',
-    col: 2, row: 2,
-    featured: true,
-  },
-  {
-    key: 'villa',
-    label: 'Villa de Luxe',
-    location: 'Rabat, Maroc',
-    cat: 'Résidentiel',
-    year: '2023',
-    src: '/assets/project-villa.png',
-    col: 1, row: 1,
-  },
-  {
-    key: 'electrical',
-    label: 'Installation Industrielle',
-    location: 'Tanger, Maroc',
-    cat: 'Industriel',
-    year: '2022',
-    src: '/assets/project-industrial.png',
-    col: 1, row: 1,
-  },
-  {
-    key: 'public',
-    label: 'Infrastructure Publique',
-    location: 'Agadir, Maroc',
-    cat: 'Travaux Publics',
-    year: '2022',
-    src: '/assets/project-public.png',
-    col: 2, row: 1,
-  },
-  {
-    key: 'luxury',
-    label: 'Rénovation Résidence',
-    location: 'Marrakech, Maroc',
-    cat: 'Rénovation',
-    year: '2023',
-    src: '/assets/project-renovation.png',
-    col: 1, row: 1,
-  },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ProjectsSection() {
+  const { t, isRTL } = useLanguage();
+  const d = t.projects;
+
+  const PROJECTS = [
+    {
+      key: 'building',
+      label: d.items.building,
+      location: 'Casablanca, Maroc',
+      cat: d.categories.construction,
+      year: '2023',
+      src: '/assets/project-commercial.png',
+      col: 2, row: 2,
+      featured: true,
+    },
+    {
+      key: 'villa',
+      label: d.items.villa,
+      location: 'Rabat, Maroc',
+      cat: d.categories.residential,
+      year: '2023',
+      src: '/assets/project-villa.png',
+      col: 1, row: 1,
+    },
+    {
+      key: 'electrical',
+      label: d.items.industrial,
+      location: 'Tanger, Maroc',
+      cat: d.categories.industrial,
+      year: '2022',
+      src: '/assets/project-industrial.png',
+      col: 1, row: 1,
+    },
+    {
+      key: 'public',
+      label: d.items.public,
+      location: 'Agadir, Maroc',
+      cat: d.categories.public,
+      year: '2022',
+      src: '/assets/project-public.png',
+      col: 2, row: 1,
+    },
+    {
+      key: 'luxury',
+      label: d.items.renovation,
+      location: 'Marrakech, Maroc',
+      cat: d.categories.renovation,
+      year: '2023',
+      src: '/assets/project-renovation.png',
+      col: 1, row: 1,
+    },
+  ];
+
   const ref       = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const gridRef   = useRef<HTMLDivElement>(null);
@@ -84,7 +88,7 @@ export default function ProjectsSection() {
   }, []);
 
   return (
-    <section ref={ref} className="proj-section">
+    <section ref={ref} className="proj-section" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
       {/* Subtle noise overlay */}
       <div className="proj-noise" />
 
@@ -94,17 +98,15 @@ export default function ProjectsSection() {
         <div ref={headerRef} className="proj-header" style={{ opacity: 0 }}>
           <div>
             <div className="proj-eyebrow">
-              <span>Nos Réalisations</span>
+              <span>{d.eyebrow}</span>
             </div>
             <h2 className="proj-heading">
-              Projets{' '}
-              <em className="proj-em">réalisés</em>
+              {d.heading}{' '}
+              <em className="proj-em">{d.headingHighlight}</em>
             </h2>
           </div>
           <div className="proj-header-right">
-            <p className="proj-header-text">
-              Plus de 200 projets livrés à travers tout le Maroc avec la plus haute exigence de qualité.
-            </p>
+            <p className="proj-header-text">{d.headerText}</p>
           </div>
         </div>
 

@@ -13,8 +13,13 @@ const fr = {
     subtitle:
       'TAZIRA CONSTRUCTION SARL réalise vos projets avec excellence, professionnalisme et rigueur. De la conception à la livraison, nous sommes à vos côtés.',
     cta: 'Demander un devis',
-    ctaSecondary: 'Voir nos services',
+    ctaSecondary: 'Nos services',
     scrollDown: 'Défiler vers le bas',
+    cards: [
+      { label: 'GÉNIE CIVIL',   sub: 'Structure & Gros Œuvre' },
+      { label: 'ÉLECTRICITÉ',   sub: 'Courant Fort & Faible' },
+      { label: 'RÉNOVATION',    sub: 'Finition & Aménagement' },
+    ],
   },
   aboutPreview: {
     badge: 'Qui sommes-nous ?',
@@ -34,25 +39,28 @@ const fr = {
   },
   services: {
     badge: 'Nos Services',
+    eyebrow: 'Nos Expertises',
+    heading: 'Services',
+    headingHighlight: 'd\'excellence',
     title: 'Des solutions complètes pour',
     titleHighlight: 'vos projets',
     subtitle:
       'Nous offrons une gamme complète de services de construction et de travaux publics adaptés à vos besoins.',
     items: {
       construction: {
-        title: 'Construction',
+        title: 'Construction de bâtiments',
         description:
-          'Réalisation de villas, maisons, immeubles résidentiels et commerciaux avec les plus hauts standards de qualité.',
+          'Conception et réalisation de bâtiments résidentiels, commerciaux et industriels selon les normes les plus strictes.',
       },
       renovation: {
-        title: 'Rénovation',
+        title: 'Rénovation & finition',
         description:
-          'Transformation et modernisation de vos espaces existants. Rénovation complète ou partielle selon vos besoins.',
+          'Rénovation complète et travaux de finition haut de gamme pour transformer et valoriser vos espaces.',
       },
       electrical: {
-        title: 'Travaux Électriques',
+        title: 'Travaux électriques',
         description:
-          'Installation et maintenance des systèmes électriques pour tous types de bâtiments, conformément aux normes en vigueur.',
+          'Installation, mise en conformité et maintenance de systèmes électriques pour tous types de bâtiments.',
       },
       publicWorks: {
         title: 'Travaux Publics',
@@ -60,9 +68,9 @@ const fr = {
           'Réalisation de routes, voiries, réseaux divers et ouvrages d\'art pour les secteurs public et privé.',
       },
       maintenance: {
-        title: 'Maintenance',
+        title: 'Maintenance & dépannage',
         description:
-          'Services de maintenance préventive et corrective pour garantir la durabilité et la performance de vos infrastructures.',
+          'Service de maintenance préventive et corrective avec intervention rapide garantie sous 24 heures.',
       },
       design: {
         title: 'Études & Conception',
@@ -71,22 +79,26 @@ const fr = {
       },
     },
     learnMore: 'En savoir plus',
-    viewAll: 'Voir tous nos services',
+    viewAll: 'Voir tous les services',
   },
   whyUs: {
     badge: 'Pourquoi nous choisir',
+    eyebrow: 'POURQUOI CHOISIR TAZIRA CONSTRUCTION',
+    heading: 'L\'excellence au',
+    headingHighlight: 'cœur',
+    headingSuffix: 'de chaque projet',
     title: 'La qualité avant tout,',
     titleHighlight: 'toujours',
     items: {
       quality: {
-        title: 'Qualité certifiée',
+        title: 'Qualité Garantie',
         description:
-          'Nous utilisons uniquement des matériaux de première qualité et respectons les normes les plus strictes.',
+          'Chaque projet est réalisé selon les normes les plus strictes avec des matériaux sélectionnés pour leur durabilité et performance à long terme.',
       },
       experience: {
-        title: '10+ ans d\'expérience',
+        title: 'Expertise Technique',
         description:
-          'Une décennie d\'expertise dans le secteur de la construction au Maroc.',
+          "Bénéficiez de plus de 10 ans d'expérience cumulée par nos ingénieurs et techniciens dans les domaines les plus pointus de la construction.",
       },
       team: {
         title: 'Équipe experte',
@@ -94,14 +106,14 @@ const fr = {
           'Des ingénieurs, architectes et techniciens qualifiés à votre service.',
       },
       deadline: {
-        title: 'Respect des délais',
+        title: 'Respect des Délais',
         description:
-          'Nous livrons vos projets dans les délais convenus, sans compromis sur la qualité.',
+          'Une planification rigoureuse et un suivi en temps réel de chaque chantier nous permettent de toujours livrer votre projet dans les temps.',
       },
       support: {
-        title: 'Support 24h/24',
+        title: 'Accompagnement 360°',
         description:
-          'Une équipe disponible en permanence pour répondre à vos besoins urgents.',
+          "De la conception préliminaire à la livraison finale, nous vous accompagnons à chaque étape et garantissons un suivi de qualité après remise des clés.",
       },
       safety: {
         title: 'Sécurité maximale',
@@ -112,72 +124,152 @@ const fr = {
   },
   projects: {
     badge: 'Nos Réalisations',
+    eyebrow: 'Nos Réalisations',
+    heading: 'Projets',
+    headingHighlight: 'réalisés',
+    headerText: 'Plus de 200 projets livrés à travers tout le Maroc avec la plus haute exigence de qualité.',
     title: 'Des projets qui parlent',
     titleHighlight: 'd\'eux-mêmes',
     subtitle:
       'Découvrez quelques-uns de nos projets réalisés avec soin et professionnalisme.',
     viewAll: 'Voir tous les projets',
     items: {
-      villa: 'Villa Résidentielle',
+      villa: 'Villa de Luxe',
       building: 'Immeuble Commercial',
-      renovation: 'Rénovation Complète',
+      renovation: 'Rénovation Résidence',
       public: 'Infrastructure Publique',
-      industrial: 'Complexe Industriel',
+      industrial: 'Installation Industrielle',
       luxury: 'Résidence de Luxe',
+    },
+    categories: {
+      construction: 'Construction',
+      renovation: 'Rénovation',
+      residential: 'Résidentiel',
+      industrial: 'Industriel',
+      public: 'Travaux Publics',
     },
   },
   stats: {
+    eyebrow: 'Chiffres clés',
+    heading: 'Des résultats qui',
+    headingHighlight: 'parlent',
+    headingSuffix: 'd\'eux-mêmes',
+    subtitle: 'Une décennie de projets livrés avec excellence, confiance et rigueur professionnelle.',
     projects: { value: '200+', label: 'Projets Réalisés' },
     years: { value: '10+', label: 'Années d\'Expérience' },
     availability: { value: '24h', label: 'Disponibilité' },
     clients: { value: '150+', label: 'Clients Satisfaits' },
+    trustItems: ['Entreprise certifiée', 'Normes internationales', 'Équipe d\'experts', 'Garantie travaux'],
   },
   process: {
-    badge: 'Notre Processus',
+    badge: 'Notre Méthode',
+    eyebrow: 'Notre Méthode',
+    heading: 'Un processus',
+    headingHighlight: 'rigoureux',
+    headingSuffix: ', de la conception à la livraison',
+    subtext: 'Chaque projet suit quatre étapes précises pour garantir transparence, qualité et respect des délais.',
     title: 'Un processus éprouvé pour',
     titleHighlight: 'vos projets',
     steps: {
-      study: { title: 'Étude', description: 'Analyse approfondie de votre projet et de vos besoins.' },
-      planning: { title: 'Planification', description: 'Élaboration d\'un plan détaillé et d\'un calendrier précis.' },
-      execution: { title: 'Exécution', description: 'Réalisation du projet avec rigueur et professionnalisme.' },
-      delivery: { title: 'Livraison', description: 'Remise des clés et suivi post-livraison.' },
+      study: {
+        title: 'Étude & Faisabilité',
+        description: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires pour concevoir des fondations solides pour votre projet.',
+      },
+      planning: {
+        title: 'Planification Stratégique',
+        description: "Élaboration d'un calendrier précis et allocation optimisée des ressources avec des jalons stricts de contrôle qualité à chaque étape.",
+      },
+      execution: {
+        title: 'Exécution & Supervision',
+        description: 'Mise en œuvre rigoureuse sur le terrain. Nos ingénieurs supervisent la construction avec des contrôles continus et respect absolu des normes.',
+      },
+      delivery: {
+        title: 'Livraison & Suivi',
+        description: 'Réception finale avec remise des clés, documents techniques et garanties complètes. Accompagnement post-livraison réactif inclus.',
+      },
     },
   },
   cta: {
+    eyebrow: 'Contactez-nous',
+    heading: 'Démarrez votre projet avec',
+    headingHighlight: 'TAZIRA CONSTRUCTION',
+    description: 'Consultation gratuite et devis personnalisé sous 24h. Notre équipe d\'experts vous accompagne de la conception à la livraison.',
+    trustItems: ['Devis gratuit', 'Réponse 24h', 'Experts certifiés', 'Garantie travaux'],
     title: 'Prêt à concrétiser votre projet ?',
     subtitle:
       'Contactez-nous dès aujourd\'hui pour obtenir un devis gratuit et personnalisé.',
-    button: 'Contactez-nous',
+    button: 'Demander un devis gratuit',
     whatsapp: 'WhatsApp',
+  },
+  testimonials: {
+    eyebrow: 'Témoignages clients',
+    heading: 'Ce que disent nos',
+    headingHighlight: 'clients',
+    subtext: 'La confiance de nos clients est notre plus grande fierté. Voici ce qu\'ils pensent de notre travail.',
+    rating: '4.9/5',
+    ratingLabel: '— Basé sur plus de 150 avis clients vérifiés',
+  },
+  trust: {
+    eyebrow: 'À propos de nous',
+    heading: 'Votre partenaire de',
+    headingHighlight: 'confiance',
+    headingSuffix: 'en construction',
+    p1: 'Spécialisée dans les travaux de construction et d\'infrastructure, notre entreprise s\'engage à fournir des solutions durables, conformes aux normes les plus exigeantes.',
+    p2: 'Notre approche allie expertise technique, rigueur dans l\'exécution et transparence totale avec nos clients, du premier rendez-vous jusqu\'à la livraison clés en main.',
+    points: [
+      'Spécialisée dans les travaux de construction et d\'infrastructure au Maroc',
+      'Conformité aux normes marocaines et internationales en vigueur',
+      'Solutions durables et techniques adaptées à chaque projet',
+      'Équipe d\'ingénieurs et techniciens certifiés et expérimentés',
+    ],
+    cta: 'En savoir plus',
+    isoCertified: 'ISO Certifié',
+    isoSub: 'Normes internationales',
+    expNum: '10+',
+    expLabel: 'ans d\'expertise',
   },
   about: {
     hero: {
       badge: 'Notre Histoire',
       title: 'Bâtir l\'avenir avec',
       titleHighlight: 'passion',
-      subtitle: 'Découvrez l\'histoire, la mission et les valeurs de TAZIRA CONSTRUCTION SARL.',
+      subtitle: 'Depuis 2013, TAZIRA CONSTRUCTION SARL bâtit l\'excellence au cœur du Maroc. Découvrez notre histoire, nos valeurs et notre vision.',
     },
     story: {
       badge: 'Notre Histoire',
-      title: 'Une histoire de passion et',
-      titleHighlight: 'd\'engagement',
-      p1: 'Fondée il y a plus d\'une décennie, TAZIRA CONSTRUCTION SARL est née de la volonté de transformer le secteur de la construction au Maroc. Notre fondateur, fort d\'une expérience de 15 ans dans le domaine, a créé une entreprise qui place l\'excellence au cœur de chaque projet.',
-      p2: 'Au fil des années, nous avons construit notre réputation sur des valeurs immuables : qualité, intégrité et respect des engagements. Chaque chantier est pour nous l\'occasion de prouver notre savoir-faire et de dépasser les attentes de nos clients.',
+      title: 'Une décennie de',
+      titleHighlight: 'bâtisseurs',
+      p1: 'Fondée en 2013 à Marrakech, TAZIRA CONSTRUCTION SARL est née de la vision d\'entrepreneurs marocains déterminés à élever les standards de la construction dans leur pays. Dès ses débuts, l\'entreprise s\'est distinguée par une approche rigoureuse, centrée sur la qualité d\'exécution et la satisfaction client.',
+      p2: 'Au fil des années, notre équipe s\'est étoffée d\'ingénieurs, de techniciens et d\'ouvriers spécialisés, tous unis par la même passion du travail bien fait. Aujourd\'hui, TAZIRA intervient sur des projets d\'envergure dans tout le Royaume, couvrant le génie civil, l\'électricité, la rénovation et les travaux publics.',
       p3: 'Aujourd\'hui, TAZIRA CONSTRUCTION SARL est reconnue comme l\'un des acteurs majeurs de la construction au Maroc, avec un portefeuille de plus de 200 projets réalisés à travers tout le Royaume.',
     },
+    pills: [
+      'Basée à Marrakech',
+      'Fondée en 2013',
+      '60+ experts',
+      'ISO Certifiée',
+    ],
     mission: {
       badge: 'Mission & Vision',
+      eyebrow: 'Mission & Vision',
+      heading: 'Notre raison d\'être',
       mission: {
         title: 'Notre Mission',
-        description: 'Offrir des services de construction et de travaux publics de la plus haute qualité, en respectant les délais, les budgets et les normes de sécurité, pour contribuer au développement durable du Maroc.',
+        description: 'Offrir à nos clients des solutions de construction complètes, fiables et durables, en respectant les délais, les budgets et les normes les plus exigeantes. Transformer chaque projet en une réalisation dont nous sommes fiers, ensemble.',
+        items: ['Qualité d\'exécution sans compromis', 'Respect des engagements', 'Satisfaction client garantie'],
       },
       vision: {
         title: 'Notre Vision',
-        description: 'Devenir le leader de la construction au Maroc, reconnu pour son excellence, son innovation et son engagement envers le développement durable et la satisfaction client.',
+        description: 'Devenir le partenaire de référence de la construction au Maroc, reconnu pour son excellence technique, son éthique professionnelle et sa capacité à livrer des projets d\'envergure avec une précision remarquable.',
+        items: ['Leadership national dans le BTP', 'Innovation et développement durable', 'Rayonnement à l\'international'],
       },
     },
     values: {
       badge: 'Nos Valeurs',
+      eyebrow: 'Nos Valeurs',
+      heading: 'Les principes qui',
+      headingHighlight: 'nous définissent',
+      subtext: 'Chaque décision, chaque projet, chaque geste quotidien reflète les valeurs fondamentales qui ont façonné notre entreprise depuis sa création.',
       title: 'Ce qui nous',
       titleHighlight: 'définit',
       items: {
@@ -188,6 +280,41 @@ const fr = {
         integrity: { title: 'Intégrité', description: 'Transparence et honnêteté dans toutes nos relations professionnelles.' },
         sustainability: { title: 'Durabilité', description: 'Nous intégrons les principes du développement durable dans nos pratiques.' },
       },
+    },
+    timeline: {
+      eyebrow: 'Notre Parcours',
+      heading: 'Une croissance',
+      headingHighlight: 'continue',
+      items: [
+        { year: '2013', title: 'Création', desc: 'Fondation de TAZIRA CONSTRUCTION SARL à Marrakech avec une équipe fondatrice de 12 professionnels passionnés.' },
+        { year: '2016', title: 'Expansion', desc: 'Ouverture de nouveaux marchés et premiers projets d\'infrastructure publique au niveau régional.' },
+        { year: '2019', title: 'Certification', desc: 'Obtention des certifications ISO et homologations marocaines pour travaux publics et bâtiment.' },
+        { year: '2022', title: 'Croissance', desc: 'Plus de 150 projets livrés. Renforcement de l\'équipe avec 60+ experts et techniciens certifiés.' },
+        { year: '2024', title: "Aujourd'hui", desc: 'Acteur de référence au Maroc avec une capacité de livraison complète sur tout le territoire national.' },
+      ],
+    },
+    domains: {
+      eyebrow: 'Nos Domaines',
+      heading: 'Domaines',
+      headingHighlight: 'd\'expertise',
+      items: [
+        {
+          title: 'Génie Civil',
+          desc: "Conception et réalisation de structures complexes : immeubles, ouvrages d'art, infrastructures routières.",
+        },
+        {
+          title: 'Électricité',
+          desc: "Installations électriques courant fort et faible pour le résidentiel, le tertiaire et l'industrie.",
+        },
+        {
+          title: 'Rénovation',
+          desc: "Réhabilitation et modernisation de bâtiments avec finitions haut de gamme et respect du patrimoine.",
+        },
+        {
+          title: 'Travaux Publics',
+          desc: "Routes, VRD, réseaux d'assainissement et aménagements urbains conformes aux normes en vigueur.",
+        },
+      ],
     },
     team: {
       badge: 'Notre Équipe',

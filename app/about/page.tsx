@@ -1,150 +1,79 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import CtaSection from '@/components/sections/CtaSection';
+import { useLanguage } from '@/context/LanguageContext';
 
 /* ─── Data ───────────────────────────────────────────────────────────── */
 
-const VALUES = [
-  {
-    key: 'quality',
-    title: 'Qualité',
-    desc: "Rigueur technique et finitions impeccables sur chaque chantier, sans exception ni compromis.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-      </svg>
-    ),
-  },
-  {
-    key: 'safety',
-    title: 'Sécurité',
-    desc: "Priorité absolue sur chaque site : normes strictes, équipements homologués et protocoles rigoureux.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-    ),
-  },
-  {
-    key: 'reliability',
-    title: 'Fiabilité',
-    desc: "Respect total des délais et des engagements contractuels, projet après projet, sans défaillance.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <polyline points="20 6 9 17 4 12"/>
-      </svg>
-    ),
-  },
-  {
-    key: 'innovation',
-    title: 'Innovation',
-    desc: "Adoption de techniques modernes et de matériaux durables pour des ouvrages pérennes et performants.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-      </svg>
-    ),
-  },
-  {
-    key: 'integrity',
-    title: 'Intégrité',
-    desc: "Transparence totale avec nos clients, de l'étude préliminaire jusqu'à la livraison clés en main.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-      </svg>
-    ),
-  },
-  {
-    key: 'sustainability',
-    title: 'Durabilité',
-    desc: "Engagement fort pour des pratiques responsables et des solutions respectueuses de l'environnement.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-        <path d="M12 22V12m0 0C12 7 7 4 2 6c5 0 8 3 10 6zm0 0c0-5 5-8 10-6-5 0-8 3-10 6z"/>
-      </svg>
-    ),
-  },
+const VALUE_ICONS: Record<string, JSX.Element> = {
+  quality: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    </svg>
+  ),
+  safety: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+    </svg>
+  ),
+  reliability: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  ),
+  innovation: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+    </svg>
+  ),
+  integrity: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+    </svg>
+  ),
+  sustainability: (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+      <path d="M12 22V12m0 0C12 7 7 4 2 6c5 0 8 3 10 6zm0 0c0-5 5-8 10-6-5 0-8 3-10 6z"/>
+    </svg>
+  ),
+};
+
+const DOMAIN_IMGS = [
+  'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=88',
+  'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=85',
+  '/assets/service_renovation.png',
+  '/assets/service_public_works.png',
 ];
 
-const TIMELINE = [
-  { year: '2013', title: 'Création', desc: "Fondation de TAZIRA CONSTRUCTION SARL à Marrakech avec une équipe fondatrice de 12 professionnels passionnés." },
-  { year: '2016', title: 'Expansion', desc: "Ouverture de nouveaux marchés et premiers projets d'infrastructure publique au niveau régional." },
-  { year: '2019', title: 'Certification', desc: "Obtention des certifications ISO et homologations marocaines pour travaux publics et bâtiment." },
-  { year: '2022', title: 'Croissance', desc: "Plus de 150 projets livrés. Renforcement de l'équipe avec 60+ experts et techniciens certifiés." },
-  { year: '2024', title: "Aujourd'hui", desc: "Acteur de référence au Maroc avec une capacité de livraison complète sur tout le territoire national." },
-];
-
-const DOMAINS = [
-  {
-    title: 'Génie Civil',
-    desc: "Conception et réalisation de structures complexes : immeubles, ouvrages d'art, infrastructures routières.",
-    img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=88',
-  },
-  {
-    title: 'Électricité',
-    desc: "Installations électriques courant fort et faible pour le résidentiel, le tertiaire et l'industrie.",
-    img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=85',
-  },
-  {
-    title: 'Rénovation',
-    desc: "Réhabilitation et modernisation de bâtiments avec finitions haut de gamme et respect du patrimoine.",
-    img: '/assets/service_renovation.png',
-  },
-  {
-    title: 'Travaux Publics',
-    desc: "Routes, VRD, réseaux d'assainissement et aménagements urbains conformes aux normes en vigueur.",
-    img: '/assets/service_public_works.png',
-  },
-];
-
-const PILLS = [
-  {
-    text: 'Basée à Marrakech',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
-      </svg>
-    ),
-  },
-  {
-    text: 'Fondée en 2013',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-        <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
-        <line x1="3" y1="10" x2="21" y2="10"/>
-      </svg>
-    ),
-  },
-  {
-    text: '60+ experts',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
-      </svg>
-    ),
-  },
-  {
-    text: 'ISO Certifiée',
-    icon: (
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-    ),
-  },
+const PILL_ICONS = [
+  <svg key="loc" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+  </svg>,
+  <svg key="cal" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+    <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+    <line x1="3" y1="10" x2="21" y2="10"/>
+  </svg>,
+  <svg key="team" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+    <circle cx="9" cy="7" r="4"/>
+    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+  </svg>,
+  <svg key="iso" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </svg>,
 ];
 
 /* ─── Page component ─────────────────────────────────────────────────── */
 
 export default function AboutPage() {
+  const { t, isRTL } = useLanguage();
+  const ta = t.about;
   const heroRef     = useRef<HTMLElement>(null);
   const storyRef    = useRef<HTMLElement>(null);
   const missionRef  = useRef<HTMLElement>(null);
@@ -222,7 +151,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div>
+    <div style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
 
       {/* ════ HERO ════════════════════════════════════════════ */}
       <section ref={heroRef} className="ab-hero">
@@ -257,14 +186,13 @@ export default function AboutPage() {
           </div>
           <div className="ab-hero-bottom">
             <p className="ab-hero-sub" style={{ opacity: 0 }}>
-              Depuis 2013, TAZIRA CONSTRUCTION SARL bâtit l&apos;excellence au cœur du Maroc.
-              Découvrez notre histoire, nos valeurs et notre vision.
+              {ta.hero.subtitle}
             </p>
             <div className="ab-hero-scroll" style={{ opacity: 0 }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 5v14M5 12l7 7 7-7"/>
               </svg>
-              <span>Défiler</span>
+              <span>{t.hero.scrollDown}</span>
             </div>
           </div>
         </div>
@@ -277,30 +205,19 @@ export default function AboutPage() {
 
           <div className="ab-story-text" style={{ opacity: 0 }}>
             <div className="ab-eyebrow">
-              
-              <span>Notre Histoire</span>
+              <span>{ta.story.badge}</span>
             </div>
             <h2 className="ab-heading">
-              Une décennie de{' '}
-              <em className="ab-em">bâtisseurs</em>
+              {ta.story.title}{' '}
+              <em className="ab-em">{ta.story.titleHighlight}</em>
             </h2>
-            <p className="ab-body">
-              Fondée en 2013 à Marrakech, TAZIRA CONSTRUCTION SARL est née de la vision
-              d&apos;entrepreneurs marocains déterminés à élever les standards de la construction
-              dans leur pays. Dès ses débuts, l&apos;entreprise s&apos;est distinguée par une
-              approche rigoureuse, centrée sur la qualité d&apos;exécution et la satisfaction client.
-            </p>
-            <p className="ab-body ab-body-mt">
-              Au fil des années, notre équipe s&apos;est étoffée d&apos;ingénieurs, de techniciens
-              et d&apos;ouvriers spécialisés, tous unis par la même passion du travail bien fait.
-              Aujourd&apos;hui, TAZIRA intervient sur des projets d&apos;envergure dans tout le
-              Royaume, couvrant le génie civil, l&apos;électricité, la rénovation et les travaux publics.
-            </p>
+            <p className="ab-body">{ta.story.p1}</p>
+            <p className="ab-body ab-body-mt">{ta.story.p2}</p>
             <div className="ab-pills">
-              {PILLS.map((p, i) => (
+              {ta.pills.map((text: string, i: number) => (
                 <div key={i} className="ab-pill">
-                  <span className="ab-pill-icon">{p.icon}</span>
-                  <span>{p.text}</span>
+                  <span className="ab-pill-icon">{PILL_ICONS[i]}</span>
+                  <span>{text}</span>
                 </div>
               ))}
             </div>
@@ -345,12 +262,10 @@ export default function AboutPage() {
 
           <div className="ab-mv-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              
-              <span className="ab-eyebrow-span-r">Mission &amp; Vision</span>
-              
+              <span className="ab-eyebrow-span-r">{ta.mission.eyebrow}</span>
             </div>
             <h2 className="ab-heading ab-heading-white ab-heading-center">
-              Notre raison d&apos;être
+              {ta.mission.heading}
             </h2>
           </div>
 
@@ -358,14 +273,10 @@ export default function AboutPage() {
             {/* Mission */}
             <div className="ab-mv-card">
               <div className="ab-mv-num">01</div>
-              <h3 className="ab-mv-title">Notre Mission</h3>
-              <p className="ab-mv-body">
-                Offrir à nos clients des solutions de construction complètes, fiables et durables,
-                en respectant les délais, les budgets et les normes les plus exigeantes.
-                Transformer chaque projet en une réalisation dont nous sommes fiers, ensemble.
-              </p>
+              <h3 className="ab-mv-title">{ta.mission.mission.title}</h3>
+              <p className="ab-mv-body">{ta.mission.mission.description}</p>
               <ul className="ab-mv-list">
-                {["Qualité d'exécution sans compromis", "Respect des engagements", "Satisfaction client garantie"].map((item, i) => (
+                {ta.mission.mission.items.map((item: string, i: number) => (
                   <li key={i} className="ab-mv-item">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
                       <polyline points="20 6 9 17 4 12"/>
@@ -382,14 +293,10 @@ export default function AboutPage() {
             {/* Vision */}
             <div className="ab-mv-card">
               <div className="ab-mv-num">02</div>
-              <h3 className="ab-mv-title">Notre Vision</h3>
-              <p className="ab-mv-body">
-                Devenir le partenaire de référence de la construction au Maroc, reconnu pour
-                son excellence technique, son éthique professionnelle et sa capacité à livrer
-                des projets d&apos;envergure avec une précision remarquable.
-              </p>
+              <h3 className="ab-mv-title">{ta.mission.vision.title}</h3>
+              <p className="ab-mv-body">{ta.mission.vision.description}</p>
               <ul className="ab-mv-list">
-                {["Leadership national dans le BTP", "Innovation et développement durable", "Rayonnement à l'international"].map((item, i) => (
+                {ta.mission.vision.items.map((item: string, i: number) => (
                   <li key={i} className="ab-mv-item">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
                       <polyline points="20 6 9 17 4 12"/>
@@ -410,29 +317,27 @@ export default function AboutPage() {
         <div className="container">
           <div className="ab-val-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              
-              <span>Nos Valeurs</span>
-              
+              <span>{ta.values.eyebrow}</span>
             </div>
             <h2 className="ab-heading ab-heading-center">
-              Les principes qui{' '}
-              <em className="ab-em">nous définissent</em>
+              {ta.values.heading}{' '}
+              <em className="ab-em">{ta.values.headingHighlight}</em>
             </h2>
-            <p className="ab-subtext">
-              Chaque décision, chaque projet, chaque geste quotidien reflète les valeurs
-              fondamentales qui ont façonné notre entreprise depuis sa création.
-            </p>
+            <p className="ab-subtext">{ta.values.subtext}</p>
           </div>
 
           <div className="ab-val-grid">
-            {VALUES.map((v) => (
-              <div key={v.key} className="ab-val-card">
-                <div className="ab-val-bar" />
-                <div className="ab-val-icon">{v.icon}</div>
-                <h3 className="ab-val-title">{v.title}</h3>
-                <p className="ab-val-desc">{v.desc}</p>
-              </div>
-            ))}
+            {(Object.keys(VALUE_ICONS) as string[]).map((key) => {
+              const v = (ta.values.items as any)[key];
+              return (
+                <div key={key} className="ab-val-card">
+                  <div className="ab-val-bar" />
+                  <div className="ab-val-icon">{VALUE_ICONS[key]}</div>
+                  <h3 className="ab-val-title">{v.title}</h3>
+                  <p className="ab-val-desc">{v.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -450,12 +355,10 @@ export default function AboutPage() {
         <div className="container ab-tl-inner">
           <div className="ab-tl-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              
-              <span className="ab-eyebrow-span-r">Notre Parcours</span>
-              
+              <span className="ab-eyebrow-span-r">{ta.timeline.eyebrow}</span>
             </div>
             <h2 className="ab-heading ab-heading-white ab-heading-center">
-              Une croissance <em className="ab-em">continue</em>
+              {ta.timeline.heading}{' '}<em className="ab-em">{ta.timeline.headingHighlight}</em>
             </h2>
           </div>
 
@@ -463,7 +366,7 @@ export default function AboutPage() {
             <div className="ab-tl-line">
               <div className="ab-tl-line-fill" />
             </div>
-            {TIMELINE.map((item, i) => (
+            {ta.timeline.items.map((item: { year: string; title: string; desc: string }, i: number) => (
               <div key={i} className="ab-tl-item">
                 <div className="ab-tl-dot">
                   <div className="ab-tl-dot-core" />
@@ -485,24 +388,18 @@ export default function AboutPage() {
         <div className="container">
           <div className="ab-dom-header">
             <div className="ab-eyebrow ab-eyebrow-center">
-              
-              <span>Nos Domaines</span>
-              
+              <span>{ta.domains.eyebrow}</span>
             </div>
             <h2 className="ab-heading ab-heading-center">
-              Expertise <em className="ab-em">complète</em>
+              {ta.domains.heading}{' '}<em className="ab-em">{ta.domains.headingHighlight}</em>
             </h2>
-            <p className="ab-subtext">
-              Quatre pôles d&apos;expertise complémentaires pour couvrir tous vos besoins
-              en construction et travaux.
-            </p>
           </div>
 
           <div className="ab-domain-grid">
-            {DOMAINS.map((d, i) => (
+            {ta.domains.items.map((d: { title: string; desc: string }, i: number) => (
               <div key={i} className="ab-domain-card">
                 <div className="ab-domain-img-wrap">
-                  <img src={d.img} alt={d.title} className="ab-domain-img" />
+                  <img src={DOMAIN_IMGS[i]} alt={d.title} className="ab-domain-img" />
                   <div className="ab-domain-img-overlay" />
                   <div className="ab-domain-num-overlay">0{i + 1}</div>
                 </div>
@@ -510,7 +407,7 @@ export default function AboutPage() {
                   <h3 className="ab-domain-title">{d.title}</h3>
                   <p className="ab-domain-desc">{d.desc}</p>
                   <Link href="/services" className="ab-domain-link">
-                    En savoir plus
+                    {t.services.learnMore}
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>

@@ -2,14 +2,17 @@
 
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function HeroSection() {
+  const { t, isRTL } = useLanguage();
+  const d = t.hero;
+
   const taglineRef  = useRef<HTMLDivElement>(null);
   const line1Ref    = useRef<HTMLSpanElement>(null);
   const line2Ref    = useRef<HTMLSpanElement>(null);
   const leftColRef  = useRef<HTMLDivElement>(null);
   const cardsRef    = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     import('gsap').then(({ gsap }) => {
@@ -34,7 +37,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="h-root">
+    <section className="h-root" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
 
       {/* ── Background image ───────────────── */}
       <div className="h-bg">
@@ -44,11 +47,8 @@ export default function HeroSection() {
           aria-hidden="true"
           className="h-bg-img"
         />
-        {/* Primary dark overlay */}
         <div className="h-overlay" />
-        {/* Left gradient for text readability */}
         <div className="h-overlay-left" />
-        {/* Vertical grid lines — signature design element */}
         <div className="h-vgrid" aria-hidden="true">
           {[...Array(10)].map((_, i) => (
             <div key={i} className="h-vgrid-line" />
@@ -85,18 +85,15 @@ export default function HeroSection() {
           <div ref={leftColRef} className="h-left" style={{ opacity: 0 }}>
             <div className="h-subtitle-wrap">
               <div className="h-subtitle-border" />
-              <p className="h-subtitle">
-                TAZIRA CONSTRUCTION SARL est votre partenaire de confiance pour tous
-                vos projets de construction, rénovation et travaux publics au Maroc.
-              </p>
+              <p className="h-subtitle">{d.subtitle}</p>
             </div>
 
             <div className="h-ctas">
               <Link href="/contact" className="h-btn-solid">
-                Demander un devis
+                {d.cta}
               </Link>
               <Link href="/services" className="h-btn-outline">
-                Nos services
+                {d.ctaSecondary}
               </Link>
             </div>
           </div>
@@ -105,8 +102,8 @@ export default function HeroSection() {
           <div ref={cardsRef} className="h-cards" style={{ opacity: 0 }}>
             {[
               {
-                label: 'GÉNIE CIVIL',
-                sub: 'Structure & Gros Œuvre',
+                label: d.cards[0].label,
+                sub: d.cards[0].sub,
                 icon: (
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="1.8">
                     <rect x="3" y="9" width="18" height="13" rx="1"/>
@@ -116,8 +113,8 @@ export default function HeroSection() {
                 ),
               },
               {
-                label: 'ÉLECTRICITÉ',
-                sub: 'Courant Fort & Faible',
+                label: d.cards[1].label,
+                sub: d.cards[1].sub,
                 icon: (
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="1.8">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
@@ -125,8 +122,8 @@ export default function HeroSection() {
                 ),
               },
               {
-                label: 'RÉNOVATION',
-                sub: 'Finition & Aménagement',
+                label: d.cards[2].label,
+                sub: d.cards[2].sub,
                 icon: (
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="1.8">
                     <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
@@ -144,18 +141,13 @@ export default function HeroSection() {
         </div>
       </div>
 
-
-
       <style jsx>{`
-        /* ─── Root ──────────────────────────── */
         .h-root {
           position: relative;
           width: 100%; height: 100vh; min-height: 680px;
           overflow: hidden;
           display: flex; flex-direction: column; justify-content: flex-end;
         }
-
-        /* ─── Background ─────────────────────── */
         .h-bg { position: absolute; inset: 0; z-index: 0; }
         .h-bg-img {
           width: 100%; height: 100%;
@@ -172,8 +164,6 @@ export default function HeroSection() {
             rgba(4,4,4,0.65) 50%,
             transparent 100%);
         }
-
-        /* ─── Vertical grid lines ────────────── */
         .h-vgrid {
           position: absolute; inset: 0;
           display: flex; justify-content: space-between;
@@ -183,8 +173,6 @@ export default function HeroSection() {
           width: 1px; height: 100%;
           background: rgba(255,255,255,0.045);
         }
-
-        /* ─── Content ────────────────────────── */
         .h-content {
           position: relative; z-index: 2;
           display: flex; flex-direction: column;
@@ -192,8 +180,6 @@ export default function HeroSection() {
           height: 100%;
           padding: calc(var(--navbar-height) + 3.5rem) 0 0;
         }
-
-        /* ─── Tagline ────────────────────────── */
         .h-tagline {
           display: flex; align-items: center; gap: 1rem;
           padding: 0 4rem;
@@ -208,8 +194,6 @@ export default function HeroSection() {
           color: rgba(255,255,255,0.3);
           white-space: nowrap;
         }
-
-        /* ─── Title block ────────────────────── */
         .h-title-block {
           padding: 0 4rem;
           flex: 1;
@@ -227,25 +211,17 @@ export default function HeroSection() {
           padding: 0.04em 0;
         }
         .h-line { display: block; }
-
-        /* Solid line — pure white */
         .h-line-solid { color: #ffffff; }
-
-        /* Ghost/outline line — key design feature */
         .h-line-ghost {
           color: transparent;
           -webkit-text-stroke: 2px rgba(255,255,255,0.35);
         }
-
-        /* ─── Bottom row ─────────────────────── */
         .h-bottom {
           display: flex; align-items: flex-end;
           justify-content: space-between;
           padding: 0 4rem 3.5rem;
           gap: 3rem;
         }
-
-        /* ─── Left col ───────────────────────── */
         .h-left { max-width: 400px; flex-shrink: 0; }
         .h-subtitle-wrap {
           display: flex; gap: 1.25rem;
@@ -294,8 +270,6 @@ export default function HeroSection() {
           border-color: rgba(255,255,255,0.6);
           color: white; transform: translateY(-3px);
         }
-
-        /* ─── Service mini-cards ─────────────── */
         .h-cards {
           display: flex; gap: 1px;
           flex-shrink: 0;
@@ -326,10 +300,6 @@ export default function HeroSection() {
           font-size: 0.68rem; color: rgba(255,255,255,0.38);
           font-weight: 500;
         }
-
-
-
-        /* ─── Responsive ─────────────────────── */
         @media (max-width: 1100px) {
           .h-title { font-size: clamp(4rem, 10vw, 8rem); }
           .h-cards { display: none; }
@@ -344,7 +314,6 @@ export default function HeroSection() {
         @media (max-width: 600px) {
           .h-title { font-size: clamp(3.2rem, 13vw, 5.5rem); }
           .h-line-ghost { -webkit-text-stroke: 1.5px rgba(255,255,255,0.35); }
-          .h-scroll { display: none; }
           .h-tagline { display: none; }
         }
       `}</style>

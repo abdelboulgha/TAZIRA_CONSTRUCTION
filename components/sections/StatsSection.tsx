@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 function useCounter(target: number, active: boolean, duration = 2.2) {
   const [val, setVal] = useState(0);
@@ -45,14 +46,17 @@ function StatItem({
   );
 }
 
-const STATS = [
-  { num: 200, suffix: '+', label: 'Projets',     sublabel: 'Réalisés avec succès'  },
-  { num: 10,  suffix: '+', label: 'Années',       sublabel: "D'expérience terrain"  },
-  { num: 150, suffix: '+', label: 'Clients',      sublabel: 'Pleinement satisfaits' },
-  { num: 24,  suffix: 'H', label: 'Disponible',   sublabel: 'Service & assistance'  },
-];
-
 export default function StatsSection() {
+  const { t, isRTL } = useLanguage();
+  const d = t.stats;
+
+  const STATS = [
+    { num: 200, suffix: '+', label: d.projects.label,      sublabel: d.projects.value      },
+    { num: 10,  suffix: '+', label: d.years.label,         sublabel: d.years.value         },
+    { num: 150, suffix: '+', label: d.clients.label,       sublabel: d.clients.value       },
+    { num: 24,  suffix: isRTL ? '/7' : 'H', label: d.availability.label, sublabel: d.availability.value },
+  ];
+
   const ref       = useRef<HTMLElement>(null);
   const bgImgRef  = useRef<HTMLDivElement>(null);
   const triggered = useRef(false);
@@ -103,7 +107,7 @@ export default function StatsSection() {
   }, []);
 
   return (
-    <section ref={ref} className="stt-section">
+    <section ref={ref} className="stt-section" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
 
       {/* Parallax background */}
       <div ref={bgImgRef} className="stt-parallax">
@@ -125,16 +129,14 @@ export default function StatsSection() {
         {/* Headline */}
         <div className="stt-headline" style={{ opacity: 0 }}>
           <div className="stt-headline-eyebrow">
-            <span>Chiffres clés</span>
+            <span>{d.eyebrow}</span>
           </div>
           <h2 className="stt-headline-title">
-            Des résultats qui{' '}
-            <em className="stt-em">parlent</em>{' '}
-            d&apos;eux-mêmes
+            {d.heading}{' '}
+            <em className="stt-em">{d.headingHighlight}</em>{' '}
+            {d.headingSuffix}
           </h2>
-          <p className="stt-headline-sub">
-            Une décennie de projets livrés avec excellence, confiance et rigueur professionnelle.
-          </p>
+          <p className="stt-headline-sub">{d.subtitle}</p>
         </div>
 
         {/* Stats */}
@@ -154,12 +156,7 @@ export default function StatsSection() {
 
         {/* Trust bar */}
         <div className="stt-trust-bar" style={{ opacity: 0 }}>
-          {[
-            'Entreprise certifiée',
-            'Normes internationales',
-            'Équipe d\'experts',
-            'Garantie travaux',
-          ].map((item, i) => (
+          {d.trustItems.map((item, i) => (
             <div key={i} className="stt-trust-item">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2.5">
                 <polyline points="20 6 9 17 4 12"/>

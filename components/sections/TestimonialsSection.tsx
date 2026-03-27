@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const TESTIMONIALS = [
   {
@@ -50,6 +51,8 @@ function Stars({ count }: { count: number }) {
 }
 
 export default function TestimonialsSection() {
+  const { t, isRTL } = useLanguage();
+  const d = t.testimonials;
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -77,7 +80,7 @@ export default function TestimonialsSection() {
   }, []);
 
   return (
-    <section ref={ref} className="tsm-section">
+    <section ref={ref} className="tsm-section" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
       {/* Dot pattern */}
       <div className="tsm-dots" />
 
@@ -86,22 +89,19 @@ export default function TestimonialsSection() {
         {/* Header */}
         <div className="tsm-header" style={{ opacity: 0 }}>
           <div className="tsm-eyebrow">
-            <span>Témoignages clients</span>
+            <span>{d.eyebrow}</span>
           </div>
           <h2 className="tsm-heading">
-            Ce que disent nos{' '}
-            <em className="tsm-em">clients</em>
+            {d.heading}{' '}
+            <em className="tsm-em">{d.headingHighlight}</em>
           </h2>
-          <p className="tsm-subtext">
-            La confiance de nos clients est notre plus grande fierté.
-            Voici ce qu&apos;ils pensent de notre travail.
-          </p>
+          <p className="tsm-subtext">{d.subtext}</p>
         </div>
 
-        {/* Cards */}
+        {/* Cards — content is always French, force ltr */}
         <div className="tsm-grid">
           {TESTIMONIALS.map((item, i) => (
-            <div key={i} className="tsm-card" style={{ opacity: 0 }}>
+            <div key={i} className="tsm-card" style={{ opacity: 0, direction: 'ltr', textAlign: 'left' }}>
               {/* Quote icon */}
               <div className="tsm-quote-icon">
                 <svg width="52" height="52" viewBox="0 0 24 24" fill="currentColor">
@@ -157,8 +157,8 @@ export default function TestimonialsSection() {
             ))}
           </div>
           <p style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', margin: 0, textAlign: 'center' }}>
-            <strong style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>4.9/5</strong>
-            {' '}— Basé sur plus de 150 avis clients vérifiés
+            <strong style={{ color: 'var(--color-text)', fontFamily: 'var(--font-heading)' }}>{d.rating}</strong>
+            {' '}{d.ratingLabel}
           </p>
         </div>
       </div>

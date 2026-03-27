@@ -1,31 +1,19 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
-const STEPS = [
-  {
-    num: '01',
-    title: 'Étude & Faisabilité',
-    desc: 'Analyse approfondie de vos besoins, contraintes techniques et budgétaires pour concevoir des fondations solides pour votre projet.',
-  },
-  {
-    num: '02',
-    title: 'Planification Stratégique',
-    desc: "Élaboration d'un calendrier précis et allocation optimisée des ressources avec des jalons stricts de contrôle qualité à chaque étape.",
-  },
-  {
-    num: '03',
-    title: 'Exécution & Supervision',
-    desc: 'Mise en œuvre rigoureuse sur le terrain. Nos ingénieurs supervisent la construction avec des contrôles continus et respect absolu des normes.',
-  },
-  {
-    num: '04',
-    title: 'Livraison & Suivi',
-    desc: 'Réception finale avec remise des clés, documents techniques et garanties complètes. Accompagnement post-livraison réactif inclus.',
-  },
-];
+const STEP_KEYS = ['study', 'planning', 'execution', 'delivery'] as const;
 
 export default function ProcessSection() {
+  const { t, isRTL } = useLanguage();
+  const d = t.process;
+  const steps = STEP_KEYS.map((key, i) => ({
+    num: `0${i + 1}`,
+    title: (d.steps as any)[key].title,
+    desc: (d.steps as any)[key].description,
+  }));
+
   const sectionRef  = useRef<HTMLElement>(null);
   const activeRef   = useRef(0);
   const [active, setActive] = useState(0);
@@ -40,8 +28,8 @@ export default function ProcessSection() {
       if (scrolled < 0 || scrolled > scrollable) return;
       const progress = scrolled / scrollable;
       const step = Math.min(
-        Math.floor(progress * STEPS.length),
-        STEPS.length - 1,
+        Math.floor(progress * STEP_KEYS.length),
+        STEP_KEYS.length - 1,
       );
       if (step !== activeRef.current) {
         activeRef.current = step;
@@ -54,7 +42,7 @@ export default function ProcessSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="proc-section">
+    <section ref={sectionRef} className="proc-section" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
       <div className="proc-noise" />
 
       {/* Sticky wrapper — both columns stick inside the tall section */}
@@ -63,20 +51,17 @@ export default function ProcessSection() {
 
           {/* ── LEFT ── */}
           <div className="proc-left">
-            <span className="proc-eyebrow">Notre Méthode</span>
+            <span className="proc-eyebrow">{d.eyebrow}</span>
             <h2 className="proc-heading">
-              Un processus{' '}
-              <em className="proc-em">rigoureux</em>,<br />
-              de la conception<br />à la livraison
+              {d.heading}{' '}
+              <em className="proc-em">{d.headingHighlight}</em>
+              {d.headingSuffix}
             </h2>
-            <p className="proc-subtext">
-              Chaque projet suit quatre étapes précises pour garantir
-              transparence, qualité et respect des délais.
-            </p>
+            <p className="proc-subtext">{d.subtext}</p>
 
             {/* Dot indicators */}
             <div className="proc-dots">
-              {STEPS.map((s, i) => (
+              {steps.map((s, i) => (
                 <div
                   key={s.num}
                   className={`proc-dot ${i === active ? 'proc-dot-active' : ''}`}
@@ -87,7 +72,7 @@ export default function ProcessSection() {
 
           {/* ── RIGHT: stacked steps ── */}
           <div className="proc-steps-wrap">
-            {STEPS.map((step, i) => {
+            {steps.map((step, i) => {
               const state =
                 i === active ? 'active' :
                 i < active  ? 'exit'   : 'enter';
@@ -111,7 +96,7 @@ export default function ProcessSection() {
       <style dangerouslySetInnerHTML={{ __html: `
         /* Section is tall — provides the scroll space */
         .proc-section {
-          height: calc(${STEPS.length} * 100vh);
+          height: calc(${STEP_KEYS.length} * 100vh);
           background: var(--color-bg-light);
           position: relative;
         }

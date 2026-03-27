@@ -4,6 +4,7 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import ScrollToTop from '@/components/ScrollToTop';
 
 export const metadata: Metadata = {
   title: 'TAZIRA CONSTRUCTION SARL — Expert en Construction au Maroc',
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="fr" dir="ltr">
       <body suppressHydrationWarning>
         <LanguageProvider>
+          <ScrollToTop />
           <Navbar />
           <main>{children}</main>
           <Footer />

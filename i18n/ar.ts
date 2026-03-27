@@ -259,6 +259,8 @@ const ar = {
   },
   about: {
     hero: {
+      line1: 'حول',
+      line2: 'تازيرا.',
       badge: 'قصتنا',
       title: 'نبني مستقبلاً',
       titleHighlight: 'بشغف وعزيمة',

@@ -274,6 +274,8 @@ const fr = {
   },
   about: {
     hero: {
+      line1: 'À PROPOS',
+      line2: 'DE NOUS.',
       badge: 'Notre Histoire',
       title: 'Bâtir l\'avenir avec',
       titleHighlight: 'passion',

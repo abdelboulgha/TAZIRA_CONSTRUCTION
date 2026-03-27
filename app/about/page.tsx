@@ -177,10 +177,10 @@ export default function AboutPage() {
           <div className="ab-hero-title-block">
             <h1 className="ab-hero-title">
               <span className="ab-hero-line-wrap">
-                <span className="ab-hero-line1 ab-hero-solid">À PROPOS</span>
+                <span className="ab-hero-line1 ab-hero-solid">{ta.hero.line1}</span>
               </span>
               <span className="ab-hero-line-wrap">
-                <span className="ab-hero-line2 ab-hero-ghost">DE NOUS.</span>
+                <span className="ab-hero-line2 ab-hero-ghost">{ta.hero.line2}</span>
               </span>
             </h1>
           </div>

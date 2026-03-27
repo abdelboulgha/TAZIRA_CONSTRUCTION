@@ -68,33 +68,31 @@ export default function ServicesPage() {
     <div style={{ direction: isRTL ? 'rtl' : 'ltr', background: 'var(--color-bg)' }}>
       
       {/* ─── HERO ────────────────────────────────────────── */}
-      <section ref={heroRef} className="srv-hero" style={{ paddingTop: 'calc(var(--navbar-height) + 4rem)', paddingBottom: '6rem', position: 'relative', overflow: 'hidden' }}>
-        <div className="container">
-          <div className="srv-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
-            
-            <div className="srv-hero-text">
-              <div className="srv-hero-eyebrow" style={{ opacity: 0, display: 'inline-flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
-                <div style={{ width: '40px', height: '1px', background: 'var(--color-primary)' }} />
-                <span style={{ fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-primary)' }}>
-                  {d.hero.badge}
-                </span>
-              </div>
-              
-              <h1 className="srv-hero-title" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.8rem, 5vw, 4.5rem)', fontWeight: 900, lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--color-dark-text)', marginBottom: '1.5rem', overflow: 'hidden' }}>
-                <div style={{ overflow: 'hidden' }}><div className="srv-hero-title-line" style={{ color: 'var(--color-secondary)' }}>{d.hero.title}</div></div>
-                <div style={{ overflow: 'hidden' }}><div className="srv-hero-title-line" style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>{d.hero.titleHighlight}</div></div>
-              </h1>
-              
-              <p className="srv-hero-desc" style={{ opacity: 0, fontSize: '1.05rem', lineHeight: 1.8, color: 'var(--color-text-muted)', maxWidth: '480px' }}>
-                {d.hero.subtitle}
-              </p>
+      <section ref={heroRef} className="srv-hero" style={{ paddingTop: 'calc(var(--navbar-height) + 6rem)', paddingBottom: '8rem', position: 'relative', overflow: 'hidden', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
+
+        {/* Full-width background image */}
+        <div className="srv-spline-wrapper" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <img src="/assets/service_construction.png" alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.25) 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%)' }} />
+        </div>
+
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="srv-hero-text" style={{ maxWidth: '600px' }}>
+            <div className="srv-hero-eyebrow" style={{ opacity: 0, display: 'inline-flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
+              <span style={{ fontSize: '0.7rem', fontWeight: 800, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-primary)' }}>
+                {d.hero.badge}
+              </span>
             </div>
 
-            <div className="srv-hero-img-col srv-spline-wrapper" style={{ position: 'relative', height: '600px', borderRadius: 'var(--radius-xl)', overflow: 'hidden', background: '#090909' }}>
-              <img src="/assets/service_construction.png" alt="TAZIRA Construction Services" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 50%)', pointerEvents: 'none' }} />
-            </div>
+            <h1 className="srv-hero-title" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.8rem, 5vw, 4.5rem)', fontWeight: 900, lineHeight: 1.05, letterSpacing: '-0.03em', marginBottom: '1.5rem', overflow: 'hidden' }}>
+              <div style={{ overflow: 'hidden' }}><div className="srv-hero-title-line" style={{ color: '#fff' }}>{d.hero.title}</div></div>
+              <div style={{ overflow: 'hidden' }}><div className="srv-hero-title-line" style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>{d.hero.titleHighlight}</div></div>
+            </h1>
 
+            <p className="srv-hero-desc" style={{ opacity: 0, fontSize: '1.05rem', lineHeight: 1.8, color: 'rgba(255,255,255,0.65)', maxWidth: '480px' }}>
+              {d.hero.subtitle}
+            </p>
           </div>
         </div>
       </section>
@@ -166,8 +164,6 @@ export default function ServicesPage() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 1000px) {
-          .srv-hero-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
-          .srv-hero-img-col { height: 400px !important; }
           .srv-item { grid-template-columns: 1fr !important; gap: 3rem !important; }
           .srv-item > div { order: unset !important; }
           .srv-item-img-wrap { aspect-ratio: 16/10 !important; }

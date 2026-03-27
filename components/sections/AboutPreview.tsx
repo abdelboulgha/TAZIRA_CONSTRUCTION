@@ -14,43 +14,10 @@ const IMAGES = [
   { src: '/assets/image6.png', alt: 'Travaux de terrassement' },
 ];
 
-/* ─── Pillars ─────────────────────────────────────────────────── */
-const PILLARS = [
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
-    label: 'Qualité certifiée',
-    desc: 'Processus rigoureux et matériaux premium.',
-  },
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <circle cx="12" cy="12" r="10" />
-        <polyline points="12 6 12 12 16 14" />
-      </svg>
-    ),
-    label: 'Délais respectés',
-    desc: 'Planification précise, livraison ponctuelle.',
-  },
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-    label: 'Expertise humaine',
-    desc: 'Une équipe expérimentée et passionnée.',
-  },
-];
 
 export default function AboutPreview() {
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useLanguage();
+  const d = t.aboutPreview;
 
   const sectionRef   = useRef<HTMLElement>(null);
   const eyebrowRef   = useRef<HTMLDivElement>(null);
@@ -192,28 +159,23 @@ export default function AboutPreview() {
           {/* Eyebrow */}
           <div style={{ marginBottom: '2rem' }}>
             <span ref={eyebrowRef} className="about-eyebrow">
-              À PROPOS DE NOUS
+              {d.eyebrow}
             </span>
           </div>
 
           {/* Headline */}
           <h2 ref={headlineRef} className="about-headline">
-            Construire avec<br />
-            <span style={{ color: 'var(--color-primary)' }}>précision</span>{' '}
-            &amp; vision.
+            {d.headline}<br />
+            <span style={{ color: 'var(--color-primary)' }}>{d.headlineHighlight}</span>{' '}
+            {d.headlineSuffix}
           </h2>
 
           {/* Body */}
-          <p ref={paraRef} className="about-para">
-            Depuis notre création, TAZIRA CONSTRUCTION SARL s&apos;impose comme
-            un acteur incontournable du secteur du bâtiment en Algérie. Nous
-            conjuguons expertise technique, rigueur et engagement humain pour
-            réaliser des projets qui durent et qui marquent les territoires.
-          </p>
+          <p ref={paraRef} className="about-para">{d.body}</p>
 
           {/* Pillars as small cards */}
           <div ref={pillarsRef} className="about-pillars">
-            {PILLARS.map((p) => (
+            {d.pillars.map((p: { label: string; desc: string }) => (
               <div key={p.label} className="about-pillar">
                 <div className="about-pillar-label">{p.label}</div>
                 <div className="about-pillar-desc">{p.desc}</div>

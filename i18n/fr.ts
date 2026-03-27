@@ -25,13 +25,23 @@ const fr = {
   },
   aboutPreview: {
     badge: 'Qui sommes-nous ?',
+    eyebrow: 'À PROPOS DE NOUS',
     title: 'Une entreprise fondée sur',
     titleHighlight: "l'excellence",
+    headline: 'Construire avec',
+    headlineHighlight: 'précision',
+    headlineSuffix: '& vision.',
     description:
       'Depuis plus de 10 ans, TAZIRA CONSTRUCTION SARL accompagne ses clients dans la réalisation de leurs projets de construction, de rénovation et de travaux publics au Maroc. Notre engagement : qualité, fiabilité et respect des délais.',
     description2:
       'Notre équipe d\'experts qualifiés met son savoir-faire au service de chaque chantier, qu\'il s\'agisse de villas, de bâtiments commerciaux ou de projets d\'infrastructure.',
+    body: 'Depuis notre création, TAZIRA CONSTRUCTION SARL s\'impose comme un acteur incontournable du secteur du bâtiment au Maroc. Nous conjuguons expertise technique, rigueur et engagement humain pour réaliser des projets qui durent et qui marquent les territoires.',
     learnMore: 'En savoir plus',
+    pillars: [
+      { label: 'Qualité certifiée',  desc: 'Processus rigoureux et matériaux premium.' },
+      { label: 'Délais respectés',   desc: 'Planification précise, livraison ponctuelle.' },
+      { label: 'Expertise humaine',  desc: 'Une équipe expérimentée et passionnée.' },
+    ],
     stats: {
       projects: 'Projets réalisés',
       years: 'Années d\'expérience',

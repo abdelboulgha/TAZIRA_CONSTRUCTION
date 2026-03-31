@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
+import StyledJsxRegistry from './registry';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
@@ -99,13 +100,15 @@ export default function RootLayout({
         <meta name="theme-color" content="#1a1a1a" />
       </head>
       <body suppressHydrationWarning>
-        <LanguageProvider>
-          <ScrollToTop />
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <WhatsAppButton />
-        </LanguageProvider>
+        <StyledJsxRegistry>
+          <LanguageProvider>
+            <ScrollToTop />
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <WhatsAppButton />
+          </LanguageProvider>
+        </StyledJsxRegistry>
       </body>
     </html>
   );

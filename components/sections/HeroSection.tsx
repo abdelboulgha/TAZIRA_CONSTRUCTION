@@ -70,10 +70,10 @@ export default function HeroSection() {
         <div className="h-title-block">
           <h1 className="h-title">
             <span className="h-line-wrap">
-              <span ref={line1Ref} className="h-line h-line-solid">{d.line1}</span>
+              <span ref={line1Ref} className="h-line h-line-solid" style={{ opacity: 0 }}>{d.line1}</span>
             </span>
             <span className="h-line-wrap">
-              <span ref={line2Ref} className="h-line h-line-ghost">{d.line2}</span>
+              <span ref={line2Ref} className="h-line h-line-ghost" style={{ opacity: 0 }}>{d.line2}</span>
             </span>
           </h1>
         </div>

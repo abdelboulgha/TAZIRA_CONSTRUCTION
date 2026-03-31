@@ -201,7 +201,7 @@ export default function HeroSection() {
         }
         .h-title {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: clamp(5rem, 12vw, 11rem);
+          font-size: clamp(4.5rem, 9.5vw, 9rem);
           line-height: 0.88; letter-spacing: -0.04em;
           text-transform: uppercase;
           margin: 0;
@@ -301,7 +301,7 @@ export default function HeroSection() {
           font-weight: 500;
         }
         @media (max-width: 1100px) {
-          .h-title { font-size: clamp(4rem, 10vw, 8rem); }
+          .h-title { font-size: clamp(3.5rem, 8vw, 6.5rem); }
           .h-cards { display: none; }
         }
         @media (max-width: 900px) {
@@ -313,7 +313,7 @@ export default function HeroSection() {
           .h-left { max-width: 100%; }
         }
         @media (max-width: 600px) {
-          .h-title { font-size: clamp(2rem, 11vw, 5.5rem); word-wrap: break-word; overflow-wrap: break-word; }
+          .h-title { font-size: clamp(2rem, 9vw, 4.5rem); word-wrap: break-word; overflow-wrap: break-word; }
           .h-line-ghost { -webkit-text-stroke: 1.5px rgba(255,255,255,0.35); }
           .h-tagline { display: none; }
           .h-title-block { margin: 1.5rem 0 2.5rem; }

@@ -40,13 +40,13 @@ export default function Navbar() {
 
         {/* ── Logo ──────────────────────────────── */}
         <Link href="/" className="nb-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', flexShrink: 0, textDecoration: 'none' }}>
-          <span style={{ display: 'flex', flexShrink: 0, width: 46, height: 46 }}>
+          <span style={{ display: 'flex', flexShrink: 0, height: 46 }}>
             <Image
               src="/assets/logo.png"
               alt="TAZIRA CONSTRUCTION"
-              width={46}
+              width={150}
               height={46}
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: 'contain', width: 'auto', height: '100%' }}
               priority
             />
           </span>
@@ -133,7 +133,7 @@ export default function Navbar() {
         
         {/* Decorative background logo */}
         <div className="nb-mobile-deco">
-          <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="rgba(196,147,63,0.03)" strokeWidth="1">
+          <svg width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="rgba(21, 63, 101,0.03)" strokeWidth="1">
             <path d="M3 21h18M5 21V5l7-3 7 3v16M12 9v12M9 13h6"/>
           </svg>
         </div>
@@ -288,11 +288,11 @@ export default function Navbar() {
         }
         
         .nb-mobile-link.active {
-          background: linear-gradient(${isRTL ? '-135deg' : '135deg'}, rgba(196,147,63,0.18) 0%, rgba(196,147,63,0.03) 100%);
-          border-color: rgba(196,147,63,0.25);
+          background: linear-gradient(${isRTL ? '-135deg' : '135deg'}, rgba(21, 63, 101,0.18) 0%, rgba(21, 63, 101,0.03) 100%);
+          border-color: rgba(21, 63, 101,0.25);
           color: var(--color-primary);
           font-weight: 800;
-          box-shadow: 0 8px 32px rgba(196,147,63,0.08);
+          box-shadow: 0 8px 32px rgba(21, 63, 101,0.08);
         }
         
         .nb-ml-arrow {

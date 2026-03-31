@@ -163,7 +163,7 @@ export default function CtaSection() {
         }
         .cta-btn-primary:hover {
           background: var(--color-primary-dark);
-          box-shadow: 0 12px 32px rgba(196,147,63,0.4);
+          box-shadow: 0 12px 32px rgba(21, 63, 101,0.4);
         }
 
         .cta-btn-wa {

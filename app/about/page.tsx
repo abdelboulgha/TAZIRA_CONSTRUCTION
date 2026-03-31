@@ -437,7 +437,7 @@ export default function AboutPage() {
           letter-spacing: 0.24em; text-transform: uppercase;
           color: var(--color-primary);
         }
-        .ab-eyebrow-span-r { color: rgba(196,147,63,0.8) !important; }
+        .ab-eyebrow-span-r { color: rgba(21, 63, 101,0.8) !important; }
         .ab-heading {
           font-family: var(--font-heading); font-weight: 900;
           font-size: clamp(2.4rem, 4.5vw, 3.8rem);
@@ -497,7 +497,7 @@ export default function AboutPage() {
         }
         .ab-hero-eline {
           height: 1px; width: 36px;
-          background: rgba(196,147,63,0.6); flex-shrink: 0;
+          background: rgba(21, 63, 101,0.6); flex-shrink: 0;
         }
         .ab-hero-eyebrow span {
           font-size: 0.58rem; font-weight: 700;
@@ -603,8 +603,8 @@ export default function AboutPage() {
           transition: border-color 0.25s, background 0.25s, color 0.25s;
         }
         .ab-pill:hover {
-          border-color: rgba(196,147,63,0.35);
-          background: rgba(196,147,63,0.06);
+          border-color: rgba(21, 63, 101,0.35);
+          background: rgba(21, 63, 101,0.06);
           color: rgba(255,255,255,0.7);
         }
         .ab-pill-icon { color: var(--color-primary); flex-shrink: 0; }
@@ -632,7 +632,7 @@ export default function AboutPage() {
         }
         .ab-mv-num {
           font-family: var(--font-heading); font-weight: 900;
-          font-size: 3rem; color: rgba(196,147,63,0.15);
+          font-size: 3rem; color: rgba(21, 63, 101,0.15);
           line-height: 1; margin-bottom: 1rem;
           letter-spacing: -0.05em;
         }
@@ -684,7 +684,7 @@ export default function AboutPage() {
         .ab-val-card:hover {
           background: rgba(255,255,255,0.05);
           transform: translateY(-6px);
-          border-color: rgba(196,147,63,0.25);
+          border-color: rgba(21, 63, 101,0.25);
           box-shadow: 0 20px 56px rgba(0,0,0,0.5);
         }
         .ab-val-bar {
@@ -697,13 +697,13 @@ export default function AboutPage() {
         .ab-val-card:hover .ab-val-bar { width: 100%; }
         .ab-val-icon {
           width: 52px; height: 52px; border-radius: 12px;
-          background: rgba(196,147,63,0.1);
-          border: 1px solid rgba(196,147,63,0.2);
+          background: rgba(21, 63, 101,0.1);
+          border: 1px solid rgba(21, 63, 101,0.2);
           display: flex; align-items: center; justify-content: center;
           color: var(--color-primary); margin-bottom: 1.5rem;
           transition: background 0.3s, transform 0.3s;
         }
-        .ab-val-card:hover .ab-val-icon { background: rgba(196,147,63,0.16); transform: scale(1.08); }
+        .ab-val-card:hover .ab-val-icon { background: rgba(21, 63, 101,0.16); transform: scale(1.08); }
         .ab-val-title {
           font-family: var(--font-heading); font-weight: 900;
           font-size: 1rem; color: var(--color-secondary);
@@ -732,7 +732,7 @@ export default function AboutPage() {
         }
         .ab-tl-line-fill {
           position: absolute; inset: 0;
-          background: linear-gradient(to bottom, var(--color-primary) 0%, rgba(196,147,63,0.15) 100%);
+          background: linear-gradient(to bottom, var(--color-primary) 0%, rgba(21, 63, 101,0.15) 100%);
         }
         .ab-tl-item {
           display: flex; gap: 3rem; padding: 0 0 3.5rem 0; position: relative;
@@ -741,8 +741,8 @@ export default function AboutPage() {
         .ab-tl-dot {
           width: 38px; height: 38px; flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
-          background: rgba(196,147,63,0.1);
-          border: 1.5px solid rgba(196,147,63,0.3);
+          background: rgba(21, 63, 101,0.1);
+          border: 1.5px solid rgba(21, 63, 101,0.3);
           border-radius: 50%;
         }
         .ab-tl-dot-core { width: 10px; height: 10px; border-radius: 50%; background: var(--color-primary); }
@@ -786,7 +786,7 @@ export default function AboutPage() {
         .ab-domain-card:hover {
           box-shadow: 0 24px 64px rgba(0,0,0,0.5);
           transform: translateY(-8px);
-          border-color: rgba(196,147,63,0.25);
+          border-color: rgba(21, 63, 101,0.25);
         }
         .ab-domain-img-wrap {
           height: 200px; overflow: hidden; position: relative;

@@ -183,7 +183,7 @@ export default function TestimonialsSection() {
         .tsm-card:hover {
           box-shadow: 0 22px 60px rgba(0,0,0,0.10);
           transform: translateY(-7px);
-          border-color: rgba(196,147,63,0.18);
+          border-color: rgba(21, 63, 101,0.18);
         }
         .tsm-card:hover .tsm-topbar { width: 100%; }
         .tsm-topbar {
@@ -195,7 +195,7 @@ export default function TestimonialsSection() {
         }
         .tsm-quote-icon {
           position: absolute; top: 1.5rem; right: 1.75rem;
-          color: rgba(196,147,63,0.07);
+          color: rgba(21, 63, 101,0.07);
         }
         .tsm-text {
           font-size: 0.9rem; color: var(--color-text-muted);

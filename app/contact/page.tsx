@@ -30,7 +30,7 @@ function ContactForm({ tc, isRTL }: { tc: any; isRTL: boolean }) {
         <p className="cf-success-sub">{tc.form.successSub}</p>
         <style jsx>{`
           .cf-success { padding: 3rem 2rem; text-align: center; display: flex; flex-direction: column; align-items: center; }
-          .cf-success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(196,147,63,0.1); border: 1.5px solid rgba(196,147,63,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+          .cf-success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(21, 63, 101,0.1); border: 1.5px solid rgba(21, 63, 101,0.3); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
           .cf-success-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem; color: var(--color-text); margin-bottom: 0.5rem; }
           .cf-success-sub { font-size: 0.88rem; color: var(--color-text-muted); }
         `}</style>
@@ -115,7 +115,7 @@ function ContactForm({ tc, isRTL }: { tc: any; isRTL: boolean }) {
         .cf-input::placeholder { color: var(--color-text-light); }
         .cf-input:focus {
           border-color: var(--color-primary);
-          box-shadow: 0 0 0 3px rgba(196,147,63,0.1);
+          box-shadow: 0 0 0 3px rgba(21, 63, 101,0.1);
         }
         .cf-select { cursor: pointer; }
         .cf-btn {
@@ -130,7 +130,7 @@ function ContactForm({ tc, isRTL }: { tc: any; isRTL: boolean }) {
         }
         .cf-btn:hover:not(:disabled) {
           background: var(--color-primary-dark);
-          box-shadow: 0 8px 28px rgba(196,147,63,0.35);
+          box-shadow: 0 8px 28px rgba(21, 63, 101,0.35);
         }
         .cf-btn:disabled { opacity: 0.65; cursor: not-allowed; }
         @keyframes cf-spin { to { transform: rotate(360deg); } }
@@ -378,7 +378,7 @@ export default function ContactPage() {
           transition: border-color 0.25s, transform 0.25s;
         }
         .cp-method:hover {
-          border-color: rgba(196,147,63,0.35);
+          border-color: rgba(21, 63, 101,0.35);
           transform: translateY(-4px);
         }
         .cp-method-icon {

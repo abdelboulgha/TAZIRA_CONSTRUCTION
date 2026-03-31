@@ -59,10 +59,10 @@ export default function ServicesSection() {
           const arrowEl = card.querySelector('.svc-arrow')     as HTMLElement;
 
           card.addEventListener('mouseenter', () => {
-            gsap.to(card, { flexGrow: FLEX_ACTIVE, borderColor: 'rgba(196,147,63,0.2)', boxShadow: '0 20px 56px rgba(0,0,0,0.1)', duration: 0.52, ease: 'power3.inOut' });
+            gsap.to(card, { flexGrow: FLEX_ACTIVE, borderColor: 'rgba(21, 63, 101,0.2)', boxShadow: '0 20px 56px rgba(0,0,0,0.1)', duration: 0.52, ease: 'power3.inOut' });
             gsap.to(imgEl,    { opacity: 0.14, scale: 1.05, duration: 0.55, ease: 'power2.out' });
-            gsap.to(numEl,    { color: 'rgba(196,147,63,0.14)', duration: 0.3 });
-            gsap.to(iconEl,   { background: 'var(--color-primary)', color: '#fff', boxShadow: '0 10px 28px rgba(196,147,63,0.35)', duration: 0.35 });
+            gsap.to(numEl,    { color: 'rgba(21, 63, 101,0.14)', duration: 0.3 });
+            gsap.to(iconEl,   { background: 'var(--color-primary)', color: '#fff', boxShadow: '0 10px 28px rgba(21, 63, 101,0.35)', duration: 0.35 });
             gsap.to(lineEl,   { width: '100%', duration: 0.52, ease: 'power3.inOut' });
             gsap.fromTo(descEl,  { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.38, delay: 0.18, ease: 'power3.out' });
             gsap.fromTo(arrowEl, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3,  delay: 0.25, ease: 'power3.out' });
@@ -207,7 +207,7 @@ export default function ServicesSection() {
           font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
           text-transform: uppercase; text-decoration: none;
           color: var(--color-text-muted);
-          border-bottom: 1px solid rgba(196,147,63,0.4);
+          border-bottom: 1px solid rgba(21, 63, 101,0.4);
           padding-bottom: 3px; transition: color 0.25s; white-space: nowrap;
         }
         .svc2-viewall:hover { color: var(--color-primary); }

@@ -225,7 +225,7 @@ export default function TrustSection() {
           transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
         }
         .trust-point:hover {
-          border-color: rgba(196,147,63,0.25);
+          border-color: rgba(21, 63, 101,0.25);
           transform: translateX(5px);
           box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
@@ -269,13 +269,13 @@ export default function TrustSection() {
           font-family: var(--font-heading); font-size: 0.68rem;
           font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
           text-decoration: none; transition: all 0.3s;
-          box-shadow: 0 8px 28px rgba(196,147,63,0.28);
+          box-shadow: 0 8px 28px rgba(21, 63, 101,0.28);
         }
         .trust-cta:hover {
           background: var(--color-primary-dark);
           border-color: var(--color-primary-dark);
           transform: translateY(-3px);
-          box-shadow: 0 16px 42px rgba(196,147,63,0.44);
+          box-shadow: 0 16px 42px rgba(21, 63, 101,0.44);
         }
 
         /* ─── Image column ─────────────────── */
@@ -359,7 +359,7 @@ export default function TrustSection() {
         }
         .trust-img-sm-overlay {
           position: absolute; inset: 0;
-          background: rgba(196,147,63,0.15);
+          background: rgba(21, 63, 101,0.15);
         }
 
         /* ─── Responsive ───────────────────── */

@@ -19,7 +19,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem', textDecoration: 'none' }}>
-              <Image src="/assets/logo.png" alt="TAZIRA" width={44} height={44} style={{ objectFit: 'contain' }} />
+              <Image src="/assets/logo.png" alt="TAZIRA" width={150} height={44} style={{ objectFit: 'contain', width: 'auto', height: '44px' }} />
               <div>
                 <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: '1rem', color: 'white' }}>TAZIRA</div>
                 <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 500, fontSize: '0.65rem', color: 'var(--color-primary)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>CONSTRUCTION</div>

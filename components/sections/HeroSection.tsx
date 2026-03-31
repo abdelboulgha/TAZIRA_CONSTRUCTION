@@ -186,7 +186,7 @@ export default function HeroSection() {
         }
         .h-tagline-line {
           height: 1px; width: 36px;
-          background: rgba(196,147,63,0.6); flex-shrink: 0;
+          background: rgba(21, 63, 101,0.6); flex-shrink: 0;
         }
         .h-tagline span {
           font-size: 0.58rem; font-weight: 700;
@@ -253,7 +253,7 @@ export default function HeroSection() {
         .h-btn-solid:hover {
           background: var(--color-primary); border-color: var(--color-primary);
           color: white; transform: translateY(-3px);
-          box-shadow: 0 16px 42px rgba(196,147,63,0.45);
+          box-shadow: 0 16px 42px rgba(21, 63, 101,0.45);
         }
         .h-btn-outline {
           display: inline-flex; align-items: center;
@@ -285,8 +285,8 @@ export default function HeroSection() {
           cursor: default;
         }
         .h-card:hover {
-          background: rgba(196,147,63,0.12);
-          border-color: rgba(196,147,63,0.25);
+          background: rgba(21, 63, 101,0.12);
+          border-color: rgba(21, 63, 101,0.25);
         }
         .h-card-icon {
           margin-bottom: 0.85rem; opacity: 0.9;

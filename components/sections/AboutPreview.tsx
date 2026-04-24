@@ -4,17 +4,6 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
-/* ─── Image data ─────────────────────────────────────────────── */
-const IMAGES = [
-  { src: '/assets/image1.png', alt: 'Chantier au coucher du soleil' },
-  { src: '/assets/image2.png', alt: 'Équipe sur chantier' },
-  { src: '/assets/image3.png', alt: 'Matériel de construction' },
-  { src: '/assets/image4.png', alt: 'Travaux en hauteur' },
-  { src: '/assets/image5.png', alt: 'Opérateur sur chantier' },
-  { src: '/assets/image6.png', alt: 'Travaux de terrassement' },
-];
-
-
 export default function AboutPreview() {
   const { t, isRTL } = useLanguage();
   const d = t.aboutPreview;
@@ -25,10 +14,8 @@ export default function AboutPreview() {
   const paraRef      = useRef<HTMLParagraphElement>(null);
   const pillarsRef   = useRef<HTMLDivElement>(null);
   const ctaRef       = useRef<HTMLDivElement>(null);
-  const col1Ref      = useRef<HTMLDivElement>(null);
-  const col2Ref      = useRef<HTMLDivElement>(null);
-  const col3Ref      = useRef<HTMLDivElement>(null);
   const lineRef      = useRef<HTMLDivElement>(null);
+  const videoWrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let ctx: any;
@@ -97,49 +84,23 @@ export default function AboutPreview() {
           1.1,
         );
 
-        /* image columns – clip-path reveal */
-        const makeColTl = (el: HTMLDivElement | null, delay: number) => {
-          if (!el) return;
-          const imgs = el.querySelectorAll('.about-img-wrap');
-          gsap.fromTo(
-            imgs,
-            { clipPath: 'inset(100% 0% 0% 0%)', opacity: 0 },
-            {
-              clipPath: 'inset(0% 0% 0% 0%)',
-              opacity: 1,
-              stagger: 0.18,
-              duration: 1,
-              ease: 'power4.inOut',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 80%',
-                once: true,
-              },
-              delay,
+        /* video — clip-path reveal */
+        gsap.fromTo(
+          videoWrapRef.current,
+          { clipPath: 'inset(100% 0% 0% 0%)', opacity: 0 },
+          {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            opacity: 1,
+            duration: 1.1,
+            ease: 'power4.inOut',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 80%',
+              once: true,
             },
-          );
-          /* subtle parallax on scroll */
-          imgs.forEach((wrap, i) => {
-            const innerImg = wrap.querySelector('.about-img');
-            if (innerImg) {
-              gsap.to(innerImg, {
-                yPercent: i % 2 === 0 ? -15 : 15,
-                scale: 1.25,
-                ease: 'none',
-                scrollTrigger: {
-                  trigger: sectionRef.current,
-                  start: 'top bottom',
-                  end: 'bottom top',
-                  scrub: 1.5,
-                },
-              });
-            }
-          });
-        };
-
-        makeColTl(col1Ref.current, 0);
-        makeColTl(col2Ref.current, 0.22);
-        makeColTl(col3Ref.current, 0.44);
+            delay: 0.2,
+          },
+        );
       }, sectionRef);
     })();
 
@@ -187,40 +148,18 @@ export default function AboutPreview() {
             ))}
           </div>
 
-
         </div>
 
-        {/* ── RIGHT: mosaic gallery ── */}
-        <div className="about-gallery">
-
-          {/* Column 1 — tall single image */}
-          <div ref={col1Ref} className="about-col about-col-1">
-            <div className="about-img-wrap about-img-tall">
-              <img src={IMAGES[0].src} alt={IMAGES[0].alt} className="about-img" />
-            </div>
-          </div>
-
-          {/* Column 2 — two images stacked (offset down) */}
-          <div ref={col2Ref} className="about-col about-col-2">
-            <div className="about-img-wrap about-img-medium">
-              <img src={IMAGES[1].src} alt={IMAGES[1].alt} className="about-img" />
-            </div>
-            <div className="about-img-wrap about-img-medium">
-              <img src={IMAGES[2].src} alt={IMAGES[2].alt} className="about-img" />
-            </div>
-          </div>
-
-          {/* Column 3 — three compact images */}
-          <div ref={col3Ref} className="about-col about-col-3">
-            <div className="about-img-wrap about-img-compact">
-              <img src={IMAGES[3].src} alt={IMAGES[3].alt} className="about-img" />
-            </div>
-            <div className="about-img-wrap about-img-compact">
-              <img src={IMAGES[4].src} alt={IMAGES[4].alt} className="about-img" />
-            </div>
-            <div className="about-img-wrap about-img-compact">
-              <img src={IMAGES[5].src} alt={IMAGES[5].alt} className="about-img" />
-            </div>
+        {/* ── RIGHT: reel player ── */}
+        <div className="about-reel-outer">
+          <div ref={videoWrapRef} className="about-reel-frame">
+            <video
+              className="about-video"
+              src="/video/C0191.mp4"
+              controls
+              playsInline
+              preload="metadata"
+            />
           </div>
         </div>
       </div>
@@ -344,48 +283,27 @@ export default function AboutPreview() {
           border-color: var(--color-primary);
         }
 
-        /* ── Gallery ── */
-        .about-gallery {
-          display: grid;
-          grid-template-columns: 1.1fr 1fr 0.9fr;
-          gap: 12px;
-          align-items: stretch;
-          height: 620px;
-        }
-        .about-col {
+        /* ── Reel ── */
+        .about-reel-outer {
           display: flex;
-          flex-direction: column;
-          gap: 12px;
+          justify-content: center;
+          align-items: center;
         }
-        .about-col-2 {
-          margin-top: 48px;
-        }
-        .about-col-3 {
-          margin-top: -32px;
-        }
-
-        /* Image wrappers */
-        .about-img-wrap {
-          border-radius: 6px;
+        .about-reel-frame {
+          width: 300px;
+          aspect-ratio: 9 / 16;
+          border-radius: 18px;
           overflow: hidden;
-          position: relative;
+          background: #000;
+          box-shadow: 0 24px 60px rgba(0,0,0,0.35);
           clip-path: inset(100% 0% 0% 0%);
           opacity: 0;
-          flex-shrink: 0;
         }
-        .about-img-tall   { flex: 1; }
-        .about-img-medium { flex: 1; }
-        .about-img-compact { flex: 1; }
-
-        .about-img {
+        .about-video {
           width: 100%;
           height: 100%;
           object-fit: cover;
           display: block;
-          transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
-        }
-        .about-img-wrap:hover .about-img {
-          transform: scale(1.05);
         }
 
         /* ── Responsive ── */
@@ -394,20 +312,13 @@ export default function AboutPreview() {
             grid-template-columns: 1fr;
             gap: 4rem;
           }
-          .about-gallery {
-            height: 420px;
-          }
+          .about-reel-frame { width: 260px; }
           .about-para { max-width: 100%; }
         }
         @media (max-width: 680px) {
           .about-root { padding: 5rem 0 6rem; }
           .about-inner { padding: 0 1.25rem; gap: 3rem; }
-          .about-gallery {
-            grid-template-columns: 1fr 1fr;
-            height: 360px;
-          }
-          .about-col-3 { display: none; }
-          .about-col-2 { margin-top: 28px; }
+          .about-reel-frame { width: 200px; border-radius: 12px; }
           .about-pillars { grid-template-columns: 1fr; gap: 1rem; }
           .about-headline { font-size: clamp(2.2rem, 8vw, 3rem); word-wrap: break-word; overflow-wrap: break-word; }
         }

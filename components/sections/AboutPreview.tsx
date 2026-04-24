@@ -305,6 +305,21 @@ export default function AboutPreview() {
           object-fit: cover;
           display: block;
         }
+        .about-video:-webkit-full-screen {
+          width: 100vw;
+          height: 100vh;
+          object-fit: contain;
+        }
+        .about-video:fullscreen {
+          width: 100vw;
+          height: 100vh;
+          object-fit: contain;
+        }
+        .about-video:-moz-full-screen {
+          width: 100vw;
+          height: 100vh;
+          object-fit: contain;
+        }
 
         /* ── Responsive ── */
         @media (max-width: 1100px) {
